@@ -64,6 +64,14 @@
             // Init tabs
             initTabs();
 
+            // 🔗 hash 路由：#goat / #cup 直达对应 Tab（分享链接友好）
+            const applyHash = () => {
+                const h = (location.hash || '').replace('#', '');
+                if (h && document.getElementById(`content-${h}`)) switchTab(h);
+            };
+            applyHash();
+            window.addEventListener('hashchange', applyHash);
+
             // Init matrix rain
             initMatrixRain();
 
@@ -152,15 +160,11 @@
         // Render HTML
         tbody.innerHTML = rows.map(r => {
             const rankClass = r.rank <= 3 ? ` rank-${r.rank}` : '';
-            const zidClass = r.registered ? '' : ' unregistered';
-            const zidDisplay = r.registered ? r.zid : '未登记';
             return `
                 <tr>
                     <td class="rank-cell${rankClass}">${r.rank}</td>
-                    <td class="zid-cell${zidClass}">${zidDisplay}</td>
                     <td class="team-cell" title="${escHTML(r.team_name)}">${escHTML(r.team_name)}</td>
                     <td class="manager-cell">${escHTML(r.manager_name || '—')}</td>
-                    <td style="text-align:center;font-family:var(--font-mono);">${r.current_gw}</td>
                     <td class="total-cell glow-text">${r.total}</td>
                 </tr>`;
         }).join('');
@@ -199,9 +203,6 @@
 
             const totalGoat = historicalGoat + currentGoat;
 
-            // Previous season final rank
-            const prevRank = prevSeasonRank[zid] || null;
-
             return {
                 zid: zid,
                 team_name: entry.team_name,
@@ -211,35 +212,50 @@
                 current_rank_points: currentRankPoints,
                 current_goat: currentGoat,
                 total_goat: totalGoat,
-                prev_rank: prevRank,
                 registered: registered
             };
         });
 
         // Calculate GoAT ranks
-        const goatRanks = assignRanks(goatRows, r => r.total_goat);
+        // 🔴 排名变化（20:05 Leon 拍板定义）：
+        //   实时总榜排名 = rank(三季历史GOAT + 本季score+排名分) —— 同一累计分数池
+        //   赛季初基准   = rank(三季历史GOAT)
+        //   历史 occupation 大头，单场波动小，哀稳第一则显示― ✓
+        const realGoatVals = goatRows.map(r => r.total_goat);
+        const histOnlyVals = goatRows.map(r => r.historical_goat);
+        const realRanks = assignRanks(goatRows, r => r.total_goat); // 与下方 goatRanks 一致
+        const histOnlyRank = (() => {
+            const indexed = histOnlyVals.map((v, i) => ({ v, i }));
+            indexed.sort((a, b) => b.v - a.v || a.i - b.i);
+            const out = new Array(histOnlyVals.length);
+            let p = 0;
+            while (p < indexed.length) {
+                let q = p;
+                while (q < indexed.length && indexed[q].v === indexed[p].v) q++;
+                for (let k = p; k < q; k++) out[indexed[k].i] = p + 1;
+                p = q;
+            }
+            return out;
+        })();
 
         // Sort by GoAT total descending
         const sorted = goatRows
-            .map((r, i) => ({ ...r, goat_rank: goatRanks[i] }))
+            .map((r, i) => ({ ...r, goat_rank: realRanks[i], hist_rank: histOnlyRank[i] }))
             .sort((a, b) => b.total_goat - a.total_goat);
 
         // Render
         tbody.innerHTML = sorted.map(r => {
             const rankClass = r.goat_rank <= 3 ? ` rank-${r.goat_rank}` : '';
-            const zidClass = r.registered ? '' : ' unregistered';
-            const zidDisplay = r.registered ? r.zid : '未登记';
 
-            // Rank change indicator
+            // 排名变化：实时总榜名次 vs 历史赛季 GOAT 名次（纯前端同尺子计算）
             let rankChangeHTML;
-            if (r.prev_rank === null || r.prev_rank === undefined) {
-                rankChangeHTML = '<span class="rank-change-same">—</span>';
-            } else if (r.goat_rank < r.prev_rank) {
-                const diff = r.prev_rank - r.goat_rank;
-                rankChangeHTML = `<span class="rank-change-up">↑${diff}</span>`;
-            } else if (r.goat_rank > r.prev_rank) {
-                const diff = r.goat_rank - r.prev_rank;
-                rankChangeHTML = `<span class="rank-change-down">↓${diff}</span>`;
+            if (r.historical_goat === 0) {
+                // 新队/未登记无历史：无法比较
+                rankChangeHTML = '<span class="rank-change-same">new</span>';
+            } else if (r.goat_rank < r.hist_rank) {
+                rankChangeHTML = `<span class="rank-change-up">↑${r.hist_rank - r.goat_rank}</span>`;
+            } else if (r.goat_rank > r.hist_rank) {
+                rankChangeHTML = `<span class="rank-change-down">↓${r.goat_rank - r.hist_rank}</span>`;
             } else {
                 rankChangeHTML = '<span class="rank-change-same">―</span>';
             }
@@ -247,10 +263,9 @@
             return `
                 <tr>
                     <td class="rank-cell${rankClass}">${r.goat_rank}</td>
-                    <td class="zid-cell${zidClass}">${zidDisplay}</td>
                     <td class="team-cell" title="${escHTML(r.team_name)}">${escHTML(r.team_name)}</td>
                     <td class="manager-cell">${escHTML(r.manager_name || '—')}</td>
-                    <td class="goat-cell">${r.historical_goat}</td>
+                    <td class="goat-cell" title="23/24 + 24/25 + 25/26 三季合计">${r.historical_goat}</td>
                     <td class="goat-cell" title="得分 ${r.current_score} + 排名分 ${r.current_rank_points}">
                         ${r.current_goat}
                         <br><small style="color:var(--text-dim);font-size:0.7rem;">(${r.current_score}+${r.current_rank_points})</small>
