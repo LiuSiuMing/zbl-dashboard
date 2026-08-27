@@ -51,7 +51,7 @@
             // Previous season rank (optional)
             const prevRankResult = results[1 + HISTORY_FILES.length];
             if (prevRankResult && prevRankResult.status === 'fulfilled') {
-                prevSeasonRank = prevRankResult.value.entries || {};
+                prevSeasonRank = prevRankResult.value.ranks || prevRankResult.value.entries || {};
             }
 
             // Update header timestamp
