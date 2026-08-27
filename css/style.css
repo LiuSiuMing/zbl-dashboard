@@ -1,0 +1,549 @@
+/* ==========================================================================
+   ZBL Zombie Basketball League — Matrix Terminal Theme
+   Dark background (#0a0f0a), Terminal green (#00ff41), Monospace
+   ========================================================================== */
+
+:root {
+    --bg-primary: #0a0f0a;
+    --bg-secondary: #0d140d;
+    --bg-card: #111b11;
+    --bg-hover: #162016;
+    --border-color: #1a3a1a;
+    --border-light: #244024;
+    --green-primary: #00ff41;
+    --green-dim: #00cc33;
+    --green-muted: #008f11;
+    --green-subtle: #003b00;
+    --text-primary: #c0ffc0;
+    --text-secondary: #70a070;
+    --text-dim: #405040;
+    --red-accent: #ff4444;
+    --red-dim: #cc3333;
+    --yellow-accent: #ffcc00;
+    --rank-up: #00ff41;
+    --rank-down: #ff4444;
+    --rank-same: #707070;
+    --font-mono: 'Share Tech Mono', 'Cascadia Code', 'Consolas', 'Courier New', monospace;
+    --font-sans: 'Noto Sans SC', -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    --transition-fast: 0.2s ease;
+    --glow-green: 0 0 10px rgba(0, 255, 65, 0.3);
+    --glow-green-strong: 0 0 20px rgba(0, 255, 65, 0.5);
+}
+
+/* Reset & Base */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 14px;
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Matrix Rain Canvas */
+#matrix-rain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.06;
+    pointer-events: none;
+}
+
+/* App Container */
+.app-container {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px;
+}
+
+/* =============================== Header ================================= */
+.site-header {
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    box-shadow: var(--glow-green);
+}
+
+.header-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.logo {
+    font-family: var(--font-mono);
+    font-size: 1.8rem;
+    color: var(--green-primary);
+    text-shadow: var(--glow-green-strong);
+    letter-spacing: 2px;
+    white-space: nowrap;
+}
+
+.logo-icon {
+    margin-right: 4px;
+}
+
+.accent {
+    color: var(--green-primary);
+    text-shadow: var(--glow-green-strong);
+}
+
+.subtitle-inline {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    font-weight: normal;
+    color: var(--text-secondary);
+    margin-left: 12px;
+    letter-spacing: 1px;
+    text-shadow: none;
+}
+
+.subtitle {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+}
+
+.data-update {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pulse-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green-primary);
+    box-shadow: 0 0 6px var(--green-primary);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+/* =========================== Tab Navigation ============================= */
+.tab-nav {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 16px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.tab-btn {
+    flex: 1;
+    min-width: 100px;
+    padding: 12px 16px;
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px 6px 0 0;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+    text-align: center;
+    outline: none;
+}
+
+.tab-btn:hover:not(.disabled) {
+    color: var(--green-primary);
+    background: var(--bg-card);
+    border-color: var(--border-light);
+}
+
+.tab-btn.active {
+    color: var(--green-primary);
+    background: var(--bg-card);
+    border-color: var(--border-light);
+    border-bottom-color: var(--bg-card);
+    text-shadow: var(--glow-green);
+    box-shadow: 0 -2px 0 var(--green-primary) inset;
+}
+
+.tab-btn.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.tab-icon {
+    margin-right: 4px;
+}
+
+.badge-coming {
+    font-size: 0.65rem;
+    background: var(--green-muted);
+    color: var(--bg-primary);
+    padding: 2px 6px;
+    border-radius: 3px;
+    vertical-align: middle;
+    margin-left: 4px;
+}
+
+/* ========================== Tab Content ================================== */
+.tab-content {
+    display: none;
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    border-radius: 0 6px 6px 6px;
+    padding: 0;
+    animation: fadeIn 0.3s ease;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================== Data Table =================================== */
+.table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.data-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.data-table th {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--green-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 12px 14px;
+    text-align: left;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-light);
+    white-space: nowrap;
+    user-select: none;
+}
+
+.data-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border-color);
+    transition: background var(--transition-fast);
+}
+
+.data-table tbody tr:hover {
+    background: var(--bg-hover);
+}
+
+.data-table tbody tr:hover td {
+    color: #fff;
+}
+
+/* Column Styles */
+.col-rank {
+    width: 50px;
+    text-align: center !important;
+}
+
+.col-zid {
+    width: 90px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+}
+
+.col-team { min-width: 140px; }
+.col-manager { min-width: 80px; }
+.col-gw { width: 80px; text-align: center !important; }
+.col-total {
+    width: 80px;
+    text-align: center !important;
+    font-family: var(--font-mono);
+    color: var(--green-primary);
+    font-weight: bold;
+}
+
+.col-goat-hist { width: 90px; text-align: center !important; }
+.col-goat-curr { width: 90px; text-align: center !important; }
+.col-goat-total { width: 90px; text-align: center !important; font-weight: bold; color: var(--green-primary); }
+.col-rank-change { width: 80px; text-align: center !important; }
+
+/* Rank Cell */
+.rank-cell {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-weight: bold;
+    color: var(--green-primary);
+    min-width: 40px;
+}
+
+.rank-1 { color: #ffd700; text-shadow: 0 0 8px rgba(255, 215, 0, 0.5); }
+.rank-2 { color: #c0c0c0; text-shadow: 0 0 6px rgba(192, 192, 192, 0.4); }
+.rank-3 { color: #cd7f32; text-shadow: 0 0 6px rgba(205, 127, 50, 0.4); }
+
+/* ZID Cell */
+.zid-cell {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+}
+
+.zid-cell.unregistered {
+    color: var(--yellow-accent);
+    font-style: italic;
+}
+
+/* Team Name */
+.team-cell {
+    font-weight: 600;
+    color: var(--text-primary);
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Manager Name */
+.manager-cell {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+/* Score */
+.total-cell {
+    font-family: var(--font-mono);
+    font-weight: bold;
+    color: var(--green-primary);
+    text-align: center;
+}
+
+/* GoAT score cells */
+.goat-cell {
+    font-family: var(--font-mono);
+    text-align: center;
+}
+
+.goat-total-cell {
+    font-family: var(--font-mono);
+    font-weight: bold;
+    color: var(--green-primary);
+    text-align: center;
+    text-shadow: var(--glow-green);
+}
+
+/* Rank Change */
+.rank-change-up {
+    color: var(--rank-up);
+    font-family: var(--font-mono);
+    font-weight: bold;
+}
+
+.rank-change-down {
+    color: var(--rank-down);
+    font-family: var(--font-mono);
+    font-weight: bold;
+}
+
+.rank-change-same {
+    color: var(--rank-same);
+    font-family: var(--font-mono);
+}
+
+/* Loading State */
+.loading-cell {
+    text-align: center;
+    padding: 40px 14px;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+}
+
+/* ======================== Placeholder Message ============================ */
+.placeholder-msg {
+    padding: 60px 24px;
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+.placeholder-icon {
+    font-size: 4rem;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+.placeholder-msg h2 {
+    font-family: var(--font-mono);
+    color: var(--green-primary);
+    margin-bottom: 12px;
+}
+
+.placeholder-msg p {
+    max-width: 400px;
+    margin: 0 auto 20px;
+    line-height: 1.8;
+}
+
+.countdown-hint {
+    font-family: var(--font-mono);
+    color: var(--green-muted);
+    animation: pulse 2s infinite;
+}
+
+/* ============================== Footer ================================= */
+.site-footer {
+    margin-top: 20px;
+    padding: 16px 0;
+    border-top: 1px solid var(--border-color);
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+}
+
+.footer-sub {
+    margin-top: 4px;
+    font-size: 0.65rem;
+}
+
+/* ======================= Scrollbar Styling ============================= */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-light);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--green-muted);
+}
+
+/* ======================== Responsive / Mobile ========================== */
+@media (max-width: 768px) {
+    html {
+        font-size: 13px;
+    }
+
+    .app-container {
+        padding: 8px;
+    }
+
+    .site-header {
+        padding: 14px 16px;
+    }
+
+    .logo {
+        font-size: 1.4rem;
+    }
+
+    .tab-btn {
+        padding: 10px 10px;
+        font-size: 0.85rem;
+    }
+
+    .data-table {
+        font-size: 0.82rem;
+    }
+
+    .data-table th,
+    .data-table td {
+        padding: 8px 8px;
+    }
+
+    .col-team { min-width: 120px; }
+
+    /* Horizontal scroll hint */
+    .table-wrapper::after {
+        content: '← 左右滑动查看更多 →';
+        display: block;
+        text-align: center;
+        padding: 8px;
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        color: var(--text-dim);
+        border-top: 1px solid var(--border-color);
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 1.2rem;
+    }
+
+    .subtitle {
+        font-size: 0.7rem;
+    }
+
+    .tab-btn {
+        font-size: 0.78rem;
+        padding: 8px 6px;
+    }
+
+    .badge-coming {
+        display: none;
+    }
+}
+
+/* ======================= Print friendly ================================= */
+@media print {
+    body { background: #fff; color: #000; }
+    #matrix-rain { display: none; }
+    .site-header { box-shadow: none; border-color: #ccc; background: #f9f9f9; }
+    .tab-nav { display: none; }
+    .tab-content { display: block !important; border-color: #ccc; }
+    .data-table th { background: #eee; color: #333; }
+    .data-table td { color: #333; border-color: #ddd; }
+    .green-primary, .total-cell, .goat-total-cell { color: #006600; }
+}
+
+/* ================================= Animations =========================== */
+@keyframes glowPulse {
+    0%, 100% { text-shadow: 0 0 10px rgba(0,255,65,0.5); }
+    50% { text-shadow: 0 0 20px rgba(0,255,65,0.8), 0 0 40px rgba(0,255,65,0.3); }
+}
+
+.glow-text {
+    animation: glowPulse 3s infinite;
+}

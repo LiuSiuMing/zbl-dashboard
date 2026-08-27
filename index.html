@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍊 僵尸条：今天吃什么，明天怎么办 | 橘僵联 26/27</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧟</text></svg>">
+</head>
+<body>
+    <!-- Matrix Rain Canvas (background) -->
+    <canvas id="matrix-rain"></canvas>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="site-header">
+            <div class="header-top">
+                <h1 class="logo"><span class="logo-icon">🍊</span> <span class="accent">僵尸条：今天吃什么，明天怎么办</span><span class="subtitle-inline">橘僵联 26/27</span></h1>
+                <div class="subtitle">Orange Zombie League · FPL Dashboard · Presented by 僵尸条</div>
+            </div>
+            <div class="data-update" id="data-update">
+                <span class="pulse-dot"></span>
+                数据加载中...
+            </div>
+        </header>
+
+        <!-- Tab Navigation -->
+        <nav class="tab-nav" id="tab-nav">
+            <button class="tab-btn active" data-tab="season" id="tab-season">
+                <span class="tab-icon">📊</span> 本赛季
+            </button>
+            <button class="tab-btn" data-tab="goat" id="tab-goat">
+                <span class="tab-icon">🐐</span> GoAT 总榜
+            </button>
+            <button class="tab-btn disabled" data-tab="cup" id="tab-cup" disabled title="GW30 后开放">
+                <span class="tab-icon">🏆</span> 杯赛 <span class="badge-coming">GW30 后开放</span>
+            </button>
+        </nav>
+
+        <!-- Season Tab Content -->
+        <section class="tab-content active" id="content-season">
+            <div class="table-wrapper">
+                <table class="data-table" id="season-table">
+                    <thead>
+                        <tr>
+                            <th class="col-rank">排名</th>
+                            <th class="col-zid">ZID</th>
+                            <th class="col-team">队名</th>
+                            <th class="col-manager">经理</th>
+                            <th class="col-gw">GW 已赛</th>
+                            <th class="col-total">总分</th>
+                        </tr>
+                    </thead>
+                    <tbody id="season-tbody">
+                        <tr><td colspan="6" class="loading-cell">加载中...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- GoAT Tab Content -->
+        <section class="tab-content" id="content-goat">
+            <div class="table-wrapper">
+                <table class="data-table" id="goat-table">
+                    <thead>
+                        <tr>
+                            <th class="col-rank">排名</th>
+                            <th class="col-zid">ZID</th>
+                            <th class="col-team">队名</th>
+                            <th class="col-manager">经理</th>
+                            <th class="col-goat-hist">历史 GoAT</th>
+                            <th class="col-goat-curr">本赛季 GoAT</th>
+                            <th class="col-goat-total">总 GoAT</th>
+                            <th class="col-rank-change">排名变化</th>
+                        </tr>
+                    </thead>
+                    <tbody id="goat-tbody">
+                        <tr><td colspan="8" class="loading-cell">加载中...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Cup Tab Content (placeholder) -->
+        <section class="tab-content" id="content-cup">
+            <div class="placeholder-msg">
+                <div class="placeholder-icon">🏆</div>
+                <h2>杯赛专区</h2>
+                <p>杯赛将于 <span class="accent">GW30</span> 后正式开始，届时此处将展示杯赛对阵及积分。</p>
+                <div class="countdown-hint">敬请期待...</div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="site-footer">
+            <div>橘僵联 26/27 &copy; 2023-2026 · 冠名：僵尸条</div>
+            <div class="footer-sub">Powered by FPL API · 数据仅供联赛内部使用</div>
+        </footer>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

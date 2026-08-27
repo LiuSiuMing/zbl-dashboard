@@ -1,0 +1,124 @@
+{
+ "season": "2324",
+ "teams": {
+  "ZID000011": {
+   "team_name": "僵尸哈",
+   "total": 1970,
+   "rank_pts": 27,
+   "cup_pts": 5,
+   "goat_total": 2002
+  },
+  "ZID000010": {
+   "team_name": "僵尸果",
+   "total": 1973,
+   "rank_pts": 28,
+   "cup_pts": 10,
+   "goat_total": 2011
+  },
+  "ZID000022": {
+   "team_name": "僵尸驰",
+   "total": 1867,
+   "rank_pts": 16,
+   "cup_pts": 10,
+   "goat_total": 1893
+  },
+  "ZID000004": {
+   "team_name": "僵尸机",
+   "total": 2043,
+   "rank_pts": 34,
+   "cup_pts": 10,
+   "goat_total": 2087
+  },
+  "ZID000032": {
+   "team_name": "僵尸青森",
+   "total": 1692,
+   "rank_pts": 6,
+   "cup_pts": 5,
+   "goat_total": 1703
+  },
+  "ZID000012": {
+   "team_name": "僵尸扎",
+   "total": 1937,
+   "rank_pts": 25,
+   "cup_pts": 25,
+   "goat_total": 1987
+  },
+  "ZID000034": {
+   "team_name": "僵尸背头",
+   "total": 1532,
+   "rank_pts": 4,
+   "cup_pts": 5,
+   "goat_total": 1541
+  },
+  "ZID000031": {
+   "team_name": "僵尸W²",
+   "total": 1714,
+   "rank_pts": 7,
+   "cup_pts": 5,
+   "goat_total": 1726
+  },
+  "ZID000033": {
+   "team_name": "僵尸扣",
+   "total": 1649,
+   "rank_pts": 5,
+   "cup_pts": 0,
+   "goat_total": 1654
+  },
+  "ZID000029": {
+   "team_name": "僵尸G",
+   "total": 1769,
+   "rank_pts": 9,
+   "cup_pts": 20,
+   "goat_total": 1798
+  },
+  "ZID000035": {
+   "team_name": "僵尸荷",
+   "total": 1121,
+   "rank_pts": 3,
+   "cup_pts": 0,
+   "goat_total": 1124
+  },
+  "ZID000036": {
+   "team_name": "僵尸春",
+   "total": 0,
+   "rank_pts": 2,
+   "cup_pts": 0,
+   "goat_total": 2
+  },
+  "ZID000028": {
+   "team_name": "僵尸场长",
+   "total": 1792,
+   "rank_pts": 10,
+   "cup_pts": 10,
+   "goat_total": 1812
+  },
+  "ZID000019": {
+   "team_name": "僵尸熊",
+   "total": 1910,
+   "rank_pts": 21,
+   "cup_pts": 5,
+   "goat_total": 1936
+  },
+  "ZID000025": {
+   "team_name": "僵尸锤",
+   "total": 1830,
+   "rank_pts": 14,
+   "cup_pts": 5,
+   "goat_total": 1849
+  },
+  "ZID000015": {
+   "team_name": "Lia Lee",
+   "total": 1924,
+   "rank_pts": 22,
+   "cup_pts": 15,
+   "goat_total": 1961
+  },
+  "ZID000037": {
+   "team_name": "僵尸芝士",
+   "total": 0,
+   "rank_pts": 2,
+   "cup_pts": 0,
+   "goat_total": 2
+  }
+ }
+}
