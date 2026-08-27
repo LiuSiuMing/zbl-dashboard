@@ -1,26 +1,26 @@
 {
  "season": "2324",
  "entries": {
-  "ZID000011": {
-   "team_name": "僵尸哈",
-   "total": 1970,
-   "rank_pts": 27,
+  "ZID000001": {
+   "team_name": "僵尸橘",
+   "total": 2188,
+   "rank_pts": 37,
+   "cup_pts": 15,
+   "goat_total": 2240
+  },
+  "ZID000002": {
+   "team_name": "僵尸平",
+   "total": 2124,
+   "rank_pts": 36,
+   "cup_pts": 30,
+   "goat_total": 2190
+  },
+  "ZID000003": {
+   "team_name": "僵尸哀",
+   "total": 2114,
+   "rank_pts": 35,
    "cup_pts": 5,
-   "goat_total": 2002
-  },
-  "ZID000010": {
-   "team_name": "僵尸果",
-   "total": 1973,
-   "rank_pts": 28,
-   "cup_pts": 10,
-   "goat_total": 2011
-  },
-  "ZID000022": {
-   "team_name": "僵尸驰",
-   "total": 1867,
-   "rank_pts": 16,
-   "cup_pts": 10,
-   "goat_total": 1893
+   "goat_total": 2154
   },
   "ZID000004": {
    "team_name": "僵尸机",
@@ -29,12 +29,61 @@
    "cup_pts": 10,
    "goat_total": 2087
   },
-  "ZID000032": {
-   "team_name": "僵尸青森",
-   "total": 1692,
-   "rank_pts": 6,
+  "ZID000005": {
+   "team_name": "僵尸豆",
+   "total": 2020,
+   "rank_pts": 33,
    "cup_pts": 5,
-   "goat_total": 1703
+   "goat_total": 2058
+  },
+  "ZID000006": {
+   "team_name": "僵尸班",
+   "total": 2014,
+   "rank_pts": 32,
+   "cup_pts": 5,
+   "goat_total": 2051
+  },
+  "ZID000007": {
+   "team_name": "僵尸发",
+   "total": 2004,
+   "rank_pts": 31,
+   "cup_pts": 10,
+   "goat_total": 2045
+  },
+  "ZID000008": {
+   "team_name": "僵尸条",
+   "total": 2000,
+   "rank_pts": 30,
+   "cup_pts": 10,
+   "goat_total": 2040
+  },
+  "ZID000009": {
+   "team_name": "僵尸歪",
+   "total": 1989,
+   "rank_pts": 29,
+   "cup_pts": 5,
+   "goat_total": 2023
+  },
+  "ZID000010": {
+   "team_name": "僵尸果",
+   "total": 1973,
+   "rank_pts": 28,
+   "cup_pts": 10,
+   "goat_total": 2011
+  },
+  "ZID000011": {
+   "team_name": "僵尸哈",
+   "total": 1970,
+   "rank_pts": 27,
+   "cup_pts": 5,
+   "goat_total": 2002
+  },
+  "ZID000013": {
+   "team_name": "僵尸K",
+   "total": 1941,
+   "rank_pts": 26,
+   "cup_pts": 5,
+   "goat_total": 1972
   },
   "ZID000012": {
    "team_name": "僵尸扎",
@@ -43,12 +92,124 @@
    "cup_pts": 25,
    "goat_total": 1987
   },
-  "ZID000034": {
-   "team_name": "僵尸背头",
-   "total": 1532,
-   "rank_pts": 4,
+  "ZID000016": {
+   "team_name": "僵尸ginger",
+   "total": 1930,
+   "rank_pts": 24,
    "cup_pts": 5,
-   "goat_total": 1541
+   "goat_total": 1959
+  },
+  "ZID000014": {
+   "team_name": "僵尸三儿",
+   "total": 1929,
+   "rank_pts": 23,
+   "cup_pts": 10,
+   "goat_total": 1962
+  },
+  "ZID000015": {
+   "team_name": "Lia Lee",
+   "total": 1924,
+   "rank_pts": 22,
+   "cup_pts": 15,
+   "goat_total": 1961
+  },
+  "ZID000019": {
+   "team_name": "僵尸熊",
+   "total": 1910,
+   "rank_pts": 21,
+   "cup_pts": 5,
+   "goat_total": 1936
+  },
+  "ZID000018": {
+   "team_name": "僵尸吴",
+   "total": 1905,
+   "rank_pts": 20,
+   "cup_pts": 15,
+   "goat_total": 1940
+  },
+  "ZID000017": {
+   "team_name": "僵尸andy",
+   "total": 1904,
+   "rank_pts": 19,
+   "cup_pts": 20,
+   "goat_total": 1943
+  },
+  "ZID000020": {
+   "team_name": "僵尸胡",
+   "total": 1876,
+   "rank_pts": 18,
+   "cup_pts": 5,
+   "goat_total": 1899
+  },
+  "ZID000021": {
+   "team_name": "僵尸炮",
+   "total": 1876,
+   "rank_pts": 18,
+   "cup_pts": 5,
+   "goat_total": 1899
+  },
+  "ZID000022": {
+   "team_name": "僵尸驰",
+   "total": 1867,
+   "rank_pts": 16,
+   "cup_pts": 10,
+   "goat_total": 1893
+  },
+  "ZID000023": {
+   "team_name": "僵尸色",
+   "total": 1844,
+   "rank_pts": 15,
+   "cup_pts": 5,
+   "goat_total": 1864
+  },
+  "ZID000025": {
+   "team_name": "僵尸锤",
+   "total": 1830,
+   "rank_pts": 14,
+   "cup_pts": 5,
+   "goat_total": 1849
+  },
+  "ZID000024": {
+   "team_name": "僵尸波",
+   "total": 1829,
+   "rank_pts": 13,
+   "cup_pts": 10,
+   "goat_total": 1852
+  },
+  "ZID000026": {
+   "team_name": "僵尸翼",
+   "total": 1821,
+   "rank_pts": 12,
+   "cup_pts": 5,
+   "goat_total": 1838
+  },
+  "ZID000027": {
+   "team_name": "僵尸软糖",
+   "total": 1808,
+   "rank_pts": 11,
+   "cup_pts": 15,
+   "goat_total": 1834
+  },
+  "ZID000028": {
+   "team_name": "僵尸场长",
+   "total": 1792,
+   "rank_pts": 10,
+   "cup_pts": 10,
+   "goat_total": 1812
+  },
+  "ZID000029": {
+   "team_name": "僵尸G",
+   "total": 1769,
+   "rank_pts": 9,
+   "cup_pts": 20,
+   "goat_total": 1798
+  },
+  "ZID000030": {
+   "team_name": "僵尸虎",
+   "total": 1740,
+   "rank_pts": 8,
+   "cup_pts": 0,
+   "goat_total": 1748
   },
   "ZID000031": {
    "team_name": "僵尸W²",
@@ -57,6 +218,13 @@
    "cup_pts": 5,
    "goat_total": 1726
   },
+  "ZID000032": {
+   "team_name": "僵尸青森",
+   "total": 1692,
+   "rank_pts": 6,
+   "cup_pts": 5,
+   "goat_total": 1703
+  },
   "ZID000033": {
    "team_name": "僵尸扣",
    "total": 1649,
@@ -64,12 +232,12 @@
    "cup_pts": 0,
    "goat_total": 1654
   },
-  "ZID000029": {
-   "team_name": "僵尸G",
-   "total": 1769,
-   "rank_pts": 9,
-   "cup_pts": 20,
-   "goat_total": 1798
+  "ZID000034": {
+   "team_name": "僵尸背头",
+   "total": 1532,
+   "rank_pts": 4,
+   "cup_pts": 5,
+   "goat_total": 1541
   },
   "ZID000035": {
    "team_name": "僵尸荷",
@@ -84,34 +252,6 @@
    "rank_pts": 2,
    "cup_pts": 0,
    "goat_total": 2
-  },
-  "ZID000028": {
-   "team_name": "僵尸场长",
-   "total": 1792,
-   "rank_pts": 10,
-   "cup_pts": 10,
-   "goat_total": 1812
-  },
-  "ZID000019": {
-   "team_name": "僵尸熊",
-   "total": 1910,
-   "rank_pts": 21,
-   "cup_pts": 5,
-   "goat_total": 1936
-  },
-  "ZID000025": {
-   "team_name": "僵尸锤",
-   "total": 1830,
-   "rank_pts": 14,
-   "cup_pts": 5,
-   "goat_total": 1849
-  },
-  "ZID000015": {
-   "team_name": "Lia Lee",
-   "total": 1924,
-   "rank_pts": 22,
-   "cup_pts": 15,
-   "goat_total": 1961
   },
   "ZID000037": {
    "team_name": "僵尸芝士",
