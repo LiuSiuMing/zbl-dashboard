@@ -386,6 +386,15 @@ def git_push(output_path, history_path, current_gw, snapshot_time):
         log("git commit: {m}".format(m=commit_msg))
         subprocess.check_call(["git", "commit", "-m", commit_msg])
 
+        # git push（先 pull --rebase 合并远端，防 diverge 导致 push 被拒）
+        log("git pull --rebase origin main ...")
+        try:
+            subprocess.check_call(["git", "pull", "--rebase", "origin", "main"])
+        except subprocess.CalledProcessError as e:
+            log("git pull --rebase 失败: {e}".format(e=e), "WARN")
+            log("尝试 git merge origin/main ...", "INFO")
+            subprocess.check_call(["git", "fetch", "origin"])
+            subprocess.check_call(["git", "merge", "origin/main", "--no-edit"])
         # git push
         log("git push ...")
         subprocess.check_call(["git", "push"])
