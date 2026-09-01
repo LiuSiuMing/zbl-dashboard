@@ -183,42 +183,60 @@
         }
 
         const entries = currentData.entries;
-        const N = currentData.meta.total_entries;
+        const N = currentData.meta.total_entries; // 本赛季报名总数(含 DQ)，排名分分母
 
-        // Calculate current season rankings for GoAT rank points
-        const currentRanks = assignRanks(entries, e => e.total);
+        // ===== Step 1: 构建「ZID → 历史 GoAT 累计」字典（三季去重合并）=====
+        const historicalGoat = {}; // zid → { goat_total, team_name }
+        for (const hist of historyData) {
+            if (!hist || !hist.entries) continue;
+            for (const [zid, info] of Object.entries(hist.entries)) {
+                if (!historicalGoat[zid]) historicalGoat[zid] = { goat_total: 0, team_name: zid };
+                historicalGoat[zid].goat_total += (info.goat_total || 0);
+                if (info.team_name) historicalGoat[zid].team_name = info.team_name;
+            }
+        }
 
-        // Build GoAT data for each entry
-        const goatRows = entries.map((entry, idx) => {
-            const zid = entry.zid;
-            const currentRank = currentRanks[idx];
-            const currentSeasonScore = entry.total || 0;
-            const currentRankPoints = N - currentRank + 1;
-            const currentGoat = currentSeasonScore + currentRankPoints;
-            const registered = entry.zid !== '未登记';
+        // ===== Step 2: 本赛季数据字典 =====
+        const currentByZid = {};
+        for (const entry of entries) currentByZid[entry.zid] = entry;
 
-            // Sum up historical GoAT
-            let historicalGoat = 0;
-            for (const hist of historyData) {
-                if (hist.entries && hist.entries[zid]) {
-                    historicalGoat += (hist.entries[zid].goat_total || 0);
-                }
+        // ===== Step 3: 合并全部 ZID（历史 ∪ 本赛季）=====
+        const allZids = new Set([...Object.keys(historicalGoat), ...Object.keys(currentByZid)]);
+
+        // Build GoAT data for each ZID
+        const goatRows = [];
+        for (const zid of allZids) {
+            const hist = historicalGoat[zid] || null;
+            const curr = currentByZid[zid] || null;
+            const isDQ = !!(curr && curr.dq);
+            const isCurrent = !!curr;
+
+            const currentSeasonScore = curr ? (curr.total || 0) : 0;
+
+            // 排名分：仅本赛季正常队有；DQ 队清零；未参赛队 0
+            let currentRankPoints = 0;
+            if (isCurrent && !isDQ && curr.rank > 0) {
+                currentRankPoints = Math.max(0, N - curr.rank + 1);
             }
 
-            const totalGoat = historicalGoat + currentGoat;
+            const currentGoat = currentSeasonScore + currentRankPoints;
+            const histGoat = hist ? hist.goat_total : 0;
+            const totalGoat = histGoat + currentGoat;
 
-            return {
+            goatRows.push({
                 zid: zid,
-                team_name: entry.team_name,
-                manager_name: entry.manager_name || '',
-                historical_goat: historicalGoat,
+                team_name: (curr && curr.team_name) || (hist && hist.team_name) || zid,
+                manager_name: curr ? (curr.manager_name || '') : '',
+                historical_goat: histGoat,
                 current_score: currentSeasonScore,
                 current_rank_points: currentRankPoints,
                 current_goat: currentGoat,
                 total_goat: totalGoat,
-                registered: registered
-            };
-        });
+                registered: zid !== '未登记',
+                is_dq: isDQ,
+                is_current: isCurrent
+            });
+        }
 
         // Calculate GoAT ranks
         // 🔴 排名变化（20:05 Leon 拍板定义）：
@@ -265,14 +283,14 @@
             }
 
             return `
-                <tr>
+                <tr class="${!r.is_current ? ' inactive-season' : ''}">
                     <td class="rank-cell${rankClass}">${r.goat_rank}</td>
-                    <td class="team-cell" title="${escHTML(r.team_name)}">${escHTML(r.team_name)}</td>
+                    <td class="team-cell" title="${escHTML(r.team_name)}">${escHTML(r.team_name)}${r.is_dq ? ' <span class="dq-badge">DQ</span>' : ''}</td>
                     <td class="manager-cell">${escHTML(r.manager_name || '—')}</td>
                     <td class="goat-cell" title="23/24 + 24/25 + 25/26 三季合计">${r.historical_goat}</td>
-                    <td class="goat-cell" title="得分 ${r.current_score} + 排名分 ${r.current_rank_points}">
-                        ${r.current_goat}
-                        <br><small style="color:var(--text-dim);font-size:0.7rem;">(${r.current_score}+${r.current_rank_points})</small>
+                    <td class="goat-cell${r.is_dq ? ' dq-season-cell' : ''}" title="得分 ${r.current_score} + 排名分 ${r.current_rank_points}">
+                        ${r.is_current ? r.current_goat : '—'}
+                        ${r.is_current ? `<br><small style="color:var(--text-dim);font-size:0.7rem;">(${r.current_score}+${r.current_rank_points})</small>` : ''}
                     </td>
                     <td class="goat-total-cell glow-text">${r.total_goat}</td>
                     <td style="text-align:center;">${rankChangeHTML}</td>
