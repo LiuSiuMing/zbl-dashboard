@@ -586,3 +586,19 @@ body {
     border-radius: 3px;
     vertical-align: middle;
 }
+
+/* ===== 本赛季未参赛队伍（历史有分但本季未打）===== */
+.inactive-season td {
+    color: #888;
+    font-style: italic;
+}
+.inactive-season .goat-cell,
+.inactive-season .goat-total-cell {
+    color: #bbb;
+}
+
+/* ===== GoAT 榜 DQ：仅本赛季列划线（历史分列/实时总分列不划线）===== */
+.dq-season-cell {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
