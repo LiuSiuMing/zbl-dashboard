@@ -1,5 +1,5 @@
 {
-  "snapshot_time": "2026-09-01 11:09",
+  "snapshot_time": "2026-09-01 16:30",
   "meta": {
     "league_id": 467317,
     "league_name": "🍊僵尸条：今天吃什么，明天怎么办·橘僵联2026/27🏆",
@@ -101,19 +101,19 @@
     },
     {
       "rank": 11,
-      "zid": "ZID000039",
-      "team_name": "僵尸吉鲁",
-      "manager_name": "Amy Neverland",
-      "entry_id": 27004,
+      "zid": "ZID000117",
+      "team_name": "僵尸团",
+      "manager_name": "木头 人",
+      "entry_id": 16962,
       "current_gw": 2,
       "total": 179
     },
     {
       "rank": 11,
-      "zid": "ZID000117",
-      "team_name": "僵尸团",
-      "manager_name": "木头 人",
-      "entry_id": 16962,
+      "zid": "ZID000039",
+      "team_name": "僵尸吉鲁",
+      "manager_name": "Amy Neverland",
+      "entry_id": 27004,
       "current_gw": 2,
       "total": 179
     },
@@ -200,19 +200,19 @@
     },
     {
       "rank": 22,
-      "zid": "ZID000138",
-      "team_name": "僵尸天才",
-      "manager_name": "足球 地才",
-      "entry_id": 3468570,
+      "zid": "ZID000019",
+      "team_name": "僵尸熊",
+      "manager_name": "PR Z",
+      "entry_id": 8804676,
       "current_gw": 2,
       "total": 164
     },
     {
       "rank": 22,
-      "zid": "ZID000019",
-      "team_name": "僵尸熊",
-      "manager_name": "PR Z",
-      "entry_id": 8804676,
+      "zid": "ZID000029",
+      "team_name": "僵尸G",
+      "manager_name": "Ah Quan",
+      "entry_id": 705380,
       "current_gw": 2,
       "total": 164
     },
@@ -227,21 +227,12 @@
     },
     {
       "rank": 22,
-      "zid": "ZID000029",
-      "team_name": "僵尸G",
-      "manager_name": "Ah Quan",
-      "entry_id": 705380,
+      "zid": "ZID000138",
+      "team_name": "僵尸天才",
+      "manager_name": "足球 地才",
+      "entry_id": 3468570,
       "current_gw": 2,
       "total": 164
-    },
-    {
-      "rank": 26,
-      "zid": "ZID000068",
-      "team_name": "僵尸番茄狗",
-      "manager_name": "Chris Paul",
-      "entry_id": 2695340,
-      "current_gw": 2,
-      "total": 163
     },
     {
       "rank": 26,
@@ -249,6 +240,15 @@
       "team_name": "僵尸船",
       "manager_name": "宇宙唯一独角兽 波尔津吉斯",
       "entry_id": 2468224,
+      "current_gw": 2,
+      "total": 163
+    },
+    {
+      "rank": 26,
+      "zid": "ZID000068",
+      "team_name": "僵尸番茄狗",
+      "manager_name": "Chris Paul",
+      "entry_id": 2695340,
       "current_gw": 2,
       "total": 163
     },
@@ -290,19 +290,19 @@
     },
     {
       "rank": 32,
-      "zid": "ZID000017",
-      "team_name": "僵尸andy",
-      "manager_name": "set forget",
-      "entry_id": 3966621,
+      "zid": "ZID000141",
+      "team_name": "僵尸美凌格",
+      "manager_name": "BA Xiao",
+      "entry_id": 2463039,
       "current_gw": 2,
       "total": 158
     },
     {
       "rank": 32,
-      "zid": "ZID000141",
-      "team_name": "僵尸美凌格",
-      "manager_name": "BA Xiao",
-      "entry_id": 2463039,
+      "zid": "ZID000017",
+      "team_name": "僵尸andy",
+      "manager_name": "set forget",
+      "entry_id": 3966621,
       "current_gw": 2,
       "total": 158
     },
@@ -335,15 +335,6 @@
     },
     {
       "rank": 36,
-      "zid": "ZID000038",
-      "team_name": "僵尸笨",
-      "manager_name": "僵尸 笨",
-      "entry_id": 176642,
-      "current_gw": 2,
-      "total": 155
-    },
-    {
-      "rank": 36,
       "zid": "ZID000136",
       "team_name": "僵尸猪",
       "manager_name": "Kevin Zhu",
@@ -352,13 +343,13 @@
       "total": 155
     },
     {
-      "rank": 39,
-      "zid": "ZID000026",
-      "team_name": "僵尸翼",
-      "manager_name": "A spirin",
-      "entry_id": 410867,
+      "rank": 36,
+      "zid": "ZID000038",
+      "team_name": "僵尸笨",
+      "manager_name": "僵尸 笨",
+      "entry_id": 176642,
       "current_gw": 2,
-      "total": 154
+      "total": 155
     },
     {
       "rank": 39,
@@ -379,6 +370,15 @@
       "total": 154
     },
     {
+      "rank": 39,
+      "zid": "ZID000026",
+      "team_name": "僵尸翼",
+      "manager_name": "A spirin",
+      "entry_id": 410867,
+      "current_gw": 2,
+      "total": 154
+    },
+    {
       "rank": 42,
       "zid": "ZID000024",
       "team_name": "僵尸波",
@@ -386,24 +386,6 @@
       "entry_id": 114733,
       "current_gw": 2,
       "total": 153
-    },
-    {
-      "rank": 43,
-      "zid": "ZID000140",
-      "team_name": "僵尸雷子",
-      "manager_name": "Lei XiYun",
-      "entry_id": 250721,
-      "current_gw": 2,
-      "total": 152
-    },
-    {
-      "rank": 43,
-      "zid": "ZID000118",
-      "team_name": "僵尸ro",
-      "manager_name": "zhou rokkie",
-      "entry_id": 27901,
-      "current_gw": 2,
-      "total": 152
     },
     {
       "rank": 43,
@@ -424,6 +406,42 @@
       "total": 152
     },
     {
+      "rank": 43,
+      "zid": "ZID000140",
+      "team_name": "僵尸雷子",
+      "manager_name": "Lei XiYun",
+      "entry_id": 250721,
+      "current_gw": 2,
+      "total": 152
+    },
+    {
+      "rank": 43,
+      "zid": "ZID000118",
+      "team_name": "僵尸ro",
+      "manager_name": "zhou rokkie",
+      "entry_id": 27901,
+      "current_gw": 2,
+      "total": 152
+    },
+    {
+      "rank": 47,
+      "zid": "ZID000007",
+      "team_name": "僵尸发",
+      "manager_name": "Ray Wong",
+      "entry_id": 3877135,
+      "current_gw": 2,
+      "total": 150
+    },
+    {
+      "rank": 47,
+      "zid": "ZID000123",
+      "team_name": "僵尸Dtum",
+      "manager_name": "Gary Cao",
+      "entry_id": 2656396,
+      "current_gw": 2,
+      "total": 150
+    },
+    {
       "rank": 47,
       "zid": "ZID000056",
       "team_name": "僵尸数字",
@@ -442,24 +460,6 @@
       "total": 150
     },
     {
-      "rank": 47,
-      "zid": "ZID000123",
-      "team_name": "僵尸Dtum",
-      "manager_name": "Gary Cao",
-      "entry_id": 2656396,
-      "current_gw": 2,
-      "total": 150
-    },
-    {
-      "rank": 47,
-      "zid": "ZID000007",
-      "team_name": "僵尸发",
-      "manager_name": "Ray Wong",
-      "entry_id": 3877135,
-      "current_gw": 2,
-      "total": 150
-    },
-    {
       "rank": 51,
       "zid": "ZID000003",
       "team_name": "僵尸哀",
@@ -470,19 +470,19 @@
     },
     {
       "rank": 51,
-      "zid": "ZID000004",
-      "team_name": "僵尸机",
-      "manager_name": "Yiner Jiqi",
-      "entry_id": 31817,
+      "zid": "ZID000144",
+      "team_name": "僵尸law陈",
+      "manager_name": "Frank Chen",
+      "entry_id": 4798217,
       "current_gw": 2,
       "total": 149
     },
     {
       "rank": 51,
-      "zid": "ZID000144",
-      "team_name": "僵尸law陈",
-      "manager_name": "Frank Chen",
-      "entry_id": 4798217,
+      "zid": "ZID000004",
+      "team_name": "僵尸机",
+      "manager_name": "Yiner Jiqi",
+      "entry_id": 31817,
       "current_gw": 2,
       "total": 149
     },
@@ -497,15 +497,6 @@
     },
     {
       "rank": 55,
-      "zid": "ZID000128",
-      "team_name": "僵尸DDDD",
-      "manager_name": "Zombie DD",
-      "entry_id": 760250,
-      "current_gw": 2,
-      "total": 147
-    },
-    {
-      "rank": 55,
       "zid": "ZID000121",
       "team_name": "僵尸小光",
       "manager_name": "Hikari X",
@@ -514,13 +505,13 @@
       "total": 147
     },
     {
-      "rank": 57,
-      "zid": "ZID000089",
-      "team_name": "僵尸kw",
-      "manager_name": "红魔 Kw",
-      "entry_id": 182776,
+      "rank": 55,
+      "zid": "ZID000128",
+      "team_name": "僵尸DDDD",
+      "manager_name": "Zombie DD",
+      "entry_id": 760250,
       "current_gw": 2,
-      "total": 145
+      "total": 147
     },
     {
       "rank": 57,
@@ -528,6 +519,15 @@
       "team_name": "僵尸霆",
       "manager_name": "Romeo Zhao",
       "entry_id": 102177,
+      "current_gw": 2,
+      "total": 145
+    },
+    {
+      "rank": 57,
+      "zid": "ZID000089",
+      "team_name": "僵尸kw",
+      "manager_name": "红魔 Kw",
+      "entry_id": 182776,
       "current_gw": 2,
       "total": 145
     },
@@ -560,19 +560,19 @@
     },
     {
       "rank": 61,
-      "zid": "ZID000078",
-      "team_name": "僵尸Pluto",
-      "manager_name": "King Kun",
-      "entry_id": 681465,
+      "zid": "ZID000041",
+      "team_name": "僵尸俊凯",
+      "manager_name": "Cheny Ye",
+      "entry_id": 708496,
       "current_gw": 2,
       "total": 144
     },
     {
       "rank": 61,
-      "zid": "ZID000041",
-      "team_name": "僵尸俊凯",
-      "manager_name": "Cheny Ye",
-      "entry_id": 708496,
+      "zid": "ZID000078",
+      "team_name": "僵尸Pluto",
+      "manager_name": "King Kun",
+      "entry_id": 681465,
       "current_gw": 2,
       "total": 144
     },
@@ -614,19 +614,19 @@
     },
     {
       "rank": 68,
-      "zid": "ZID000048",
-      "team_name": "僵尸堡",
-      "manager_name": "李 李",
-      "entry_id": 3324,
+      "zid": "ZID000134",
+      "team_name": "僵尸龙王",
+      "manager_name": "Eva Li",
+      "entry_id": 2459887,
       "current_gw": 2,
       "total": 140
     },
     {
       "rank": 68,
-      "zid": "ZID000134",
-      "team_name": "僵尸龙王",
-      "manager_name": "Eva Li",
-      "entry_id": 2459887,
+      "zid": "ZID000048",
+      "team_name": "僵尸堡",
+      "manager_name": "李 李",
+      "entry_id": 3324,
       "current_gw": 2,
       "total": 140
     },
@@ -638,15 +638,6 @@
       "entry_id": 748108,
       "current_gw": 2,
       "total": 139
-    },
-    {
-      "rank": 71,
-      "zid": "ZID000014",
-      "team_name": "僵尸三儿",
-      "manager_name": "128080 贰",
-      "entry_id": 48777,
-      "current_gw": 2,
-      "total": 138
     },
     {
       "rank": 71,
@@ -667,13 +658,13 @@
       "total": 138
     },
     {
-      "rank": 74,
-      "zid": "ZID000085",
-      "team_name": "僵尸818",
-      "manager_name": "KaKa Wu",
-      "entry_id": 2473971,
+      "rank": 71,
+      "zid": "ZID000014",
+      "team_name": "僵尸三儿",
+      "manager_name": "128080 贰",
+      "entry_id": 48777,
       "current_gw": 2,
-      "total": 137
+      "total": 138
     },
     {
       "rank": 74,
@@ -681,6 +672,15 @@
       "team_name": "僵尸马",
       "manager_name": "Ma Xc",
       "entry_id": 3775621,
+      "current_gw": 2,
+      "total": 137
+    },
+    {
+      "rank": 74,
+      "zid": "ZID000085",
+      "team_name": "僵尸818",
+      "manager_name": "KaKa Wu",
+      "entry_id": 2473971,
       "current_gw": 2,
       "total": 137
     },
@@ -704,19 +704,19 @@
     },
     {
       "rank": 78,
-      "zid": "ZID000049",
-      "team_name": "僵尸Conan",
-      "manager_name": "나의 좀비 계정",
-      "entry_id": 1654415,
+      "zid": "ZID000050",
+      "team_name": "僵尸Yemon",
+      "manager_name": "Yemon Huang",
+      "entry_id": 2549850,
       "current_gw": 2,
       "total": 134
     },
     {
       "rank": 78,
-      "zid": "ZID000050",
-      "team_name": "僵尸Yemon",
-      "manager_name": "Yemon Huang",
-      "entry_id": 2549850,
+      "zid": "ZID000049",
+      "team_name": "僵尸Conan",
+      "manager_name": "나의 좀비 계정",
+      "entry_id": 1654415,
       "current_gw": 2,
       "total": 134
     },
@@ -758,19 +758,19 @@
     },
     {
       "rank": 84,
-      "zid": "ZID000016",
-      "team_name": "僵尸ginger",
-      "manager_name": "book d",
-      "entry_id": 2583556,
+      "zid": "ZID000135",
+      "team_name": "僵尸xzz",
+      "manager_name": "JEREMY Xiong",
+      "entry_id": 2493076,
       "current_gw": 2,
       "total": 131
     },
     {
       "rank": 84,
-      "zid": "ZID000135",
-      "team_name": "僵尸xzz",
-      "manager_name": "JEREMY Xiong",
-      "entry_id": 2493076,
+      "zid": "ZID000016",
+      "team_name": "僵尸ginger",
+      "manager_name": "book d",
+      "entry_id": 2583556,
       "current_gw": 2,
       "total": 131
     },
@@ -794,19 +794,19 @@
     },
     {
       "rank": 88,
-      "zid": "ZID000073",
-      "team_name": "僵史史",
-      "manager_name": "511 fplchina.top",
-      "entry_id": 24932,
+      "zid": "ZID000051",
+      "team_name": "僵尸甲",
+      "manager_name": "甲 僵尸",
+      "entry_id": 302417,
       "current_gw": 2,
       "total": 127
     },
     {
       "rank": 88,
-      "zid": "ZID000051",
-      "team_name": "僵尸甲",
-      "manager_name": "甲 僵尸",
-      "entry_id": 302417,
+      "zid": "ZID000073",
+      "team_name": "僵史史",
+      "manager_name": "511 fplchina.top",
+      "entry_id": 24932,
       "current_gw": 2,
       "total": 127
     },
@@ -830,19 +830,19 @@
     },
     {
       "rank": 92,
-      "zid": "ZID000043",
-      "team_name": "僵尸北海",
-      "manager_name": "Kenny Liu",
-      "entry_id": 9018,
+      "zid": "ZID000030",
+      "team_name": "僵尸虎",
+      "manager_name": "侵略如山 不动如山",
+      "entry_id": 4013197,
       "current_gw": 2,
       "total": 116
     },
     {
       "rank": 92,
-      "zid": "ZID000030",
-      "team_name": "僵尸虎",
-      "manager_name": "侵略如山 不动如山",
-      "entry_id": 4013197,
+      "zid": "ZID000043",
+      "team_name": "僵尸北海",
+      "manager_name": "Kenny Liu",
+      "entry_id": 9018,
       "current_gw": 2,
       "total": 116
     },
