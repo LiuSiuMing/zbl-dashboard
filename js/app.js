@@ -151,6 +151,7 @@
             manager_name: entry.manager_name || '',
             current_gw: entry.current_gw,
             total: entry.total,
+            dq: !!entry.dq,
             registered: entry.zid !== '未登记'
         }));
 
@@ -160,12 +161,15 @@
         // Render HTML
         tbody.innerHTML = rows.map(r => {
             const rankClass = r.rank <= 3 ? ` rank-${r.rank}` : '';
+            // DQ 队伍：沉底划线（仅当季排名页）
+            const dqRowClass = r.dq ? ' dq-team' : '';
+            const dqBadge = r.dq ? ' <span class="dq-badge">DQ</span>' : '';
             return `
-                <tr>
+                <tr class="${dqRowClass}">
                     <td class="rank-cell${rankClass}">${r.rank}</td>
-                    <td class="team-cell" title="${escHTML(r.team_name)}">${escHTML(r.team_name)}</td>
+                    <td class="team-cell" title="${escHTML(r.team_name)}">${escHTML(r.team_name)}${dqBadge}</td>
                     <td class="manager-cell">${escHTML(r.manager_name || '—')}</td>
-                    <td class="total-cell glow-text">${r.total}</td>
+                    <td class="total-cell">${r.total}</td>
                 </tr>`;
         }).join('');
     }

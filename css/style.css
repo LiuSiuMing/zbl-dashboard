@@ -564,3 +564,25 @@ body {
 .glow-text {
     animation: glowPulse 3s infinite;
 }
+
+/* ===== DQ 队伍样式（仅当季排名页）===== */
+.dq-team td {
+    text-decoration: line-through;
+    opacity: 0.55;
+    color: #999;
+}
+.dq-team .total-cell {
+    color: #777;
+    text-shadow: none;
+}
+.dq-badge {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 1px 6px;
+    font-size: 11px;
+    line-height: 1.4;
+    color: #ff6b6b;
+    border: 1px solid #ff6b6b;
+    border-radius: 3px;
+    vertical-align: middle;
+}
