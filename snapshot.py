@@ -226,6 +226,10 @@ def merge_data(standings, lookup):
             "manager_name": manager_name,
             "entry_id": entry_id,
             "total": total,
+            # 上轮结束排名（FPL standings.last_rank）；首轮/缺失为 None → 前端显示「—」
+            "last_rank": s.get("last_rank"),
+            # 本轮（当前 GW）得分（FPL standings.event_total）
+            "event_total": s.get("event_total", 0),
             "current_gw": 0  # Will be set from bootstrap or entry detail later
         })
 
@@ -306,7 +310,10 @@ def build_output(entries, league_id, league_name, current_event=0):
                 "manager_name": e["manager_name"],
                 "entry_id": e["entry_id"],
                 "current_gw": e["current_gw"],
-                "total": e["total"]
+                "total": e["total"],
+                # 与 zbl_auto.py 保持同一 schema：上轮排名 + 本轮得分
+                "last_rank": e.get("last_rank"),
+                "event_total": e.get("event_total", 0)
             }
             for e in entries
         ]

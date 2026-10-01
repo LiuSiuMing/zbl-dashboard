@@ -194,6 +194,43 @@
         return `<span class="rank-change rank-change-same" role="img" aria-label="名次与赛季初持平" title="赛季初第 ${goatRank} 名 → 现在第 ${goatRank} 名，持平${note}"><svg aria-hidden="true" focusable="false"><use href="#i-flat"/></svg></span>`;
     }
 
+    /**
+     * 本赛季「排名变化」：当前排名 vs 上轮结束排名（API 的 last_rank）。
+     *
+     * ⚠️ 与上面的 rankChangeHTML（）口径不同：GoAT 是「实时 GoAT 名次 vs 赛季初
+     *    （仅按历史 GoAT 排序）名次」，本赛季是「当前名次 vs 上轮名次」。
+     *    两者写成两个独立函数，互不干扰，GoAT 逻辑一个字未改。
+     *
+     * 复用同一套 .rank-change 组件与 #i-up / #i-down / #i-flat 符号，保持一致。
+     * last_rank 缺失（首轮 / DQ / 老快照）→ 显示「—」，绝不出现 0 或 NaN。
+     */
+    function seasonRankChangeHTML(rank, lastRank) {
+        const cur = Number(rank);
+        const last = Number(lastRank);
+        // null/undefined/空串/非数字/非正 → 无法比较
+        if (!isFinite(cur) || !isFinite(last) || cur <= 0 || last <= 0) {
+            return '<span class="rank-change rank-change-none" role="img" aria-label="暂无上轮排名，无法比较" title="暂无上轮排名数据（首轮、DQ 或历史快照）">—</span>';
+        }
+        if (cur < last) {
+            const n = last - cur;
+            return `<span class="rank-change rank-change-up" role="img" aria-label="较上轮上升 ${n} 位" title="上轮第 ${last} 名 → 现在第 ${cur} 名，上升 ${n} 位"><svg aria-hidden="true" focusable="false"><use href="#i-up"/></svg>${n}</span>`;
+        }
+        if (cur > last) {
+            const n = cur - last;
+            return `<span class="rank-change rank-change-down" role="img" aria-label="较上轮下降 ${n} 位" title="上轮第 ${last} 名 → 现在第 ${cur} 名，下降 ${n} 位"><svg aria-hidden="true" focusable="false"><use href="#i-down"/></svg>${n}</span>`;
+        }
+        return `<span class="rank-change rank-change-same" role="img" aria-label="较上轮名次持平" title="上轮第 ${last} 名 → 现在第 ${cur} 名，持平"><svg aria-hidden="true" focusable="false"><use href="#i-flat"/></svg></span>`;
+    }
+
+    /** 本 GW 得分：DQ / 字段缺失 → 「—」，绝不显示 NaN */
+    function gwScoreHTML(eventTotal) {
+        const v = Number(eventTotal);
+        if (eventTotal === null || eventTotal === undefined || eventTotal === '' || !isFinite(v)) {
+            return '<span class="cell-empty">—</span>';
+        }
+        return `<span class="cell-main">${v}</span>`;
+    }
+
     // ===================== Season Tab =====================
     function renderSeasonTable() {
         const tbody = document.getElementById('season-tbody');
@@ -208,8 +245,13 @@
             team_name: entry.team_name,
             manager_name: entry.manager_name || '',
             total: entry.total,
+            last_rank: entry.last_rank,          // 可能为 null（首轮 / DQ / 老快照）
+            event_total: entry.event_total,      // 可能为 undefined（老快照）
             dq: !!entry.dq
         })).sort((a, b) => a.rank - b.rank);
+
+        const gwNum = (currentData.meta && currentData.meta.current_gw) || null;
+        const gwLabel = gwNum ? `第 ${gwNum} 轮` : '本轮';
 
         // 一次性 innerHTML 批量插入（105 行不逐行 appendChild、不逐行绑事件）
         tbody.innerHTML = rows.map(r => {
@@ -221,11 +263,18 @@
             const badges = (isSponsor(r) ? sponsorBadgeHTML() : '') + (r.dq ? dqBadgeHTML() : '');
             const search = escHTML(`${r.team_name} ${r.manager_name}`);
 
+            // DQ 队没有本轮得分，强制「—」（不显示 0）
+            const gwCell = r.dq ? '<span class="cell-empty">—</span>' : gwScoreHTML(r.event_total);
+            const hasGw = !r.dq && r.event_total !== null && r.event_total !== undefined && r.event_total !== '' && isFinite(Number(r.event_total));
+            const gwTitle = hasGw ? `${gwLabel}得分 ${Number(r.event_total)}` : `${gwLabel}得分暂无数据`;
+
             return `<tr class="${cls.join(' ')}" data-search="${search}">
                 <td class="rank-cell${rankCls}">${rankChipHTML(r.rank)}</td>
                 <td class="team-cell" title="${escHTML(r.team_name)}"><span class="team-name">${escHTML(r.team_name)}</span>${badges}</td>
                 <td class="manager-cell">${escHTML(r.manager_name || '—')}</td>
                 <td class="total-cell">${r.total}</td>
+                <td class="rank-change-cell">${seasonRankChangeHTML(r.rank, r.last_rank)}</td>
+                <td class="gw-score-cell" title="${escHTML(gwTitle)}">${gwCell}</td>
             </tr>`;
         }).join('');
 
@@ -589,7 +638,7 @@
         let row = tbody.querySelector('.state-empty-row');
         if (show) {
             if (!row) {
-                const colspan = tbody.id === 'goat-tbody' ? 7 : 4;
+                const colspan = tbody.id === 'goat-tbody' ? 7 : 6;   // 赛季榜 6 列（含排名变化 + 本GW得分）
                 row = document.createElement('tr');
                 row.className = 'state-empty-row';
                 row.innerHTML = `<td class="state-inline" colspan="${colspan}">没有匹配的队伍，换个关键词试试。</td>`;

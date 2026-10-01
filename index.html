@@ -146,7 +146,14 @@
           <span class="rank-change rank-change-same" role="img" aria-label="持平"><svg aria-hidden="true" focusable="false"><use href="#i-flat"/></svg></span>
           <span class="rank-change rank-change-new" aria-hidden="true">new</span>
         </span>
-        <span class="legend-text">↑3 ↓2 = 名次较赛季初上升 / 下降；― 持平；new = 本赛季新加入</span>
+        <span class="legend-text">↑3 ↓2 = 名次较赛季初上升 / 下降；― 持平；new = 本赛季新加入（GoAT 总榜口径）</span>
+      </li>
+      <li class="legend-item">
+        <span class="legend-swatch legend-swatch-change">
+          <span class="rank-change rank-change-up" role="img" aria-label="较上轮上升"><svg aria-hidden="true" focusable="false"><use href="#i-up"/></svg>2</span>
+          <span class="rank-change rank-change-down" role="img" aria-label="较上轮下降"><svg aria-hidden="true" focusable="false"><use href="#i-down"/></svg>2</span>
+        </span>
+        <span class="legend-text">本赛季榜「排名变化」= 当前名次对比<strong>上一轮</strong>结束名次；「本GW得分」= 本轮得分；无上轮数据（首轮 / DQ）显示 —</span>
       </li>
     </ul>
   </details>
@@ -167,29 +174,41 @@
             <col class="c-rank" style="width:64px">
             <col class="c-team">
             <col class="c-manager" style="width:180px">
-            <col class="c-total" style="width:130px">
+            <col class="c-total" style="width:120px">
+            <col class="c-change" style="width:96px">
+            <col class="c-gw" style="width:96px">
           </colgroup>
           <thead>
             <tr>
               <th scope="col" class="col-rank"><span class="th-main">排名</span></th>
               <th scope="col" class="col-team"><span class="th-main">队名</span></th>
               <th scope="col" class="col-manager"><span class="th-main">经理</span></th>
-              <th scope="col" class="col-total" title="本赛季 FPL 累计总分，本榜按此列降序排名"><span class="th-main">总分</span></th>
+              <th scope="col" class="col-total" title="本赛季 FPL 累计总分，本榜按此列降序排名"><span class="th-main">目前总分</span></th>
+              <th scope="col" class="col-rank-change"
+                  title="当前名次对比上一轮结束名次的变化（FPL standings 的 last_rank）">
+                <span class="th-main">排名变化</span>
+                <span class="th-sub">对比上轮</span>
+              </th>
+              <th scope="col" class="col-gw-score"
+                  title="本轮（当前 GW）得分，来自 FPL standings 的 event_total">
+                <span class="th-main">本GW得分</span>
+                <span class="th-sub">本轮</span>
+              </th>
             </tr>
           </thead>
           <tbody id="season-tbody" aria-busy="true">
-            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td></tr>
-            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td></tr>
-            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td></tr>
-            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td></tr>
-            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td></tr>
-            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td></tr>
-            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td></tr>
-            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td></tr>
-            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td></tr>
-            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td></tr>
-            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td></tr>
-            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td><td><span class="sk sk-num sk-num-sm"></span></td><td><span class="sk sk-num"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td><td><span class="sk sk-num sk-num-sm"></span></td><td><span class="sk sk-num"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td><td><span class="sk sk-num sk-num-sm"></span></td><td><span class="sk sk-num"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td><td><span class="sk sk-num sk-num-sm"></span></td><td><span class="sk sk-num"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td><td><span class="sk sk-num sk-num-sm"></span></td><td><span class="sk sk-num"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td><td><span class="sk sk-num sk-num-sm"></span></td><td><span class="sk sk-num"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td><td><span class="sk sk-num sk-num-sm"></span></td><td><span class="sk sk-num"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td><td><span class="sk sk-num sk-num-sm"></span></td><td><span class="sk sk-num"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td><td><span class="sk sk-num sk-num-sm"></span></td><td><span class="sk sk-num"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td><td><span class="sk sk-num sk-num-sm"></span></td><td><span class="sk sk-num"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td><td><span class="sk sk-num sk-num-sm"></span></td><td><span class="sk sk-num"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td><td><span class="sk sk-num sk-num-sm"></span></td><td><span class="sk sk-num"></span></td></tr>
           </tbody>
         </table>
       </div>

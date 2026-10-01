@@ -385,7 +385,7 @@ body {
 
 /* 列对齐：排名居中，数字右对齐，文本左对齐 */
 .col-rank{ text-align:center; }
-.col-total,.col-goat-hist,.col-goat-curr,.col-goat-total,.col-rank-change{ text-align:right; }
+.col-total,.col-goat-hist,.col-goat-curr,.col-goat-total,.col-rank-change,.col-gw-score{ text-align:right; }
 
 /* 行底色统一走 --row-bg 变量，避免 zebra / 赞助商 / hover 互相打优先级 */
 .data-table tbody tr{ background:var(--row-bg, transparent); }
@@ -409,6 +409,15 @@ body {
 .team-cell{ color:var(--text-primary); font-weight:600; }
 .manager-cell{ color:var(--text-secondary); font-size:var(--fs-sm); }
 .total-cell{ font-weight:700; color:var(--text-primary); }
+/* 赛季榜新增两列：排名变化（复用 .rank-change 组件）+ 本 GW 得分 */
+.rank-change-cell{ text-align:right; }
+.gw-score-cell{
+  text-align:right; font-weight:600; color:var(--text-primary);
+  font-variant-numeric:tabular-nums lining-nums;
+  font-feature-settings:"tnum" 1,"lnum" 1;
+}
+/* 无数据占位（缺失 / DQ）：弱化，但不隐藏——列不能空着 */
+.cell-empty{ color:var(--text-muted); font-weight:400; }
 .goat-cell{ color:var(--text-secondary); }
 .goat-total-cell{ font-weight:700; color:var(--text-primary); }
 .cell-main{
@@ -472,6 +481,11 @@ body {
 .rank-change-down{ color:var(--signal-down); }
 .rank-change-same,.rank-change-new{ color:var(--signal-flat); }
 .rank-change-new{ font-size:var(--fs-xs); letter-spacing:.04em; }
+/* 无上轮排名（首轮 / DQ / 老快照）：占位「—」，与持平共用弱化灰 */
+.rank-change-none{ color:var(--signal-flat); font-size:var(--fs-sm); }
+
+/* DQ 行：本 GW 得分恒为「—」，跟随 DQ 弱化色（总分列已有规则，这里补齐） */
+.row-dq .gw-score-cell{ color:var(--dq-text); }
 
 /* -------- 行状态：DQ / 未参赛（一律用预混实色，不用 opacity 降对比）-------- */
 .row-dq .team-cell{ color:var(--dq-text); text-decoration:line-through; }
@@ -518,6 +532,7 @@ body {
 .sk-team   { width:78% }
 .sk-manager{ width:52% }
 .sk-num    { width:44px; margin-left:auto }
+.sk-num-sm { width:32px; margin-left:auto }   /* 排名变化列（箭头 + 1~2 位数字） */
 .sk-num-lg { width:56px; height:16px }
 /* 固定交替（禁止随机）：产生「队名长度不同」的真实感 */
 .sk-row:nth-child(even) .sk-team{ width:64% }
@@ -689,6 +704,43 @@ body {
   #goat-table tr.row-inactive{ border-left:3px solid var(--brand-dim); }
   #goat-table tr.row-sponsor{ border-left-color:var(--brand); }
   #goat-table tr.row-dq{ border-left-color:var(--border-strong); }
+
+  /* -------- 赛季榜卡片化（3 行网格，6 个 td 显式落位）--------
+     6 列在 768px 以下会挤爆表格（固定列宽合计 556px + 队名），
+     与 GoAT 一样转成卡片；新增的「排名变化」「本GW得分」显式落位，
+     不依赖自动流，保证在任何列数下都不横向溢出。 */
+  #season-table thead{ display:none; }
+  #season-table, #season-table tbody{ display:block; width:100%; }
+  #season-table tr{
+    display:grid;
+    grid-template-columns:2.25rem minmax(0,1fr) 5rem;   /* ❗第三列固定，防队名可用宽度逐行抖动 */
+    grid-template-rows:auto auto auto;
+    column-gap:var(--sp-3); row-gap:2px;
+    align-items:center;
+    padding:var(--sp-3);
+    border-bottom:1px solid var(--border-subtle);
+  }
+  #season-table td{ display:block; padding:0; border:0; min-width:0; overflow:visible; text-overflow:clip; }
+  #season-table td:nth-child(1){ grid-area:1/1/4/2; }                      /* 排名：纵跨三行 */
+  #season-table td:nth-child(2){                                           /* 队名 */
+    grid-area:1/2/2/3; font-size:var(--fs-md);
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  }
+  #season-table td:nth-child(3){                                           /* 经理 */
+    grid-area:2/2/3/3; font-size:var(--fs-sm); color:var(--text-muted);
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  }
+  #season-table td:nth-child(4){                                           /* 目前总分 */
+    grid-area:1/3/2/4; font-size:var(--fs-lg); font-weight:700; text-align:right;
+  }
+  #season-table td:nth-child(5){ grid-area:2/3/3/4; font-size:var(--fs-sm); text-align:right; }  /* 排名变化 */
+  #season-table td:nth-child(6){ grid-area:3/2/4/3; font-size:var(--fs-sm); text-align:left; }  /* 本GW得分 */
+  /* 卡片态 thead 已隐藏 → 用 ::before 补列义（箭头本身已够自明，只给得分列补） */
+  #season-table td:nth-child(6)::before{ content:'本GW · '; color:var(--text-muted); }
+  /* 卡片态竖条改挂 tr（td 已 display:block，inset box-shadow 位置不对） */
+  #season-table .row-sponsor > td:first-child{ box-shadow:none; }
+  #season-table tr.row-sponsor{ border-left:3px solid var(--brand); }
+  #season-table tr.row-dq{ border-left-color:var(--border-strong); }
 }
 
 @media (max-width:480px){
@@ -698,28 +750,9 @@ body {
   .tab-btn{ font-size:var(--fs-sm); padding:var(--sp-3) var(--sp-2); }
   .badge-coming{ display:none; }
 
-  /* -------- 赛季榜卡片化（2 行网格）-------- */
-  #season-table thead{ display:none; }
-  #season-table, #season-table tbody{ display:block; width:100%; }
-  #season-table tr{
-    display:grid;
-    grid-template-columns:2rem minmax(0,1fr) 4.5rem;
-    grid-template-rows:auto auto;
-    column-gap:var(--sp-3); align-items:center;
-    padding:var(--sp-3);
-    border-bottom:1px solid var(--border-subtle);
-  }
-  #season-table td{ display:block; padding:0; border:0; min-width:0; overflow:visible; text-overflow:clip; }
-  #season-table td:nth-child(1){ grid-area:1/1/3/2; }
-  #season-table td:nth-child(2){
-    grid-area:1/2/2/3; font-size:var(--fs-md);
-    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
-  }
-  #season-table td:nth-child(3){ grid-area:2/2/3/4; font-size:var(--fs-sm); color:var(--text-muted); }
-  #season-table td:nth-child(4){ grid-area:1/3/2/4; font-size:var(--fs-lg); font-weight:700; text-align:right; }
-  #season-table .row-sponsor > td:first-child{ box-shadow:none; }
-  #season-table tr.row-sponsor{ border-left:3px solid var(--brand); }
-  #season-table tr.row-dq{ border-left-color:var(--border-strong); }
+  /* 赛季榜卡片：已在 ≤768px 整体卡片化，这里只收窄栅格
+     （字号令牌 --fs-table / --fs-sm 也在本断点下调，卡片字号自动跟随） */
+  #season-table tr{ grid-template-columns:1.75rem minmax(0,1fr) 4.25rem; }
 }
 
 /* ============================ 打印 ====================================== */

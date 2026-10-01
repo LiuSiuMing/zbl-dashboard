@@ -286,6 +286,11 @@ def merge_standings_with_mapping(standings, lookup_by_eid, full_season_set, curr
             "entry_id": eid,
             "current_gw": current_gw,
             "total": s.get("total", 0),
+            # 上轮结束排名（FPL standings.last_rank）。首轮或 API 未返回时为 None，
+            # 前端据此显示「—」，不得显示 0 或 NaN。
+            "last_rank": s.get("last_rank"),
+            # 本轮（当前 GW）得分（FPL standings.event_total）
+            "event_total": s.get("event_total", 0),
         })
 
     # 按总分降序排序（同分保持 API 原始顺序 → stable sort）
@@ -314,6 +319,9 @@ def merge_standings_with_mapping(standings, lookup_by_eid, full_season_set, curr
             "entry_id": eid,
             "current_gw": current_gw,
             "total": 0,
+            # DQ 队不在 standings 中，没有上轮排名，本轮得分按 0 记（前端统一显示「—」）
+            "last_rank": None,
+            "event_total": 0,
             "dq": True,
         })
 
@@ -400,14 +408,38 @@ def git_push(output_path, history_path, current_gw, snapshot_time):
         subprocess.check_call(["git", "push"])
 
         log("Git push successful. Vercel will auto-deploy.", "INFO")
+        _clear_push_flag()
         return True
 
     except subprocess.CalledProcessError as e:
         log("Git operation failed: {e}".format(e=e), "ERROR")
+        _set_push_flag("CalledProcessError: {e}".format(e=e))
         return False
     except FileNotFoundError:
         log("git not found. Install git or use --no-git.", "ERROR")
+        _set_push_flag("FileNotFoundError: git not found")
         return False
+
+
+# ============================================================
+# Push 失败标记（供 ding_fpl.py 读取 → 钉钉告警；2026-09-28 加）
+# ============================================================
+PUSH_FLAG = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".push_failed")
+
+
+def _set_push_flag(detail):
+    try:
+        with open(PUSH_FLAG, "w", encoding="utf-8") as f:
+            f.write(time.strftime("%Y-%m-%d %H:%M:%S") + " " + str(detail))
+    except OSError:
+        pass
+
+
+def _clear_push_flag():
+    try:
+        os.remove(PUSH_FLAG)
+    except OSError:
+        pass
 
 
 # ============================================================
