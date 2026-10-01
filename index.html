@@ -1,102 +1,303 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🍊 僵尸条：今天吃什么，明天怎么办 | 橘僵联 26/27</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧟</text></svg>">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ZBL 橘僵联 26/27 · 僵尸联赛排名与 GoAT 总榜</title>
+
+<meta name="description" content="ZBL 橘僵联 26/27 私联赛看板：本赛季 FPL 实时积分排名 + 跨赛季 GoAT 总榜，105 支队伍，每日 16:30 更新。">
+<meta name="theme-color" content="#0B0E0D">
+<meta name="color-scheme" content="dark">
+<link rel="canonical" href="https://zblboard.top/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+<!-- Open Graph（微信 / Telegram / Facebook / LinkedIn） -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ZBL 橘僵联">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:title" content="ZBL 橘僵联 26/27 · 僵尸联赛排名与 GoAT 总榜">
+<meta property="og:description" content="本赛季 FPL 积分排名 + 跨赛季 GoAT 总榜，105 支队伍，每日 16:30 更新。">
+<meta property="og:url" content="https://zblboard.top/">
+<meta property="og:image" content="https://zblboard.top/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ZBL 橘僵联 26/27 排行榜">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ZBL 橘僵联 26/27 · 僵尸联赛排名">
+<meta name="twitter:description" content="本赛季积分排名 + 跨赛季 GoAT 总榜，105 支队伍。">
+<meta name="twitter:image" content="https://zblboard.top/og.png">
+
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- Matrix Rain Canvas (background) -->
-    <canvas id="matrix-rain"></canvas>
 
-    <div class="app-container">
-        <!-- Header -->
-        <header class="site-header">
-            <div class="header-top">
-                <h1 class="logo"><span class="logo-icon">🍊</span> <span class="accent">僵尸条：今天吃什么，明天怎么办</span><span class="subtitle-inline">橘僵联 26/27</span></h1>
-                <div class="subtitle">Orange Zombie League · FPL Dashboard · Presented by 僵尸条</div>
-            </div>
-            <div class="data-update" id="data-update">
-                <span class="pulse-dot"></span>
-                数据加载中...
-            </div>
-        </header>
+<!-- 环境层：CSS-only「球场夜雾」，零 JS、零 canvas、零逐帧重绘 -->
+<div class="ambient" aria-hidden="true"></div>
 
-        <!-- Tab Navigation -->
-        <nav class="tab-nav" id="tab-nav">
-            <button class="tab-btn active" data-tab="season" id="tab-season">
-                <span class="tab-icon">📊</span> 本赛季
-            </button>
-            <button class="tab-btn" data-tab="goat" id="tab-goat">
-                <span class="tab-icon">🐐</span> GoAT 总榜
-            </button>
-            <button class="tab-btn disabled" data-tab="cup" id="tab-cup" disabled title="GW30 后开放">
-                <span class="tab-icon">🏆</span> 杯赛 <span class="badge-coming">GW30 后开放</span>
-            </button>
-        </nav>
+<!-- ===== SVG 图标雪碧图（Phase 1 §5.2 的 8 个 + Phase 2 §10 的 6 个）===== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16"/><path d="M7 20v-6"/><path d="M12 20V6"/><path d="M17 20v-9"/></symbol>
+  <symbol id="i-crown" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7.5 8 11l4-6.5 4 6.5 4.5-3.5L19 19.5H5L3.5 7.5Z"/></symbol>
+  <symbol id="i-trophy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3H4.6a2.4 2.4 0 0 0 0 4.8H6"/><path d="M18 3h1.4a2.4 2.4 0 0 1 0 4.8H18"/><path d="M6 3v5.2a6 6 0 0 0 12 0V3"/><path d="M10 14.7V17a3 3 0 0 1-3 3"/><path d="M14 14.7V17a3 3 0 0 0 3 3"/></symbol>
+  <symbol id="i-orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13.5" r="7"/><path d="M12 6.5v14"/><path d="M12.5 6.5c-.4-2 1-3.8 3.2-4.3-.2 2-1.2 3.4-3.2 4.3Z"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 12 12" fill="currentColor" stroke="none"><path d="M6 1l1.5 3.5L11 6l-3.5 1.5L6 11 4.5 7.5 1 6l3.5-1.5L6 1Z"/></symbol>
+  <symbol id="i-up" viewBox="0 0 12 12" fill="currentColor" stroke="none"><path d="M6 2.5 10.5 9h-9L6 2.5Z"/></symbol>
+  <symbol id="i-down" viewBox="0 0 12 12" fill="currentColor" stroke="none"><path d="M6 9.5 1.5 3h9L6 9.5Z"/></symbol>
+  <symbol id="i-flat" viewBox="0 0 12 12" fill="currentColor" stroke="none"><rect x="2" y="5.25" width="8" height="1.5" rx=".75"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5 21.5 20.5h-19L12 3.5Z"/><path d="M12 9.5v4.5"/><path d="M12 17h.01"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 8-8 8 8 0 0 0-6.9 4"/><path d="M4 3.5V8h4.5"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.5-4.5"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5"/><path d="M12 7.75h.01"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9.5l6 6 6-6"/></symbol>
+  <symbol id="i-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19.5V5"/><path d="M5.5 11.5 12 5l6.5 6.5"/></symbol>
+</svg>
 
-        <!-- Season Tab Content -->
-        <section class="tab-content active" id="content-season">
-            <div class="table-wrapper">
-                <table class="data-table" id="season-table">
-                    <thead>
-                        <tr>
-                            <th class="col-rank">排名</th>
-                            <th class="col-team">队名</th>
-                            <th class="col-manager">经理</th>
-                            <th class="col-total">总分</th>
-                        </tr>
-                    </thead>
-                    <tbody id="season-tbody">
-                        <tr><td colspan="4" class="loading-cell">加载中...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+<div class="app-container">
 
-        <!-- GoAT Tab Content -->
-        <section class="tab-content" id="content-goat">
-            <div class="table-wrapper">
-                <table class="data-table" id="goat-table">
-                    <thead>
-                        <tr>
-                            <th class="col-rank">排名</th>
-                            <th class="col-team">队名</th>
-                            <th class="col-manager">经理</th>
-                            <th class="col-goat-hist">GOATdex<br>(历史赛季)</th>
-                            <th class="col-goat-curr">GOATdex<br>(本赛季)</th>
-                            <th class="col-goat-total">GOATdex<br>(实时)</th>
-                            <th class="col-rank-change">变化<br>(对比赛季初)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="goat-tbody">
-                        <tr><td colspan="7" class="loading-cell">加载中...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+  <!-- ============================== Header ============================== -->
+  <header class="site-header">
+    <div class="header-top">
+      <h1 class="logo">
+        <svg class="logo-icon" aria-hidden="true" focusable="false"><use href="#i-orange"/></svg>
+        ZBL 橘僵联 26/27
+      </h1>
+      <p class="subtitle">僵尸联赛 · FPL 私联赛看板 · 冠名：僵尸条</p>
+      <p class="tagline">僵尸条：今天吃什么，明天怎么办</p>
+    </div>
+    <div class="data-update" id="data-update" role="status">
+      <span class="pulse-dot" aria-hidden="true"></span>
+      数据加载中…
+    </div>
+  </header>
 
-        <!-- Cup Tab Content (placeholder) -->
-        <section class="tab-content" id="content-cup">
-            <div class="placeholder-msg">
-                <div class="placeholder-icon">🏆</div>
-                <h2>杯赛专区</h2>
-                <p>杯赛将于 <span class="accent">GW30</span> 后正式开始，届时此处将展示杯赛对阵及积分。</p>
-                <div class="countdown-hint">敬请期待...</div>
-            </div>
-        </section>
+  <!-- ============================ Tab 导航 ============================== -->
+  <div class="tab-nav" id="tab-nav" role="tablist" aria-label="榜单视图">
+    <button type="button" class="tab-btn" role="tab" id="tab-season" data-tab="season"
+            aria-selected="true" aria-controls="content-season" tabindex="0">
+      <svg class="tab-icon" aria-hidden="true" focusable="false"><use href="#i-chart"/></svg>
+      本赛季
+    </button>
+    <button type="button" class="tab-btn" role="tab" id="tab-goat" data-tab="goat"
+            aria-selected="false" aria-controls="content-goat" tabindex="-1">
+      <svg class="tab-icon" aria-hidden="true" focusable="false"><use href="#i-crown"/></svg>
+      GoAT 总榜
+    </button>
+    <button type="button" class="tab-btn is-disabled" role="tab" id="tab-cup" data-tab="cup"
+            aria-selected="false" aria-controls="content-cup"
+            tabindex="-1" aria-disabled="true" title="GW30 后开放">
+      <svg class="tab-icon" aria-hidden="true" focusable="false"><use href="#i-trophy"/></svg>
+      杯赛
+      <span class="badge-coming">GW30 后开放</span>
+    </button>
+  </div>
 
-        <!-- Footer -->
-        <footer class="site-footer">
-            <div>橘僵联 26/27 &copy; 2023-2026 · 冠名：僵尸条</div>
-            <div class="footer-sub">Powered by FPL API · 数据仅供联赛内部使用</div>
-        </footer>
+  <!-- ============================ 搜索筛选 ============================== -->
+  <div class="filter-bar" id="filter-bar" role="search">
+    <label class="sr-only" for="team-filter">搜索队名或经理</label>
+    <svg class="filter-icon" aria-hidden="true" focusable="false"><use href="#i-search"/></svg>
+    <input type="search" id="team-filter" class="filter-input"
+           placeholder="搜索队名或经理" autocomplete="off" spellcheck="false"
+           aria-describedby="filter-count">
+    <span class="filter-count" id="filter-count" role="status">共 105 支队伍</span>
+  </div>
+
+  <!-- ============================== 图例 ================================ -->
+  <details class="legend" id="legend" open>
+    <summary class="legend-toggle">
+      <svg class="legend-icon" aria-hidden="true" focusable="false"><use href="#i-info"/></svg>
+      图例：颜色与标记是什么意思
+      <svg class="legend-caret" aria-hidden="true" focusable="false"><use href="#i-chevron"/></svg>
+    </summary>
+    <ul class="legend-list">
+      <li class="legend-item">
+        <span class="legend-swatch">
+          <span class="rank-chip rank-1" aria-hidden="true">1</span>
+          <span class="rank-chip rank-2" aria-hidden="true">2</span>
+          <span class="rank-chip rank-3" aria-hidden="true">3</span>
+        </span>
+        <span class="legend-text">金 / 银 / 铜圆标 = 当前榜前三名</span>
+      </li>
+      <li class="legend-item">
+        <span class="legend-swatch">
+          <span class="sponsor-badge" role="img" aria-label="本届冠名赞助商" title="本届冠名赞助商">冠名</span>
+        </span>
+        <span class="legend-text">橘色队名 +「冠名」徽章 = 本届冠名赞助商（僵尸条）</span>
+      </li>
+      <li class="legend-item">
+        <span class="legend-swatch">
+          <span class="dq-badge" role="img" aria-label="已判 DQ，取消本赛季资格">DQ</span>
+        </span>
+        <span class="legend-text">DQ = 已判取消本赛季资格，成绩划线</span>
+      </li>
+      <li class="legend-item">
+        <span class="legend-swatch">
+          <span class="legend-inactive-sample" aria-hidden="true">队名示例</span>
+        </span>
+        <span class="legend-text">灰色斜体 = 本赛季未参赛，仅保留历史成绩</span>
+      </li>
+      <li class="legend-item">
+        <span class="legend-swatch legend-swatch-change">
+          <span class="rank-change rank-change-up" role="img" aria-label="上升"><svg aria-hidden="true" focusable="false"><use href="#i-up"/></svg>3</span>
+          <span class="rank-change rank-change-down" role="img" aria-label="下降"><svg aria-hidden="true" focusable="false"><use href="#i-down"/></svg>2</span>
+          <span class="rank-change rank-change-same" role="img" aria-label="持平"><svg aria-hidden="true" focusable="false"><use href="#i-flat"/></svg></span>
+          <span class="rank-change rank-change-new" aria-hidden="true">new</span>
+        </span>
+        <span class="legend-text">↑3 ↓2 = 名次较赛季初上升 / 下降；― 持平；new = 本赛季新加入</span>
+      </li>
+    </ul>
+  </details>
+
+  <!-- ============================ Tab 面板区 ============================ -->
+  <main id="panel-area">
+
+    <!-- ---------- 本赛季 ---------- -->
+    <section class="tab-content" role="tabpanel" id="content-season"
+             aria-labelledby="tab-season" tabindex="0">
+      <!-- tabindex="0"：桌面是容器内部滚动，键盘用户必须能聚焦滚动容器才能翻 105 行。
+           Chrome 127+ 会自动把可滚动容器纳入 Tab 序列，Firefox/Safari 不会 →
+           显式写上以保证跨浏览器一致（对 Chrome 是无副作用的显式化）。 -->
+      <div class="table-wrapper is-loading" tabindex="0">
+        <table class="data-table" id="season-table">
+          <caption class="sr-only" id="season-caption">本赛季积分榜，按 FPL 总分降序</caption>
+          <colgroup>
+            <col class="c-rank" style="width:64px">
+            <col class="c-team">
+            <col class="c-manager" style="width:180px">
+            <col class="c-total" style="width:130px">
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col" class="col-rank"><span class="th-main">排名</span></th>
+              <th scope="col" class="col-team"><span class="th-main">队名</span></th>
+              <th scope="col" class="col-manager"><span class="th-main">经理</span></th>
+              <th scope="col" class="col-total" title="本赛季 FPL 累计总分，本榜按此列降序排名"><span class="th-main">总分</span></th>
+            </tr>
+          </thead>
+          <tbody id="season-tbody" aria-busy="true">
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num sk-num-lg"></span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ---------- GoAT 总榜 ---------- -->
+    <section class="tab-content" role="tabpanel" id="content-goat"
+             aria-labelledby="tab-goat" tabindex="0" hidden>
+      <div class="notice-bar" id="goat-notice" role="status" hidden>
+        <svg class="notice-icon" aria-hidden="true" focusable="false"><use href="#i-warn"/></svg>
+        <p class="notice-text"></p>
+      </div>
+      <div class="table-wrapper is-loading" tabindex="0">
+        <table class="data-table" id="goat-table">
+          <caption class="sr-only" id="goat-caption">GoAT 总榜，按 GoAT 总分降序（历史三季 GoAT 加本赛季 GoAT）</caption>
+          <colgroup>
+            <col class="c-rank" style="width:64px">
+            <col class="c-team">
+            <col class="c-manager" style="width:180px">
+            <col class="c-hist" style="width:120px">
+            <col class="c-curr" style="width:130px">
+            <col class="c-total" style="width:130px">
+            <col class="c-change" style="width:100px">
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col" class="col-rank">
+                <span class="th-main">排名</span>
+              </th>
+              <th scope="col" class="col-team">
+                <span class="th-main">队名</span>
+              </th>
+              <th scope="col" class="col-manager">
+                <span class="th-main">经理</span>
+              </th>
+              <th scope="col" class="col-goat-hist"
+                  title="23/24、24/25、25/26 三个赛季的 GoAT 合计">
+                <span class="th-main">历史 GoAT</span>
+                <span class="th-sub">23/24–25/26</span>
+              </th>
+              <th scope="col" class="col-goat-curr"
+                  title="本赛季 GoAT = FPL 得分 + 本赛季排名分">
+                <span class="th-main">本季 GoAT</span>
+                <span class="th-sub">得分 + 排名分</span>
+              </th>
+              <th scope="col" class="col-goat-total"
+                  title="GoAT 总分 = 历史 GoAT + 本季 GoAT，本榜按此列降序排名">
+                <span class="th-main">GoAT 总分</span>
+                <span class="th-sub">历史 + 本季</span>
+              </th>
+              <th scope="col" class="col-rank-change"
+                  title="当前名次对比赛季初（仅按历史 GoAT 排序）名次的变化">
+                <span class="th-main">名次变化</span>
+                <span class="th-sub">对比赛季初</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody id="goat-tbody" aria-busy="true">
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num"></span></td><td><span class="sk sk-num"></span></td><td><span class="sk sk-num sk-num-lg"></span></td><td><span class="sk sk-num"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num"></span></td><td><span class="sk sk-num"></span></td><td><span class="sk sk-num sk-num-lg"></span></td><td><span class="sk sk-num"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num"></span></td><td><span class="sk sk-num"></span></td><td><span class="sk sk-num sk-num-lg"></span></td><td><span class="sk sk-num"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num"></span></td><td><span class="sk sk-num"></span></td><td><span class="sk sk-num sk-num-lg"></span></td><td><span class="sk sk-num"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num"></span></td><td><span class="sk sk-num"></span></td><td><span class="sk sk-num sk-num-lg"></span></td><td><span class="sk sk-num"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num"></span></td><td><span class="sk sk-num"></span></td><td><span class="sk sk-num sk-num-lg"></span></td><td><span class="sk sk-num"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num"></span></td><td><span class="sk sk-num"></span></td><td><span class="sk sk-num sk-num-lg"></span></td><td><span class="sk sk-num"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num"></span></td><td><span class="sk sk-num"></span></td><td><span class="sk sk-num sk-num-lg"></span></td><td><span class="sk sk-num"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num"></span></td><td><span class="sk sk-num"></span></td><td><span class="sk sk-num sk-num-lg"></span></td><td><span class="sk sk-num"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num"></span></td><td><span class="sk sk-num"></span></td><td><span class="sk sk-num sk-num-lg"></span></td><td><span class="sk sk-num"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num"></span></td><td><span class="sk sk-num"></span></td><td><span class="sk sk-num sk-num-lg"></span></td><td><span class="sk sk-num"></span></td></tr>
+            <tr class="sk-row" aria-hidden="true"><td><span class="sk sk-rank"></span></td><td><span class="sk sk-team"></span></td><td><span class="sk sk-manager"></span></td><td><span class="sk sk-num"></span></td><td><span class="sk sk-num"></span></td><td><span class="sk sk-num sk-num-lg"></span></td><td><span class="sk sk-num"></span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ---------- 杯赛（占位） ---------- -->
+    <section class="tab-content" role="tabpanel" id="content-cup"
+             aria-labelledby="tab-cup" tabindex="0" hidden>
+      <div class="placeholder-msg">
+        <svg class="placeholder-icon" aria-hidden="true" focusable="false"><use href="#i-trophy"/></svg>
+        <h2 class="section-title">杯赛专区</h2>
+        <p>杯赛将于 <strong>GW30</strong> 后正式开始，届时此处将展示杯赛对阵及积分。</p>
+        <div class="countdown-hint">敬请期待…</div>
+      </div>
+    </section>
+
+    <!-- ---------- 打印专用 ---------- -->
+    <div class="print-only print-footer">
+      榜单来源：https://zblboard.top　·　数据更新于 <span id="print-ts">—</span>
+    </div>
+    <div class="print-only print-legend">
+      图例：金/银/铜圆标 = 三甲；橘色队名 +「冠名」= 冠名赞助商；DQ = 取消本赛季资格；灰斜体 = 未参赛；↑↓ = 名次较赛季初变化。
     </div>
 
-    <script src="js/app.js"></script>
+  </main>
+
+  <!-- ============================== Footer ============================== -->
+  <footer class="site-footer">
+    <div>ZBL Zombie League 橘僵联 26/27 © 2023-2026 · 冠名：僵尸条</div>
+    <div class="footer-sub">数据来源：FPL 官方 API 每日 16:30 快照 · https://zblboard.top · 数据仅供联赛内部使用</div>
+  </footer>
+
+</div>
+
+<button type="button" class="back-to-top" id="back-to-top" aria-label="回到顶部" hidden>
+  <svg aria-hidden="true" focusable="false"><use href="#i-arrow-up"/></svg>
+</button>
+
+<script src="js/app.js"></script>
 </body>
 </html>

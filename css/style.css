@@ -1,604 +1,779 @@
 /* ==========================================================================
-   ZBL Zombie Basketball League — Matrix Terminal Theme
-   Dark background (#0a0f0a), Terminal green (#00ff41), Monospace
+   ZBL Zombie League 橘僵联 — 暗夜球场（Undead Pitch）主题
+   中性石墨底 #0B0E0D + 品牌橘 #FF7A18 + 语义色分离
+   纯静态 · 无框架 · 无构建 · 零 JS 动画（环境层为 CSS-only）
    ========================================================================== */
 
-:root {
-    --bg-primary: #0a0f0a;
-    --bg-secondary: #0d140d;
-    --bg-card: #111b11;
-    --bg-hover: #162016;
-    --border-color: #1a3a1a;
-    --border-light: #244024;
-    --green-primary: #00ff41;
-    --green-dim: #00cc33;
-    --green-muted: #008f11;
-    --green-subtle: #003b00;
-    --text-primary: #c0ffc0;
-    --text-secondary: #70a070;
-    --text-dim: #405040;
-    --red-accent: #ff4444;
-    --red-dim: #cc3333;
-    --yellow-accent: #ffcc00;
-    --rank-up: #00ff41;
-    --rank-down: #ff4444;
-    --rank-same: #707070;
-    --font-mono: 'Share Tech Mono', 'Cascadia Code', 'Consolas', 'Courier New', monospace;
-    --font-sans: 'Noto Sans SC', -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-    --font-logo: 'AlimamaShuHeiTi', 'Share Tech Mono', 'Noto Sans SC', sans-serif;
-    --transition-fast: 0.2s ease;
-    --glow-green: 0 0 10px rgba(0, 255, 65, 0.3);
-    --glow-green-strong: 0 0 20px rgba(0, 255, 65, 0.5);
+/* ============================ 字体 ====================================== */
+/* 14KB 子集，仅覆盖站名等固定文案。⚠️ 只允许 .logo / .section-title 使用，
+   用在别处会因缺字形回退系统字体造成同一行内字体混排。 */
+@font-face {
+  font-family: 'AlimamaShuHeiTi';
+  src: url('../fonts/alimama-subset.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
 }
 
-/* Reset & Base */
-*, *::before, *::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* ============================ 设计令牌 ================================== */
+:root {
+  /* 背景层级（4 层） */
+  --bg-base:#0B0E0D;
+  --bg-surface:#121715;
+  --bg-elevated:#171C1A;
+  --bg-hover:#1C2220;
+  --bg-row-alt:#151A18;
+  --bg-inset:#0E1211;
+
+  /* 文字层级 */
+  --text-primary:#E8EDEA;
+  --text-secondary:#A9B4AE;
+  --text-muted:#7C8781;
+  --text-th:#8B968F;
+  --text-disabled:#6B746E;
+  --text-on-brand:#1A0F04;
+  --text-on-metal:#0B0E0D;
+
+  /* 边框 */
+  --border-subtle:#232A27;
+  --border-default:#2E3733;
+  --border-strong:#45514A;
+
+  /* 品牌橘 */
+  --brand:#FF7A18;
+  --brand-hover:#FF8F3C;
+  --brand-dim:#D96E12;
+  --brand-tint:#201D15;
+  --brand-tint-hover:#2A2115;
+
+  /* 三甲（金属色） */
+  --medal-gold:#FFC93C;
+  --medal-silver:#C7CDD4;
+  --medal-bronze:#D08A4E;
+
+  /* 语义 */
+  --signal-up:#46D17F;
+  --signal-down:#CE7171;
+  --signal-flat:#7C8781;
+  --dq-text:#A87C7C;
+  --dq-badge:#E0645C;
+
+  /* 焦点 / 链接 */
+  --focus-ring:#FF9A45;
+  --link:#FF9A45;
+
+  /* 阴影（全中性，无彩色发光） */
+  --shadow-sm:0 1px 2px rgba(0,0,0,.45);
+  --shadow-md:0 2px 8px rgba(0,0,0,.40);
+  --shadow-lg:0 12px 32px rgba(0,0,0,.45);
+
+  /* 字体 */
+  --font-logo:'AlimamaShuHeiTi','PingFang SC','Microsoft YaHei',sans-serif;
+  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Source Han Sans SC',sans-serif;
+  --font-mono:ui-monospace,'SFMono-Regular','Cascadia Mono',Menlo,Consolas,'DejaVu Sans Mono','PingFang SC','Microsoft YaHei',monospace;
+
+  /* 字号（root=16px，断点处不缩小 root） */
+  --fs-logo:1.75rem;
+  --fs-h2:1.25rem;
+  --fs-lg:1.0625rem;
+  --fs-md:0.9375rem;
+  --fs-table:0.875rem;
+  --fs-sm:0.8125rem;
+  --fs-xs:0.75rem;
+  --fs-2xs:0.6875rem;
+
+  /* 间距（4px 网格） */
+  --sp-1:4px;  --sp-2:8px;  --sp-3:12px; --sp-4:16px;
+  --sp-5:20px; --sp-6:24px; --sp-8:32px; --sp-10:40px; --sp-12:48px;
+
+  /* 圆角 */
+  --r-sm:6px; --r-md:10px; --r-lg:12px; --r-pill:999px;
+
+  /* 动效 */
+  --dur-instant:80ms; --dur-fast:140ms; --dur-base:220ms; --dur-slow:400ms;
+  --ease-std:cubic-bezier(.4,0,.2,1);
+  --ease-out:cubic-bezier(.16,1,.3,1);
+
+  /* 布局 */
+  --container-max:1200px;
+  --row-h:44px;
 }
+
+/* ============================ 基础层 ==================================== */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
 html {
-    font-size: 14px;
-    scroll-behavior: smooth;
+  font-size:16px;
+  scroll-behavior:smooth;
 }
 
 body {
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-    font-family: var(--font-sans);
-    line-height: 1.6;
-    min-height: 100vh;
-    overflow-x: hidden;
-}
-
-/* Matrix Rain Canvas */
-#matrix-rain {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    opacity: 0.06;
-    pointer-events: none;
-}
-
-/* App Container */
-.app-container {
-    position: relative;
-    z-index: 1;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 16px;
-}
-
-/* ========================= Font Face ==================================== */
-@font-face {
-    font-family: 'AlimamaShuHeiTi';
-    src: url('../fonts/alimama-subset.woff2') format('woff2');
-    font-weight: bold;
-    font-display: swap;
-}
-
-/* =============================== Header ================================= */
-.site-header {
-    border: 1px solid var(--border-color);
-    background: var(--bg-card);
-    border-radius: 6px;
-    padding: 20px 24px;
-    margin-bottom: 16px;
-    box-shadow: var(--glow-green);
-}
-
-.header-top {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 12px;
-    margin-bottom: 12px;
-}
-
-.logo {
-    font-family: var(--font-logo);
-    font-size: 1.8rem;
-    color: var(--green-primary);
-    text-shadow: var(--glow-green-strong);
-    letter-spacing: 2px;
-    white-space: normal;
-}
-
-.logo-icon {
-    margin-right: 4px;
-}
-
-.accent {
-    color: var(--green-primary);
-    text-shadow: var(--glow-green-strong);
-}
-
-.subtitle-inline {
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
-    font-weight: normal;
-    color: var(--text-secondary);
-    margin-left: 12px;
-    letter-spacing: 1px;
-    text-shadow: none;
-}
-
-.subtitle {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-    letter-spacing: 1px;
-}
-
-.data-update {
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.pulse-dot {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--green-primary);
-    box-shadow: 0 0 6px var(--green-primary);
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-}
-
-/* =========================== Tab Navigation ============================= */
-.tab-nav {
-    display: flex;
-    gap: 2px;
-    margin-bottom: 16px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
-.tab-btn {
-    flex: 1;
-    min-width: 100px;
-    padding: 12px 16px;
-    font-family: var(--font-mono);
-    font-size: 0.95rem;
-    color: var(--text-secondary);
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: 6px 6px 0 0;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-    white-space: nowrap;
-    text-align: center;
-    outline: none;
-}
-
-.tab-btn:hover:not(.disabled) {
-    color: var(--green-primary);
-    background: var(--bg-card);
-    border-color: var(--border-light);
-}
-
-.tab-btn.active {
-    color: var(--green-primary);
-    background: var(--bg-card);
-    border-color: var(--border-light);
-    border-bottom-color: var(--bg-card);
-    text-shadow: var(--glow-green);
-    box-shadow: 0 -2px 0 var(--green-primary) inset;
-}
-
-.tab-btn.disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-}
-
-.tab-icon {
-    margin-right: 4px;
-}
-
-.badge-coming {
-    font-size: 0.65rem;
-    background: var(--green-muted);
-    color: var(--bg-primary);
-    padding: 2px 6px;
-    border-radius: 3px;
-    vertical-align: middle;
-    margin-left: 4px;
-}
-
-/* ========================== Tab Content ================================== */
-.tab-content {
-    display: none;
-    border: 1px solid var(--border-color);
-    background: var(--bg-card);
-    border-radius: 0 6px 6px 6px;
-    padding: 0;
-    animation: fadeIn 0.3s ease;
-}
-
-.tab-content.active {
-    display: block;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(4px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* ========================== Data Table =================================== */
-.table-wrapper {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
-.data-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.9rem;
-    white-space: nowrap;
-}
-
-.data-table thead {
-    position: sticky;
-    top: 0;
-    z-index: 2;
-}
-
-.data-table th {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    font-weight: 400;
-    color: var(--green-muted);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 12px 14px;
-    text-align: left;
-    background: var(--bg-secondary);
-    border-bottom: 1px solid var(--border-light);
-    white-space: nowrap;
-    user-select: none;
-}
-
-.data-table td {
-    padding: 10px 14px;
-    border-bottom: 1px solid var(--border-color);
-    transition: background var(--transition-fast);
-}
-
-.data-table tbody tr:hover {
-    background: var(--bg-hover);
-}
-
-.data-table tbody tr:hover td {
-    color: #fff;
-}
-
-/* Column Styles */
-.col-rank {
-    width: 40px;
-    text-align: center !important;
-}
-
-.col-team { min-width: 110px; max-width: 150px; }
-.col-manager { min-width: 70px; max-width: 100px; }
-
-.col-team,
-.col-manager {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.col-gw { width: 60px; text-align: center !important; }
-.col-total {
-    width: 64px;
-    text-align: center !important;
-    font-family: var(--font-mono);
-    color: var(--green-primary);
-    font-weight: bold;
-}
-
-.col-goat-hist { width: 84px; text-align: center !important; }
-.col-goat-curr { width: 84px; text-align: center !important; }
-.col-goat-total { width: 84px; text-align: center !important; font-weight: bold; color: var(--green-primary); }
-.col-rank-change { width: 72px; text-align: center !important; }
-
-/* Rank Cell */
-.rank-cell {
-    text-align: center;
-    font-family: var(--font-mono);
-    font-weight: bold;
-    color: var(--green-primary);
-    min-width: 40px;
-}
-
-.rank-1 { color: #ffd700; text-shadow: 0 0 8px rgba(255, 215, 0, 0.5); }
-.rank-2 { color: #c0c0c0; text-shadow: 0 0 6px rgba(192, 192, 192, 0.4); }
-.rank-3 { color: #cd7f32; text-shadow: 0 0 6px rgba(205, 127, 50, 0.4); }
-
-/* ZID Cell */
-.zid-cell {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--text-dim);
-    letter-spacing: 0.5px;
-}
-
-.zid-cell.unregistered {
-    color: var(--yellow-accent);
-    font-style: italic;
-}
-
-/* Team Name */
-.team-cell {
-    font-weight: 600;
-    color: var(--text-primary);
-    max-width: 200px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-/* Manager Name */
-.manager-cell {
-    color: var(--text-secondary);
-    font-size: 0.85rem;
-}
-
-/* Score */
-.total-cell {
-    font-family: var(--font-mono);
-    font-weight: bold;
-    color: var(--green-primary);
-    text-align: center;
-}
-
-/* GoAT score cells */
-.goat-cell {
-    font-family: var(--font-mono);
-    text-align: center;
-}
-
-.goat-total-cell {
-    font-family: var(--font-mono);
-    font-weight: bold;
-    color: var(--green-primary);
-    text-align: center;
-    text-shadow: var(--glow-green);
-}
-
-/* Rank Change */
-.rank-change-up {
-    color: var(--rank-up);
-    font-family: var(--font-mono);
-    font-weight: bold;
-}
-
-.rank-change-down {
-    color: var(--rank-down);
-    font-family: var(--font-mono);
-    font-weight: bold;
-}
-
-.rank-change-same {
-    color: var(--rank-same);
-    font-family: var(--font-mono);
-}
-
-/* Loading State */
-.loading-cell {
-    text-align: center;
-    padding: 40px 14px;
-    color: var(--text-secondary);
-    font-family: var(--font-mono);
-}
-
-/* ======================== Placeholder Message ============================ */
-.placeholder-msg {
-    padding: 60px 24px;
-    text-align: center;
-    color: var(--text-secondary);
-}
-
-.placeholder-icon {
-    font-size: 4rem;
-    margin-bottom: 16px;
-    opacity: 0.5;
-}
-
-.placeholder-msg h2 {
-    font-family: var(--font-mono);
-    color: var(--green-primary);
-    margin-bottom: 12px;
-}
-
-.placeholder-msg p {
-    max-width: 400px;
-    margin: 0 auto 20px;
-    line-height: 1.8;
-}
-
-.countdown-hint {
-    font-family: var(--font-mono);
-    color: var(--green-muted);
-    animation: pulse 2s infinite;
-}
-
-/* ============================== Footer ================================= */
-.site-footer {
-    margin-top: 20px;
-    padding: 16px 0;
-    border-top: 1px solid var(--border-color);
-    text-align: center;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--text-dim);
-}
-
-.footer-sub {
-    margin-top: 4px;
-    font-size: 0.65rem;
-}
-
-/* ======================= Scrollbar Styling ============================= */
-::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--bg-primary);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--border-light);
-    border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--green-muted);
-}
-
-/* ======================== Responsive / Mobile ========================== */
-@media (max-width: 768px) {
-    html {
-        font-size: 13px;
-    }
-
-    .app-container {
-        padding: 4px;
-    }
-
-    .site-header {
-        padding: 12px 10px;
-    }
-
-    .logo {
-        font-size: 1.3rem;
-    }
-
-    .tab-btn {
-        padding: 10px 8px;
-        font-size: 0.85rem;
-    }
-
-    /* 手机免横拉：压缩所有列的 padding 与字号 */
-    .data-table {
-        font-size: 0.78rem;
-        white-space: nowrap;
-    }
-
-    .data-table th,
-    .data-table td {
-        padding: 7px 4px;
-    }
-
-    /* GoAT 表数字用短格式字号 */
-    .col-goat-hist,
-    .col-goat-curr,
-    .col-goat-total {
-        width: auto;
-        min-width: 56px;
-    }
-
-    /* 队名经理在手机上允许缩窄 + 省略号 */
-    .team-cell {
-        max-width: 96px;
-    }
-
-    .manager-cell {
-        max-width: 64px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-}
-
-@media (max-width: 480px) {
-    .logo {
-        font-size: 1.2rem;
-    }
-
-    .subtitle {
-        font-size: 0.7rem;
-    }
-
-    .tab-btn {
-        font-size: 0.78rem;
-        padding: 8px 6px;
-    }
-
-    .badge-coming {
-        display: none;
-    }
-}
-
-/* ======================= Print friendly ================================= */
-@media print {
-    body { background: #fff; color: #000; }
-    #matrix-rain { display: none; }
-    .site-header { box-shadow: none; border-color: #ccc; background: #f9f9f9; }
-    .tab-nav { display: none; }
-    .tab-content { display: block !important; border-color: #ccc; }
-    .data-table th { background: #eee; color: #333; }
-    .data-table td { color: #333; border-color: #ddd; }
-    .green-primary, .total-cell, .goat-total-cell { color: #006600; }
-}
-
-/* ================================= Animations =========================== */
-@keyframes glowPulse {
-    0%, 100% { text-shadow: 0 0 10px rgba(0,255,65,0.5); }
-    50% { text-shadow: 0 0 20px rgba(0,255,65,0.8), 0 0 40px rgba(0,255,65,0.3); }
-}
-
-.glow-text {
-    animation: glowPulse 3s infinite;
-}
-
-/* ===== DQ 队伍样式（仅当季排名页）===== */
-.dq-team td {
-    text-decoration: line-through;
-    opacity: 0.55;
-    color: #999;
-}
-.dq-team .total-cell {
-    color: #777;
-    text-shadow: none;
-}
-.dq-badge {
-    display: inline-block;
-    margin-left: 6px;
-    padding: 1px 6px;
-    font-size: 11px;
-    line-height: 1.4;
-    color: #ff6b6b;
-    border: 1px solid #ff6b6b;
-    border-radius: 3px;
-    vertical-align: middle;
-}
-
-/* ===== 本赛季未参赛队伍（历史有分但本季未打）===== */
-.inactive-season td {
-    color: #888;
-    font-style: italic;
-}
-.inactive-season .goat-cell,
-.inactive-season .goat-total-cell {
-    color: #bbb;
-}
-
-/* ===== GoAT 榜 DQ：仅本赛季列划线（历史分列/实时总分列不划线）===== */
-.dq-season-cell {
-    text-decoration: line-through;
-    opacity: 0.6;
+  background-color:var(--bg-base);
+  color:var(--text-primary);
+  font-family:var(--font-sans);
+  font-size:var(--fs-md);
+  line-height:1.6;
+  min-height:100vh;
+  overflow-x:hidden;
+  -webkit-text-size-adjust:100%;
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* ❗兜底：作者显式隐藏优先于一切布局样式。
+   没有这条，`.tab-content{display:block}` 与卡片态 `tr{display:grid}`
+   会覆盖 UA 的 [hidden]，导致两个榜叠在一起、搜索过滤失效。 */
+[hidden]{ display:none !important; }
+
+.sr-only{
+  position:absolute; width:1px; height:1px;
+  padding:0; margin:-1px; overflow:hidden;
+  clip:rect(0 0 0 0); clip-path:inset(50%);
+  white-space:nowrap; border:0;
+}
+
+.print-only{ display:none; }
+
+/* ==================== 环境层：CSS-only「球场夜雾」 ====================== */
+/* 纯 CSS 背景层：零 JS、零 canvas、零逐帧重绘、零 setInterval */
+.ambient{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  transform:translateZ(0);
+  background:
+    radial-gradient(120% 55% at 50% -12%, rgba(255,122,24,.10) 0%, rgba(255,122,24,0) 62%),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.016) 0 56px, rgba(255,255,255,0) 56px 112px),
+    radial-gradient(rgba(255,255,255,.035) 1px, transparent 1px) 0 0/4px 4px,
+    linear-gradient(180deg, rgba(11,14,13,0) 55%, rgba(11,14,13,.85) 100%);
+}
+.ambient::after{
+  content:''; position:absolute; inset:0 0 auto 0; height:1px;
+  background:linear-gradient(90deg, transparent, rgba(255,122,24,.55), transparent);
+}
+/* 唯一允许的持续动效：只动 transform/opacity，纯合成器动画 */
+@media (min-width:769px) and (prefers-reduced-motion:no-preference){
+  .ambient::before{
+    content:''; position:absolute; inset:-20%;
+    background:radial-gradient(45% 45% at 30% 20%, rgba(255,122,24,.07), transparent 70%);
+    animation:drift 48s ease-in-out infinite alternate;
+    will-change:transform,opacity;
+  }
+}
+@keyframes drift{
+  from{ transform:translate3d(-3%,-2%,0); opacity:.75; }
+  to  { transform:translate3d(4%,3%,0);   opacity:1; }
+}
+
+/* ============================ 容器 ====================================== */
+.app-container{
+  position:relative; z-index:1;
+  max-width:var(--container-max);
+  margin:0 auto;
+  padding:var(--sp-4) 16px var(--sp-6);
+}
+
+/* ============================ Header ==================================== */
+.site-header{
+  background:var(--bg-surface);
+  border:1px solid var(--border-default);
+  border-radius:var(--r-lg);
+  padding:var(--sp-5) var(--sp-6);
+  margin-bottom:var(--sp-4);
+  box-shadow:var(--shadow-md);
+}
+.header-top{ margin-bottom:var(--sp-3); }
+
+.logo{
+  display:flex; align-items:center; gap:var(--sp-2);
+  font-family:var(--font-logo);
+  font-size:var(--fs-logo);
+  font-weight:700;
+  line-height:1.2;
+  letter-spacing:.01em;
+  color:var(--brand);
+}
+.logo-icon{ width:1.5rem; height:1.5rem; flex:none; }
+
+.subtitle{
+  font-size:var(--fs-sm);
+  color:var(--text-secondary);
+  letter-spacing:.01em;
+}
+.tagline{
+  margin-top:2px;
+  font-size:var(--fs-sm);
+  color:var(--text-muted);
+}
+
+.data-update{
+  display:flex; align-items:center; gap:var(--sp-2);
+  font-size:var(--fs-sm);
+  color:var(--text-secondary);
+  font-variant-numeric:tabular-nums lining-nums;
+}
+.pulse-dot{
+  width:8px; height:8px; border-radius:var(--r-pill);
+  background:var(--signal-up); flex:none;
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{ 0%,100%{opacity:1} 50%{opacity:.35} }
+
+/* ============================ Tab 导航 ================================== */
+.tab-nav{
+  display:flex; gap:2px;
+}
+.tab-btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:6px;
+  flex:1 1 auto; min-width:0; min-height:44px;
+  padding:var(--sp-3) var(--sp-4);
+  font-family:inherit; font-size:var(--fs-md); font-weight:600;
+  color:var(--text-secondary);
+  background:var(--bg-base);
+  border:0;
+  border-radius:var(--r-md) var(--r-md) 0 0;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:color var(--dur-fast) var(--ease-std),
+             background var(--dur-fast) var(--ease-std),
+             box-shadow var(--dur-fast) var(--ease-std);
+}
+.tab-icon{ width:18px; height:18px; flex:none; }
+.tab-btn[aria-selected="true"]{
+  color:var(--brand);
+  background:var(--bg-surface);
+  box-shadow:inset 0 -2px 0 var(--brand);
+}
+.tab-btn[aria-disabled="true"]{
+  color:var(--text-disabled);
+  cursor:not-allowed;
+}
+.tab-btn[aria-disabled="true"] .tab-icon,
+.tab-btn[aria-disabled="true"] .badge-coming{ opacity:.7; }
+/* ❗禁用项仍可聚焦（aria-disabled 而非 disabled）→ 焦点环必须保留 */
+.tab-btn:focus-visible{
+  outline:2px solid var(--focus-ring);
+  outline-offset:2px;
+}
+.badge-coming{
+  font-size:var(--fs-2xs); font-weight:600; letter-spacing:.04em;
+  background:var(--bg-elevated); color:var(--text-muted);
+  border:1px solid var(--border-default);
+  padding:1px 6px; border-radius:var(--r-sm);
+}
+
+@media (hover:hover){
+  .tab-btn:hover:not([aria-disabled="true"]){
+    color:var(--text-primary); background:var(--bg-elevated);
+  }
+}
+.tab-btn:active:not([aria-disabled="true"]){ background:var(--bg-elevated); }
+
+/* ============================ 搜索筛选 ================================== */
+.filter-bar{
+  display:flex; align-items:center; gap:var(--sp-2);
+  padding:var(--sp-2) var(--sp-3);
+  margin-bottom:var(--sp-3);
+  background:var(--bg-surface);
+  border:1px solid var(--border-default);
+  border-radius:var(--r-md);
+}
+.filter-bar:focus-within{ border-color:var(--brand); }
+.filter-icon{ width:16px; height:16px; flex:none; color:var(--text-muted); }
+.filter-input{
+  flex:1 1 auto; min-width:0; min-height:44px;
+  background:transparent; border:0; outline:0;
+  font-family:inherit; font-size:var(--fs-md); color:var(--text-primary);
+}
+.filter-input::placeholder{ color:var(--text-muted); }
+.filter-input:focus-visible{ outline:2px solid var(--focus-ring); outline-offset:2px; }
+.filter-input::-webkit-search-cancel-button{ filter:invert(1) opacity(.6); }
+.filter-count{
+  flex:none; font-size:var(--fs-sm); color:var(--text-muted);
+  font-variant-numeric:tabular-nums lining-nums;
+}
+
+/* ============================== 图例 ==================================== */
+.legend{
+  margin-bottom:var(--sp-3);
+  background:var(--bg-surface);
+  border:1px solid var(--border-default);
+  border-radius:var(--r-md);
+}
+.legend-toggle{
+  display:flex; align-items:center; gap:var(--sp-2);
+  min-height:44px; padding:var(--sp-2) var(--sp-4);
+  font-size:var(--fs-sm); color:var(--text-secondary);
+  cursor:pointer; list-style:none;
+}
+.legend-toggle::-webkit-details-marker{ display:none; }
+.legend-toggle:focus-visible{ outline:2px solid var(--focus-ring); outline-offset:2px; }
+.legend-icon{ width:15px; height:15px; flex:none; color:var(--text-muted); }
+.legend-caret{
+  width:14px; height:14px; flex:none; margin-left:auto;
+  color:var(--text-muted);
+  transition:transform var(--dur-fast) var(--ease-std);
+}
+.legend[open] .legend-caret{ transform:rotate(180deg); }
+.legend-list{
+  list-style:none; margin:0;
+  padding:0 var(--sp-4) var(--sp-4);
+  display:grid; gap:var(--sp-2);
+}
+.legend-item{ display:flex; align-items:center; gap:var(--sp-3); }
+.legend-swatch{ flex:none; display:flex; align-items:center; gap:4px; min-width:96px; }
+.legend-text{ font-size:var(--fs-sm); line-height:1.5; color:var(--text-secondary); }
+.legend-inactive-sample{ font-style:italic; color:var(--text-muted); }
+
+/* ============================ 表格容器 ================================== */
+.tab-content{ animation:fadeIn var(--dur-base) var(--ease-out); }
+@keyframes fadeIn{ from{opacity:0; transform:translateY(4px)} to{opacity:1; transform:none} }
+
+.table-wrapper{
+  overflow:auto;                      /* ❗显式双轴，sticky 才有可定位的滚动容器 */
+  max-height:min(72vh, 760px);        /* ❗必须给高度上限 */
+  overscroll-behavior:contain;
+  background:var(--bg-surface);
+  border:1px solid var(--border-default);
+  border-radius:var(--r-lg);
+  box-shadow:var(--shadow-md);
+}
+/* 容器锁高：CLS 的真正解药（骨架屏只有 12 行时容器撑不到最终高度） */
+.table-wrapper.is-loading{ min-height:min(72vh, 760px); }
+/* 桌面容器是滚动容器 → 显式可聚焦 + 焦点环（内嵌，外扩会被 overflow 裁掉） */
+.table-wrapper:focus-visible{
+  outline:2px solid var(--focus-ring);
+  outline-offset:-2px;
+}
+
+.data-table{
+  table-layout:fixed;                 /* 防溢出 + 列宽可控 */
+  width:100%;
+  border-collapse:collapse;
+  font-size:var(--fs-table);
+}
+.data-table td,
+.data-table th{
+  font-variant-numeric:tabular-nums lining-nums;
+  font-feature-settings:"tnum" 1,"lnum" 1;   /* iOS Safari <13 兜底 */
+}
+.data-table thead th{
+  position:sticky; top:0; z-index:2;
+  padding:12px 12px;
+  text-align:left; vertical-align:bottom;
+  font-weight:400;
+  white-space:nowrap;
+  background:var(--bg-elevated);      /* ❗必须实色，否则行内容会透出 */
+  box-shadow:0 1px 0 var(--border-default);  /* sticky 下 border-bottom 会随滚动消失 */
+}
+.data-table th .th-main{
+  display:block;
+  font:500 var(--fs-xs)/1.3 var(--font-sans);
+  letter-spacing:.08em;
+  color:var(--text-th);
+}
+.data-table th .th-sub{
+  display:block;
+  margin-top:2px;
+  font:400 var(--fs-2xs)/1.2 var(--font-sans);
+  letter-spacing:0;
+  color:var(--text-muted);
+}
+#goat-table   td{ padding:8px 10px; }   /* 行高 48px */
+#season-table td{ padding:12px 12px; }  /* 行高 44px */
+.data-table td{
+  border-bottom:1px solid var(--border-subtle);
+  line-height:1.45;                 /* Phase 1 §3.2：padding 12px + 1.45×14px ≈ 44px 行高 */
+  min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+
+/* 列对齐：排名居中，数字右对齐，文本左对齐 */
+.col-rank{ text-align:center; }
+.col-total,.col-goat-hist,.col-goat-curr,.col-goat-total,.col-rank-change{ text-align:right; }
+
+/* 行底色统一走 --row-bg 变量，避免 zebra / 赞助商 / hover 互相打优先级 */
+.data-table tbody tr{ background:var(--row-bg, transparent); }
+#goat-table tbody tr:nth-child(even){ --row-bg:var(--bg-row-alt); }   /* 极弱斑马纹，仅 GoAT */
+#goat-table tbody tr.row-sponsor,
+#season-table tbody tr.row-sponsor{ --row-bg:var(--brand-tint); }
+#goat-table tbody tr.row-sponsor.row-dq,
+#season-table tbody tr.row-sponsor.row-dq,
+#goat-table tbody tr.row-sponsor.row-inactive{ --row-bg:transparent; }
+
+@media (hover:hover){
+  .data-table tbody tr{ transition:background var(--dur-fast) var(--ease-std); }
+  .data-table tbody tr:hover{ --row-bg:var(--bg-hover); }
+  .data-table tbody tr:hover .team-cell{ color:#FFFFFF; }
+  #goat-table tbody tr.row-sponsor:hover,
+  #season-table tbody tr.row-sponsor:hover{ --row-bg:var(--brand-tint-hover); }
+}
+
+/* -------- 单元格 -------- */
+.rank-cell{ text-align:center; color:var(--text-muted); font-weight:600; }
+.team-cell{ color:var(--text-primary); font-weight:600; }
+.manager-cell{ color:var(--text-secondary); font-size:var(--fs-sm); }
+.total-cell{ font-weight:700; color:var(--text-primary); }
+.goat-cell{ color:var(--text-secondary); }
+.goat-total-cell{ font-weight:700; color:var(--text-primary); }
+.cell-main{
+  display:block; font:600 var(--fs-table)/1.25 var(--font-mono);
+  font-variant-numeric:tabular-nums lining-nums;
+}
+.cell-sub{
+  display:block; font-size:var(--fs-xs); line-height:1.2;
+  color:var(--text-muted);
+  font-variant-numeric:tabular-nums lining-nums;
+}
+/* ❗行首竖条必须挂 td，不能挂 tr —— display:table-row 的 box-shadow 不渲染 */
+.row-sponsor > td:first-child{ box-shadow:inset 3px 0 0 var(--brand); }
+.row-sponsor .team-cell{ color:var(--brand); font-weight:700; }
+@media (hover:hover){
+  .row-sponsor:hover > td:first-child{ box-shadow:inset 4px 0 0 var(--brand); }
+}
+
+/* -------- 三甲：圆形排名筹码（竖条形态独家给赞助商）-------- */
+.rank-chip{
+  display:inline-flex; align-items:center; justify-content:center;
+  min-width:1.75rem; height:1.75rem; padding:0 .25rem;
+  border-radius:var(--r-pill);
+  font:700 var(--fs-sm)/1 var(--font-mono);
+  font-variant-numeric:tabular-nums lining-nums;
+  background:var(--bg-elevated); color:var(--text-secondary);
+}
+.rank-1 .rank-chip, .rank-chip.rank-1{ background:var(--medal-gold);   color:var(--text-on-metal); }
+.rank-2 .rank-chip, .rank-chip.rank-2{ background:var(--medal-silver); color:var(--text-on-metal); }
+.rank-3 .rank-chip, .rank-chip.rank-3{ background:var(--medal-bronze); color:var(--text-on-metal); }
+
+/* -------- 徽章 -------- */
+.sponsor-badge{
+  display:inline-flex; align-items:center; gap:3px;
+  margin-left:6px; padding:2px 6px;
+  font:600 var(--fs-2xs)/1.4 var(--font-sans);
+  letter-spacing:.04em; vertical-align:1px;
+  color:var(--text-on-brand); background:var(--brand);
+  border-radius:var(--r-sm);
+  white-space:nowrap;
+}
+.dq-badge{
+  display:inline-flex; align-items:center;
+  margin-left:6px; padding:1px 6px;
+  font:600 var(--fs-2xs)/1.4 var(--font-sans);
+  letter-spacing:.04em; vertical-align:1px;
+  color:var(--dq-badge);
+  border:1px solid var(--dq-badge);
+  border-radius:var(--r-sm);
+  white-space:nowrap;
+}
+
+/* -------- 名次变化（SVG，非 U+2191 字符，防列宽跳动）-------- */
+.rank-change{
+  display:inline-flex; align-items:center; gap:3px;
+  font:600 var(--fs-sm)/1 var(--font-mono);
+  font-variant-numeric:tabular-nums lining-nums;
+}
+.rank-change svg{ width:12px; height:12px; flex:none; }
+.rank-change-up{ color:var(--signal-up); }
+.rank-change-down{ color:var(--signal-down); }
+.rank-change-same,.rank-change-new{ color:var(--signal-flat); }
+.rank-change-new{ font-size:var(--fs-xs); letter-spacing:.04em; }
+
+/* -------- 行状态：DQ / 未参赛（一律用预混实色，不用 opacity 降对比）-------- */
+.row-dq .team-cell{ color:var(--dq-text); text-decoration:line-through; }
+.row-dq .total-cell,
+.row-dq .manager-cell{ color:var(--dq-text); }
+.dq-season-cell{ color:var(--dq-text); text-decoration:line-through; }
+
+.row-inactive .team-cell{ color:var(--text-muted); font-style:italic; font-weight:400; }
+.row-inactive .goat-cell,
+.row-inactive .cell-main{ color:var(--text-muted); }
+
+/* 赞助商 + DQ：身份保留，视觉让位 */
+.row-sponsor.row-dq > td:first-child{ box-shadow:inset 3px 0 0 var(--border-strong); }
+.row-sponsor.row-dq .team-cell{ color:var(--dq-text); }
+.row-sponsor.row-dq .sponsor-badge{
+  background:transparent; color:var(--brand-dim);
+  box-shadow:inset 0 0 0 1px var(--brand-dim);
+}
+/* 赞助商 + GoAT 未参赛：减饱和，不抢眼 */
+.row-sponsor.row-inactive > td:first-child{ box-shadow:inset 2px 0 0 var(--brand-dim); }
+.row-sponsor.row-inactive .team-cell{ color:var(--brand-dim); font-weight:600; }
+.row-sponsor.row-inactive .sponsor-badge{
+  background:transparent; color:var(--brand-dim);
+  box-shadow:inset 0 0 0 1px var(--brand-dim);
+}
+/* DQ 优先级高于未参赛 */
+.row-sponsor.row-dq.row-inactive > td:first-child{ box-shadow:inset 3px 0 0 var(--border-strong); }
+.row-sponsor.row-dq.row-inactive .team-cell{ color:var(--dq-text); }
+
+/* ============================ 骨架屏 ==================================== */
+.sk-row{ opacity:0; animation:sk-in var(--dur-fast) var(--ease-std) 120ms forwards; }
+@keyframes sk-in{ to{ opacity:1 } }
+.sk{
+  display:block; height:12px; border-radius:var(--r-sm);
+  background:linear-gradient(90deg,
+    var(--bg-elevated) 25%, var(--bg-hover) 37%, var(--bg-elevated) 63%);
+  background-size:200% 100%;
+  animation:sk-shimmer 1.4s linear infinite;
+}
+@keyframes sk-shimmer{
+  from{ background-position:200% 0 } to{ background-position:-200% 0 }
+}
+.sk-rank   { width:28px; height:28px; border-radius:var(--r-pill); }
+.sk-team   { width:78% }
+.sk-manager{ width:52% }
+.sk-num    { width:44px; margin-left:auto }
+.sk-num-lg { width:56px; height:16px }
+/* 固定交替（禁止随机）：产生「队名长度不同」的真实感 */
+.sk-row:nth-child(even) .sk-team{ width:64% }
+.sk-row:nth-child(3n)   .sk-team{ width:86% }
+.sk-row:nth-child(even) .sk-manager{ width:44% }
+
+/* 骨架行高逐行对齐真实行高（td padding 已一致，这里只对齐内容盒高度）：
+   赛季榜 padding 12 + 内容 20.3 + border 1 = 45.3px；GoAT padding 8 + 内容 31.9 + border 1 = 48.9px
+   （20.3 = 14px × line-height 1.45；31.9 = cell-main 17.5 + cell-sub 14.4，与真实单元格内容盒完全一致） */
+#season-table .sk,
+#season-table .sk-num-lg{ height:20.3px; }
+#season-table .sk-rank{ width:20px; height:20px; }
+#goat-table .sk,
+#goat-table .sk-num-lg{ height:31.9px; }
+#goat-table .sk-rank{ width:28px; height:28px; }
+/* 真实榜的前三行更高（含 28px 排名筹码），骨架屏同步，做到真正逐行等高 */
+#season-table .sk-row:nth-child(-n+3) .sk-rank,
+#goat-table .sk-row:nth-child(-n+3) .sk-rank{ width:1.75rem; height:1.75rem; }
+
+/* ============================ 警告条 ==================================== */
+.notice-bar{
+  display:flex; align-items:flex-start; gap:var(--sp-2);
+  padding:var(--sp-3) var(--sp-4); margin-bottom:var(--sp-3);
+  background:var(--bg-elevated);
+  border:1px solid var(--border-default);
+  border-left:3px solid var(--medal-gold);
+  border-radius:var(--r-md);
+}
+.notice-bar:empty{ display:none; }
+.notice-icon{ flex:none; width:16px; height:16px; margin-top:2px; color:var(--medal-gold); }
+.notice-text{ font-size:var(--fs-sm); line-height:1.5; color:var(--text-secondary); }
+
+/* ========================= 错误态 / 空态 ================================ */
+.state-panel{
+  padding:var(--sp-10) var(--sp-6); text-align:center;
+  background:var(--bg-surface);
+  border:1px solid var(--border-default);
+  border-radius:var(--r-lg);
+}
+.state-icon{ width:40px; height:40px; color:var(--dq-badge); margin-bottom:var(--sp-4); }
+.state-empty .state-icon{ color:var(--text-muted); }
+/* ⚠️ 用 --font-sans 而非 --font-logo：alimama-subset 不含「暂」字形，
+   用 logo 字体会让「数据暂时无法加载」出现字体混排。已实测子集缺字。 */
+.state-title{ font:700 var(--fs-h2)/1.3 var(--font-sans); margin-bottom:var(--sp-3); }
+.state-desc {
+  font-size:var(--fs-md); color:var(--text-secondary);
+  max-width:52ch; margin:0 auto var(--sp-3);
+}
+.state-hint {
+  font-size:var(--fs-sm); color:var(--text-muted);
+  max-width:60ch; margin:0 auto var(--sp-6);
+}
+.state-hint:empty{ display:none; }
+.btn-retry{
+  display:inline-flex; align-items:center; gap:var(--sp-2);
+  min-height:44px; padding:var(--sp-2) var(--sp-5);
+  font-family:inherit; font-size:var(--fs-md); font-weight:600;
+  color:var(--text-on-brand); background:var(--brand);
+  border:0; border-radius:var(--r-md); cursor:pointer;
+}
+.btn-retry svg{ width:16px; height:16px; }
+.btn-retry:focus-visible{ outline:2px solid var(--focus-ring); outline-offset:2px; }
+@media (hover:hover){ .btn-retry:hover{ background:var(--brand-hover); } }
+.btn-retry:active{ background:var(--brand-dim); }
+
+.state-inline{
+  padding:var(--sp-6) var(--sp-4); text-align:center;
+  font-size:var(--fs-sm); color:var(--text-muted);
+}
+
+/* ========================== 杯赛占位页 =================================== */
+.placeholder-msg{
+  padding:var(--sp-12) var(--sp-6);
+  text-align:center; color:var(--text-secondary);
+  background:var(--bg-surface);
+  border:1px solid var(--border-default);
+  border-radius:var(--r-lg);
+}
+.placeholder-icon{ width:3.5rem; height:3.5rem; color:var(--text-muted); margin-bottom:var(--sp-4); }
+.section-title{
+  font-family:var(--font-logo); font-size:var(--fs-h2); font-weight:700;
+  line-height:1.3; margin-bottom:var(--sp-3);
+}
+.placeholder-msg p{ max-width:400px; margin:0 auto var(--sp-5); line-height:1.8; }
+.countdown-hint{ font-size:var(--fs-sm); color:var(--text-muted); }
+[role="tabpanel"]:focus-visible{
+  outline:2px solid var(--focus-ring);
+  outline-offset:-2px;   /* 面板尺寸大，外扩会被 overflow:auto 裁掉 */
+}
+
+/* ============================== Footer ================================== */
+.site-footer{
+  margin-top:var(--sp-6);
+  padding:var(--sp-4) 0;
+  border-top:1px solid var(--border-default);
+  text-align:center; font-size:var(--fs-xs); color:var(--text-muted);
+}
+.footer-sub{ margin-top:var(--sp-1); font-size:var(--fs-2xs); }
+
+/* ========================== 回到顶部（仅移动端）======================== */
+.back-to-top{
+  display:none;
+  position:fixed; right:var(--sp-4); bottom:var(--sp-4);
+  width:44px; height:44px; border-radius:var(--r-pill);
+  background:var(--bg-elevated); color:var(--text-primary);
+  border:1px solid var(--border-default);
+  box-shadow:var(--shadow-md); cursor:pointer; z-index:20;
+}
+.back-to-top svg{ width:20px; height:20px; }
+.back-to-top:focus-visible{ outline:2px solid var(--focus-ring); outline-offset:2px; }
+
+/* =========================== 滚动条 ===================================== */
+::-webkit-scrollbar{ width:8px; height:8px; }
+::-webkit-scrollbar-track{ background:var(--bg-base); }
+::-webkit-scrollbar-thumb{ background:var(--border-default); border-radius:4px; }
+::-webkit-scrollbar-thumb:hover{ background:var(--border-strong); }
+
+/* ============================ 响应式 ==================================== */
+@media (max-width:768px){
+  .app-container{ padding:var(--sp-3) 12px var(--sp-6); }
+
+  /* ❗解除容器内部滚动：移动端是卡片态，thead 已隐藏，sticky 无意义，
+     嵌套滚动只剩「滑到底滑不动」的坏处 */
+  .table-wrapper{
+    max-height:none;
+    overflow:visible;
+    overscroll-behavior:auto;
+  }
+  .data-table thead th{ position:static; }
+
+  .data-table tbody tr{ transition:none; }
+  .back-to-top{ display:flex; align-items:center; justify-content:center; }
+  .back-to-top[hidden]{ display:none !important; }
+  .site-footer{ padding-bottom:76px; }
+
+  .legend-item{ align-items:flex-start; }
+  .legend-swatch{ min-width:72px; padding-top:2px; }
+
+  /* -------- GoAT 卡片化（3 行网格，7 个 td 显式落位）-------- */
+  #goat-table thead{ display:none; }
+  #goat-table, #goat-table tbody{ display:block; width:100%; }
+  #goat-table tr{
+    display:grid;
+    grid-template-columns:2.25rem minmax(0,1fr) 5rem;   /* ❗第三列固定，防队名可用宽度逐行抖动 */
+    grid-template-rows:auto auto auto;
+    column-gap:var(--sp-3); row-gap:2px;
+    padding:var(--sp-3);
+    border-bottom:1px solid var(--border-subtle);
+  }
+  #goat-table td{ display:block; padding:0; border:0; min-width:0; overflow:visible; text-overflow:clip; }
+  #goat-table td:nth-child(1){ grid-area:1/1/4/2; align-self:center; }
+  #goat-table td:nth-child(2){ grid-area:1/2/2/3; font-size:var(--fs-md); }
+  #goat-table td:nth-child(3){ grid-area:2/2/3/3; font-size:var(--fs-sm); color:var(--text-muted); }
+  #goat-table td:nth-child(4){ grid-area:3/2/4/3; font-size:var(--fs-sm); text-align:left; }
+  #goat-table td:nth-child(5){ grid-area:3/3/4/4; font-size:var(--fs-sm); text-align:right; }
+  #goat-table td:nth-child(6){ grid-area:1/3/2/4; font-size:var(--fs-lg); font-weight:700; text-align:right; }
+  #goat-table td:nth-child(7){ grid-area:2/3/3/4; font-size:var(--fs-sm); text-align:right; }
+  /* 卡片态 thead 已隐藏 → 必须用 ::before 补列义 */
+  #goat-table td:nth-child(4)::before{ content:'历史 · '; color:var(--text-muted); }
+  #goat-table td:nth-child(5)::before{ content:'本季 · '; color:var(--text-muted); }
+  #goat-table td:nth-child(2),
+  #goat-table td:nth-child(3){ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  #goat-table .cell-sub{ display:none; }          /* 移动端省略「得分+排名分」明细 */
+  /* 卡片态 .cell-main 改行内，让 ::before 标签与数值同行（「历史 · 8258」） */
+  #goat-table .cell-main{ display:inline; font-size:var(--fs-sm); }
+  #goat-table .row-sponsor > td:first-child,
+  #goat-table .row-inactive > td:first-child{ box-shadow:none; }
+  #goat-table tr.row-sponsor,
+  #goat-table tr.row-inactive{ border-left:3px solid var(--brand-dim); }
+  #goat-table tr.row-sponsor{ border-left-color:var(--brand); }
+  #goat-table tr.row-dq{ border-left-color:var(--border-strong); }
+}
+
+@media (max-width:480px){
+  :root{ --fs-table:0.8125rem; --fs-sm:0.75rem; }
+
+  .logo{ font-size:1.375rem; }
+  .tab-btn{ font-size:var(--fs-sm); padding:var(--sp-3) var(--sp-2); }
+  .badge-coming{ display:none; }
+
+  /* -------- 赛季榜卡片化（2 行网格）-------- */
+  #season-table thead{ display:none; }
+  #season-table, #season-table tbody{ display:block; width:100%; }
+  #season-table tr{
+    display:grid;
+    grid-template-columns:2rem minmax(0,1fr) 4.5rem;
+    grid-template-rows:auto auto;
+    column-gap:var(--sp-3); align-items:center;
+    padding:var(--sp-3);
+    border-bottom:1px solid var(--border-subtle);
+  }
+  #season-table td{ display:block; padding:0; border:0; min-width:0; overflow:visible; text-overflow:clip; }
+  #season-table td:nth-child(1){ grid-area:1/1/3/2; }
+  #season-table td:nth-child(2){
+    grid-area:1/2/2/3; font-size:var(--fs-md);
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  }
+  #season-table td:nth-child(3){ grid-area:2/2/3/4; font-size:var(--fs-sm); color:var(--text-muted); }
+  #season-table td:nth-child(4){ grid-area:1/3/2/4; font-size:var(--fs-lg); font-weight:700; text-align:right; }
+  #season-table .row-sponsor > td:first-child{ box-shadow:none; }
+  #season-table tr.row-sponsor{ border-left:3px solid var(--brand); }
+  #season-table tr.row-dq{ border-left-color:var(--border-strong); }
+}
+
+/* ============================ 打印 ====================================== */
+@media print{
+  body{ background:#fff; color:#000; font-size:11pt; }
+  .ambient,
+  .tab-nav, .legend, .filter-bar, .back-to-top,
+  .pulse-dot, .tagline{ display:none !important; }
+
+  .tab-content:not(.active){ display:none !important; }
+  .tab-content{ animation:none !important; }
+
+  /* 解除滚动容器，让全部行都打印出来 */
+  .table-wrapper{
+    max-height:none !important; overflow:visible !important;
+    background:#fff !important; border-color:#ccc !important; box-shadow:none !important;
+  }
+  .data-table thead th{
+    position:static !important; box-shadow:none !important;
+    border-bottom:1px solid #999 !important;
+    background:#eee !important; color:#333 !important;
+  }
+  .data-table th .th-main{ color:#333 !important; }
+  .data-table th .th-sub{ color:#666 !important; }
+
+  /* ❗防御：若打印命中窄屏断点，强制恢复表格布局 */
+  .data-table, .data-table tbody{ display:table !important; width:100% !important; }
+  .data-table tr{ display:table-row !important; border:0 !important; }
+  .data-table td, .data-table th{ display:table-cell !important; padding:4px 6px !important; }
+  .data-table thead{ display:table-header-group !important; }
+  .data-table td::before{ content:none !important; }
+  .data-table td{ color:#333 !important; border-color:#ddd !important; }
+
+  /* 斑马纹转灰度可辨 */
+  #goat-table tbody tr:nth-child(even){ background:#f2f2f2 !important; }
+  /* 三甲筹码改白底黑字 + 描边（金属色黑白打印会变成难分辨的灰块） */
+  .rank-chip{ background:#fff !important; color:#000 !important; box-shadow:inset 0 0 0 1px #666 !important; }
+  .row-sponsor > td:first-child{ box-shadow:none !important; }
+  .cell-sub{ display:block !important; color:#666 !important; }
+
+  .site-header{ background:#f9f9f9 !important; border-color:#ccc !important; box-shadow:none !important; }
+  .site-footer{ border-color:#ccc !important; color:#555 !important; }
+  .print-only{ display:block !important; }
+  .print-footer, .print-legend{ margin-top:8pt; font-size:9pt; color:#555 !important; }
+}
+
+/* ===================== prefers-reduced-motion =========================== */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important; animation-iteration-count:1 !important;
+    transition-duration:.01ms !important; scroll-behavior:auto !important;
+  }
+  /* ❗必须同时置 opacity:1，否则骨架屏会停在 opacity:0 完全不可见 */
+  .sk{ animation:none; background:var(--bg-elevated); }
+  .sk-row{ opacity:1; animation:none; }
+  .ambient::before{ display:none; }
 }
