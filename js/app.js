@@ -589,6 +589,9 @@
                 : '#' + tabName;
             history.replaceState(null, '', url);
         }
+
+        // 广播 Tab 切换（杯赛模块据此懒加载/隐藏榜单专用控件，见 js/cup.js）
+        document.dispatchEvent(new CustomEvent('zbl:tabchange', { detail: { tab: tabName } }));
     }
 
     function syncTabFromHash() {

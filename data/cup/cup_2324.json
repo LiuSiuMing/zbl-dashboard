@@ -1,0 +1,606 @@
+{
+ "season": "2324",
+ "label": "23/24",
+ "rounds": [
+  "R64",
+  "R32",
+  "R16",
+  "R08",
+  "R04",
+  "R02"
+ ],
+ "round_labels": {
+  "R64": "64强",
+  "R32": "32强",
+  "R16": "16强",
+  "R08": "8强",
+  "R04": "半决赛",
+  "R02": "决赛"
+ },
+ "champion": {
+  "fplid": "32969",
+  "zid": "ZID000002",
+  "name": "僵尸平"
+ },
+ "match_count": 34,
+ "matches": [
+  {
+   "round": "R64",
+   "id": "1",
+   "a": {
+    "fplid": "5897952",
+    "zid": "ZID000026",
+    "name": "僵尸翼"
+   },
+   "b": {
+    "fplid": "5585096",
+    "zid": "ZID000033",
+    "name": "僵尸扣"
+   },
+   "winner": "a",
+   "winner_fplid": "5897952",
+   "feeds_into": "R32|13"
+  },
+  {
+   "round": "R64",
+   "id": "2",
+   "a": {
+    "fplid": "7450178",
+    "zid": "ZID000028",
+    "name": "僵尸场长"
+   },
+   "b": {
+    "fplid": "5484857",
+    "zid": "ZID000030",
+    "name": "僵尸虎"
+   },
+   "winner": "a",
+   "winner_fplid": "7450178",
+   "feeds_into": "R32|5"
+  },
+  {
+   "round": "R64",
+   "id": "3",
+   "a": {
+    "fplid": "5587524",
+    "zid": "ZID000029",
+    "name": "僵尸G"
+   },
+   "b": {
+    "fplid": "14335",
+    "zid": "ZID000035",
+    "name": "僵尸荷"
+   },
+   "winner": "a",
+   "winner_fplid": "5587524",
+   "feeds_into": "R32|10"
+  },
+  {
+   "round": "R32",
+   "id": "1",
+   "a": {
+    "fplid": "5570766",
+    "zid": "ZID000001",
+    "name": "僵尸橘"
+   },
+   "b": {
+    "fplid": "19625",
+    "zid": "ZID000034",
+    "name": "僵尸背头"
+   },
+   "winner": "a",
+   "winner_fplid": "5570766",
+   "feeds_into": "R16|1"
+  },
+  {
+   "round": "R32",
+   "id": "2",
+   "a": {
+    "fplid": "32969",
+    "zid": "ZID000002",
+    "name": "僵尸平"
+   },
+   "b": {
+    "fplid": "5632303",
+    "zid": "ZID000003",
+    "name": "僵尸哀"
+   },
+   "winner": "a",
+   "winner_fplid": "32969",
+   "feeds_into": "R16|2"
+  },
+  {
+   "round": "R32",
+   "id": "3",
+   "a": {
+    "fplid": "5672143",
+    "zid": "ZID000022",
+    "name": "僵尸驰"
+   },
+   "b": {
+    "fplid": "5489262",
+    "zid": "ZID000011",
+    "name": "僵尸哈"
+   },
+   "winner": "a",
+   "winner_fplid": "5672143",
+   "feeds_into": "R16|2"
+  },
+  {
+   "round": "R32",
+   "id": "4",
+   "a": {
+    "fplid": "7462829",
+    "zid": "ZID000015",
+    "name": "Lia Lee"
+   },
+   "b": {
+    "fplid": "5602147",
+    "zid": "ZID000005",
+    "name": "僵尸豆"
+   },
+   "winner": "a",
+   "winner_fplid": "7462829",
+   "feeds_into": "R16|3"
+  },
+  {
+   "round": "R32",
+   "id": "5",
+   "a": {
+    "fplid": "7450178",
+    "zid": "ZID000028",
+    "name": "僵尸场长"
+   },
+   "b": {
+    "fplid": "5642039",
+    "zid": "ZID000006",
+    "name": "僵尸班"
+   },
+   "winner": "a",
+   "winner_fplid": "7450178",
+   "feeds_into": "R16|1"
+  },
+  {
+   "round": "R32",
+   "id": "6",
+   "a": {
+    "fplid": "5933397",
+    "zid": "ZID000008",
+    "name": "僵尸条"
+   },
+   "b": {
+    "fplid": "5682358",
+    "zid": "ZID000009",
+    "name": "僵尸歪"
+   },
+   "winner": "a",
+   "winner_fplid": "5933397",
+   "feeds_into": "R16|3"
+  },
+  {
+   "round": "R32",
+   "id": "7",
+   "a": {
+    "fplid": "5699416",
+    "zid": "ZID000010",
+    "name": "僵尸果"
+   },
+   "b": {
+    "fplid": "5591327",
+    "zid": "ZID000032",
+    "name": "僵尸青森"
+   },
+   "winner": "a",
+   "winner_fplid": "5699416",
+   "feeds_into": "R16|6"
+  },
+  {
+   "round": "R32",
+   "id": "8",
+   "a": {
+    "fplid": "16624",
+    "zid": "ZID000004",
+    "name": "僵尸机"
+   },
+   "b": {
+    "fplid": "30206",
+    "zid": "ZID000023",
+    "name": "僵尸色"
+   },
+   "winner": "a",
+   "winner_fplid": "16624",
+   "feeds_into": "R16|4"
+  },
+  {
+   "round": "R32",
+   "id": "9",
+   "a": {
+    "fplid": "566574",
+    "zid": "ZID000007",
+    "name": "僵尸发"
+   },
+   "b": {
+    "fplid": "18366",
+    "zid": "ZID000021",
+    "name": "僵尸炮"
+   },
+   "winner": "a",
+   "winner_fplid": "566574",
+   "feeds_into": "R16|5"
+  },
+  {
+   "round": "R32",
+   "id": "10",
+   "a": {
+    "fplid": "5587524",
+    "zid": "ZID000029",
+    "name": "僵尸G"
+   },
+   "b": {
+    "fplid": "6367875",
+    "zid": "ZID000019",
+    "name": "僵尸熊"
+   },
+   "winner": "a",
+   "winner_fplid": "5587524",
+   "feeds_into": "R16|6"
+  },
+  {
+   "round": "R32",
+   "id": "11",
+   "a": {
+    "fplid": "593651",
+    "zid": "ZID000018",
+    "name": "僵尸吴"
+   },
+   "b": {
+    "fplid": "514859",
+    "zid": "ZID000016",
+    "name": "僵尸ginger"
+   },
+   "winner": "a",
+   "winner_fplid": "593651",
+   "feeds_into": "R16|4"
+  },
+  {
+   "round": "R32",
+   "id": "12",
+   "a": {
+    "fplid": "6834716",
+    "zid": "ZID000027",
+    "name": "僵尸软糖"
+   },
+   "b": {
+    "fplid": "4753463",
+    "zid": "ZID000013",
+    "name": "僵尸K"
+   },
+   "winner": "a",
+   "winner_fplid": "6834716",
+   "feeds_into": "R16|5"
+  },
+  {
+   "round": "R32",
+   "id": "13",
+   "a": {
+    "fplid": "5587616",
+    "zid": "ZID000017",
+    "name": "僵尸andy"
+   },
+   "b": {
+    "fplid": "5897952",
+    "zid": "ZID000026",
+    "name": "僵尸翼"
+   },
+   "winner": "a",
+   "winner_fplid": "5587616",
+   "feeds_into": "R16|7"
+  },
+  {
+   "round": "R32",
+   "id": "14",
+   "a": {
+    "fplid": "5569200",
+    "zid": "ZID000024",
+    "name": "僵尸波"
+   },
+   "b": {
+    "fplid": "5578965",
+    "zid": "ZID000020",
+    "name": "僵尸胡"
+   },
+   "winner": "a",
+   "winner_fplid": "5569200",
+   "feeds_into": "R16|7"
+  },
+  {
+   "round": "R32",
+   "id": "15",
+   "a": {
+    "fplid": "5609957",
+    "zid": "ZID000012",
+    "name": "僵尸扎"
+   },
+   "b": {
+    "fplid": "13316",
+    "zid": "ZID000031",
+    "name": "僵尸W²"
+   },
+   "winner": "a",
+   "winner_fplid": "5609957",
+   "feeds_into": "R16|8"
+  },
+  {
+   "round": "R32",
+   "id": "16",
+   "a": {
+    "fplid": "5669712",
+    "zid": "ZID000014",
+    "name": "僵尸三儿"
+   },
+   "b": {
+    "fplid": "5900002",
+    "zid": "ZID000025",
+    "name": "僵尸锤"
+   },
+   "winner": "a",
+   "winner_fplid": "5669712",
+   "feeds_into": "R16|8"
+  },
+  {
+   "round": "R16",
+   "id": "1",
+   "a": {
+    "fplid": "5570766",
+    "zid": "ZID000001",
+    "name": "僵尸橘"
+   },
+   "b": {
+    "fplid": "7450178",
+    "zid": "ZID000028",
+    "name": "僵尸场长"
+   },
+   "winner": "a",
+   "winner_fplid": "5570766",
+   "feeds_into": "R08|1"
+  },
+  {
+   "round": "R16",
+   "id": "2",
+   "a": {
+    "fplid": "32969",
+    "zid": "ZID000002",
+    "name": "僵尸平"
+   },
+   "b": {
+    "fplid": "5672143",
+    "zid": "ZID000022",
+    "name": "僵尸驰"
+   },
+   "winner": "a",
+   "winner_fplid": "32969",
+   "feeds_into": "R08|1"
+  },
+  {
+   "round": "R16",
+   "id": "3",
+   "a": {
+    "fplid": "7462829",
+    "zid": "ZID000015",
+    "name": "Lia Lee"
+   },
+   "b": {
+    "fplid": "5933397",
+    "zid": "ZID000008",
+    "name": "僵尸条"
+   },
+   "winner": "a",
+   "winner_fplid": "7462829",
+   "feeds_into": "R08|2"
+  },
+  {
+   "round": "R16",
+   "id": "4",
+   "a": {
+    "fplid": "16624",
+    "zid": "ZID000004",
+    "name": "僵尸机"
+   },
+   "b": {
+    "fplid": "593651",
+    "zid": "ZID000018",
+    "name": "僵尸吴"
+   },
+   "winner": "b",
+   "winner_fplid": "593651",
+   "feeds_into": "R08|3"
+  },
+  {
+   "round": "R16",
+   "id": "5",
+   "a": {
+    "fplid": "566574",
+    "zid": "ZID000007",
+    "name": "僵尸发"
+   },
+   "b": {
+    "fplid": "6834716",
+    "zid": "ZID000027",
+    "name": "僵尸软糖"
+   },
+   "winner": "b",
+   "winner_fplid": "6834716",
+   "feeds_into": "R08|4"
+  },
+  {
+   "round": "R16",
+   "id": "6",
+   "a": {
+    "fplid": "5699416",
+    "zid": "ZID000010",
+    "name": "僵尸果"
+   },
+   "b": {
+    "fplid": "5587524",
+    "zid": "ZID000029",
+    "name": "僵尸G"
+   },
+   "winner": "b",
+   "winner_fplid": "5587524",
+   "feeds_into": "R08|4"
+  },
+  {
+   "round": "R16",
+   "id": "7",
+   "a": {
+    "fplid": "5587616",
+    "zid": "ZID000017",
+    "name": "僵尸andy"
+   },
+   "b": {
+    "fplid": "5569200",
+    "zid": "ZID000024",
+    "name": "僵尸波"
+   },
+   "winner": "a",
+   "winner_fplid": "5587616",
+   "feeds_into": "R08|2"
+  },
+  {
+   "round": "R16",
+   "id": "8",
+   "a": {
+    "fplid": "5609957",
+    "zid": "ZID000012",
+    "name": "僵尸扎"
+   },
+   "b": {
+    "fplid": "5669712",
+    "zid": "ZID000014",
+    "name": "僵尸三儿"
+   },
+   "winner": "a",
+   "winner_fplid": "5609957",
+   "feeds_into": "R08|3"
+  },
+  {
+   "round": "R08",
+   "id": "1",
+   "a": {
+    "fplid": "5570766",
+    "zid": "ZID000001",
+    "name": "僵尸橘"
+   },
+   "b": {
+    "fplid": "32969",
+    "zid": "ZID000002",
+    "name": "僵尸平"
+   },
+   "winner": "b",
+   "winner_fplid": "32969",
+   "feeds_into": "R04|1"
+  },
+  {
+   "round": "R08",
+   "id": "2",
+   "a": {
+    "fplid": "7462829",
+    "zid": "ZID000015",
+    "name": "Lia Lee"
+   },
+   "b": {
+    "fplid": "5587616",
+    "zid": "ZID000017",
+    "name": "僵尸andy"
+   },
+   "winner": "b",
+   "winner_fplid": "5587616",
+   "feeds_into": "R04|2"
+  },
+  {
+   "round": "R08",
+   "id": "3",
+   "a": {
+    "fplid": "593651",
+    "zid": "ZID000018",
+    "name": "僵尸吴"
+   },
+   "b": {
+    "fplid": "5609957",
+    "zid": "ZID000012",
+    "name": "僵尸扎"
+   },
+   "winner": "b",
+   "winner_fplid": "5609957",
+   "feeds_into": "R04|2"
+  },
+  {
+   "round": "R08",
+   "id": "4",
+   "a": {
+    "fplid": "5587524",
+    "zid": "ZID000029",
+    "name": "僵尸G"
+   },
+   "b": {
+    "fplid": "6834716",
+    "zid": "ZID000027",
+    "name": "僵尸软糖"
+   },
+   "winner": "a",
+   "winner_fplid": "5587524",
+   "feeds_into": "R04|1"
+  },
+  {
+   "round": "R04",
+   "id": "1",
+   "a": {
+    "fplid": "32969",
+    "zid": "ZID000002",
+    "name": "僵尸平"
+   },
+   "b": {
+    "fplid": "5587524",
+    "zid": "ZID000029",
+    "name": "僵尸G"
+   },
+   "winner": "a",
+   "winner_fplid": "32969",
+   "feeds_into": "R02|1"
+  },
+  {
+   "round": "R04",
+   "id": "2",
+   "a": {
+    "fplid": "5587616",
+    "zid": "ZID000017",
+    "name": "僵尸andy"
+   },
+   "b": {
+    "fplid": "5609957",
+    "zid": "ZID000012",
+    "name": "僵尸扎"
+   },
+   "winner": "b",
+   "winner_fplid": "5609957",
+   "feeds_into": "R02|1"
+  },
+  {
+   "round": "R02",
+   "id": "1",
+   "a": {
+    "fplid": "32969",
+    "zid": "ZID000002",
+    "name": "僵尸平"
+   },
+   "b": {
+    "fplid": "5609957",
+    "zid": "ZID000012",
+    "name": "僵尸扎"
+   },
+   "winner": "a",
+   "winner_fplid": "32969",
+   "feeds_into": null
+  }
+ ]
+}

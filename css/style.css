@@ -810,3 +810,126 @@ body {
   .sk-row{ opacity:1; animation:none; }
   .ambient::before{ display:none; }
 }
+
+/* ==========================================================================
+   杯赛：历史杯赛对阵图（js/cup.js）
+   桌面：列=轮次（左→右晋级），行=feeds_into 递归中点定位，绝对定位 + SVG 连线
+   ≤768px：分轮折叠列表（不硬塞宽图）
+   ========================================================================== */
+.cup-head{ padding:var(--sp-4) var(--sp-4) 0; display:flex; flex-wrap:wrap; align-items:center; gap:var(--sp-3); }
+.cup-seasons{ display:flex; gap:6px; margin-left:auto; flex-wrap:wrap; }
+.cup-season-btn{
+  font:600 var(--fs-sm)/1 var(--font-sans); color:var(--text-secondary);
+  background:var(--bg-elevated); border:1px solid var(--border-default);
+  border-radius:var(--r-pill); padding:8px 14px; cursor:pointer;
+  transition:color var(--dur-fast) var(--ease-std), background var(--dur-fast) var(--ease-std), border-color var(--dur-fast) var(--ease-std);
+}
+.cup-season-btn[aria-pressed="true"]{ color:var(--text-on-brand); background:var(--brand); border-color:var(--brand); font-weight:700; }
+.cup-season-btn:focus-visible{ outline:2px solid var(--focus-ring); outline-offset:2px; }
+.cup-summary{ width:100%; margin:0; font-size:var(--fs-sm); color:var(--text-muted); }
+
+/* 冠军横幅 */
+.cup-champ{
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+  margin:var(--sp-3) var(--sp-4) 0; padding:10px 14px;
+  background:var(--bg-elevated); border:1px solid rgba(255,201,60,.35);
+  border-radius:var(--r-md);
+}
+.cup-champ .cup-champ-crown{ width:18px; height:18px; color:var(--medal-gold); flex:none; }
+.cup-champ-label{ font-size:var(--fs-sm); color:var(--text-secondary); }
+.cup-champ-name{ font-size:var(--fs-lg); font-weight:700; color:var(--medal-gold); }
+
+/* 杯赛图例 */
+.cup-legend{
+  list-style:none; margin:var(--sp-3) var(--sp-4) 0; padding:var(--sp-3);
+  border:1px solid var(--border-subtle); border-radius:var(--r-md);
+  font-size:var(--fs-xs); color:var(--text-muted); display:grid; gap:6px;
+}
+.cup-legend code{ font-family:var(--font-mono); font-size:10px; color:var(--text-secondary); }
+.cup-legend-icon{ width:12px; height:12px; color:var(--signal-up); vertical-align:-1px; }
+.cup-legend-icon.cup-legend-crown{ width:14px; height:14px; color:var(--medal-gold); }
+.cup-legend-sample.win{ color:var(--text-primary); font-weight:600; }
+.cup-legend-sample.champ{ color:var(--medal-gold); font-weight:700; }
+.cup-legend-bye{ font-family:var(--font-mono); }
+
+/* 加载 / 错误态 */
+.cup-loading{ padding:48px 16px; display:flex; align-items:center; justify-content:center; gap:8px; color:var(--text-secondary); font-size:var(--fs-sm); }
+.cup-error{ padding:48px 16px; text-align:center; }
+.cup-error .state-icon{ width:28px; height:28px; color:var(--dq-badge); }
+.cup-error .state-title{ margin:10px 0 4px; font-size:var(--fs-h2); color:var(--text-primary); font-family:var(--font-sans); }
+.cup-error .state-desc{ max-width:420px; margin:0 auto 16px; font-size:var(--fs-sm); color:var(--text-muted); line-height:1.7; }
+
+/* ---- 桌面对阵图 ---- */
+.cup-bracket{ overflow:auto; padding:0 var(--sp-3) var(--sp-4); margin-top:var(--sp-2); }
+.cup-bracket:focus-visible{ outline:2px solid var(--focus-ring); outline-offset:-2px; }
+.cup-colheads{ position:sticky; top:0; z-index:3; height:34px; background:var(--bg-base); box-shadow:0 1px 0 var(--border-subtle); }
+.cup-colhead{
+  position:absolute; top:9px; font-family:var(--font-mono); font-size:var(--fs-xs);
+  letter-spacing:.08em; color:var(--text-th); text-align:center;
+}
+.cup-colhead-champ{ color:var(--medal-gold); }
+.cup-canvas{ position:relative; }
+.cup-links{ position:absolute; inset:0; display:block; }
+.cup-link{ fill:none; stroke:var(--border-default); stroke-width:1.5; }
+.cup-link-champ{ stroke:var(--brand); stroke-width:2; }
+.cup-bye{ fill:none; stroke:var(--border-strong); stroke-width:1; stroke-dasharray:3 4; }
+.cup-bye-label{ font-size:10px; fill:var(--text-muted); font-family:var(--font-sans); }
+
+.cup-card{
+  position:absolute; background:var(--bg-surface); border:1px solid var(--border-default);
+  border-radius:var(--r-sm); box-shadow:var(--shadow-sm);
+  display:flex; flex-direction:column; justify-content:center; gap:1px; padding:2px 8px;
+}
+.cup-card.champ-path{ border-color:rgba(255,122,24,.45); }
+.cup-team{ display:flex; align-items:center; gap:4px; min-width:0; font-size:12px; line-height:1.35; color:var(--text-muted); }
+.cup-team .cup-tname{ min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.cup-team.win{ color:var(--text-primary); font-weight:600; }
+.cup-team.lose{ color:var(--text-muted); }
+.cup-team.cup-empty .cup-tname, .cup-team.cup-pending .cup-tname{ font-style:italic; }
+.cup-win-mark{ width:11px; height:11px; color:var(--signal-up); flex:none; }
+.cup-lose-mark{ width:11px; text-align:center; flex:none; }
+.cup-sponsor{ flex:none; padding:0 4px; font-size:10px; margin-left:2px; }
+.cup-champ-card{ border-color:var(--medal-gold); background:var(--bg-elevated); }
+.cup-champ-card .cup-tname{ color:var(--medal-gold); font-weight:700; }
+.cup-champ-card .cup-champ-crown{ width:14px; height:14px; color:var(--medal-gold); flex:none; }
+.cup-champ-tag{
+  flex:none; margin-left:auto; font-size:10px; font-weight:600;
+  color:var(--text-on-metal); background:var(--medal-gold); border-radius:4px; padding:1px 5px;
+}
+
+/* ---- 移动端分轮列表 ---- */
+.cup-mobile{ display:none; }
+@media (max-width:768px){
+  .cup-head{ padding:var(--sp-3) var(--sp-3) 0; }
+  .cup-seasons{ margin-left:0; }
+  .cup-champ{ margin:var(--sp-3) var(--sp-3) 0; }
+  .cup-legend{ margin:var(--sp-3) var(--sp-3) 0; }
+  .cup-bracket{ display:none; }
+  .cup-mobile{ display:block; padding:var(--sp-3) var(--sp-3) var(--sp-4); }
+  .cup-mround{ border:1px solid var(--border-subtle); border-radius:var(--r-md); margin-bottom:var(--sp-2); background:var(--bg-surface); }
+  .cup-mround-head{
+    list-style:none; display:flex; align-items:center; gap:8px;
+    padding:12px; cursor:pointer; font-size:var(--fs-md); font-weight:600; color:var(--text-primary);
+  }
+  .cup-mround-head::-webkit-details-marker{ display:none; }
+  .cup-mround-count{ margin-left:auto; font-size:var(--fs-xs); color:var(--text-muted); font-weight:400; }
+  .cup-mround-caret{ width:16px; height:16px; color:var(--text-muted); flex:none; transition:transform var(--dur-fast) var(--ease-std); }
+  .cup-mround[open] .cup-mround-caret{ transform:rotate(180deg); }
+  .cup-mlist{ list-style:none; padding:0 var(--sp-3) var(--sp-3); display:grid; gap:8px; }
+  .cup-mcard{
+    position:relative; background:var(--bg-elevated); border:1px solid var(--border-subtle);
+    border-radius:var(--r-sm); padding:6px 52px 6px 10px; display:flex; flex-direction:column; gap:2px;
+  }
+  .cup-mcard.champ-path{ border-color:rgba(255,122,24,.45); }
+  .cup-mcard-no{ position:absolute; top:8px; right:10px; font-family:var(--font-mono); font-size:10px; color:var(--text-muted); }
+  .cup-mcard .cup-team{ font-size:13px; }
+}
+
+/* ---- 打印：对阵图是宽幅绝对布局，打印一律走分轮列表 ---- */
+@media print{
+  .cup-bracket{ display:none !important; }
+  .cup-mobile{ display:block !important; padding:0 !important; }
+  .cup-mround{ break-inside:avoid; border-color:#ccc !important; }
+  .cup-season-btn[aria-pressed="true"]{ background:none !important; color:#000 !important; border-color:#999 !important; }
+  .cup-champ{ border-color:#999 !important; }
+}

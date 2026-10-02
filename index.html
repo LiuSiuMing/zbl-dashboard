@@ -48,6 +48,7 @@
   <symbol id="i-up" viewBox="0 0 12 12" fill="currentColor" stroke="none"><path d="M6 2.5 10.5 9h-9L6 2.5Z"/></symbol>
   <symbol id="i-down" viewBox="0 0 12 12" fill="currentColor" stroke="none"><path d="M6 9.5 1.5 3h9L6 9.5Z"/></symbol>
   <symbol id="i-flat" viewBox="0 0 12 12" fill="currentColor" stroke="none"><rect x="2" y="5.25" width="8" height="1.5" rx=".75"/></symbol>
+  <symbol id="i-check" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5 4.8 9.2 10 3.5"/></symbol>
   <symbol id="i-warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5 21.5 20.5h-19L12 3.5Z"/><path d="M12 9.5v4.5"/><path d="M12 17h.01"/></symbol>
   <symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 8-8 8 8 0 0 0-6.9 4"/><path d="M4 3.5V8h4.5"/></symbol>
   <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.5-4.5"/></symbol>
@@ -86,12 +87,10 @@
       <svg class="tab-icon" aria-hidden="true" focusable="false"><use href="#i-crown"/></svg>
       GoAT 总榜
     </button>
-    <button type="button" class="tab-btn is-disabled" role="tab" id="tab-cup" data-tab="cup"
-            aria-selected="false" aria-controls="content-cup"
-            tabindex="-1" aria-disabled="true" title="GW30 后开放">
+    <button type="button" class="tab-btn" role="tab" id="tab-cup" data-tab="cup"
+            aria-selected="false" aria-controls="content-cup" tabindex="-1">
       <svg class="tab-icon" aria-hidden="true" focusable="false"><use href="#i-trophy"/></svg>
       杯赛
-      <span class="badge-coming">GW30 后开放</span>
     </button>
   </div>
 
@@ -284,15 +283,48 @@
       </div>
     </section>
 
-    <!-- ---------- 杯赛（占位） ---------- -->
+    <!-- ---------- 杯赛：历史杯赛对阵图 ---------- -->
     <section class="tab-content" role="tabpanel" id="content-cup"
              aria-labelledby="tab-cup" tabindex="0" hidden>
-      <div class="placeholder-msg">
-        <svg class="placeholder-icon" aria-hidden="true" focusable="false"><use href="#i-trophy"/></svg>
-        <h2 class="section-title">杯赛专区</h2>
-        <p>杯赛将于 <strong>GW30</strong> 后正式开始，届时此处将展示杯赛对阵及积分。</p>
-        <div class="countdown-hint">敬请期待…</div>
+
+      <div class="cup-head">
+        <h2 class="section-title">历史杯赛对阵图</h2>
+        <div class="cup-seasons" id="cup-seasons" role="group" aria-label="选择杯赛赛季">
+          <button type="button" class="cup-season-btn" data-season="2324" aria-pressed="false">23/24</button>
+          <button type="button" class="cup-season-btn" data-season="2425" aria-pressed="false">24/25</button>
+          <button type="button" class="cup-season-btn" data-season="2526" aria-pressed="true">25/26</button>
+        </div>
+        <p class="cup-summary" id="cup-summary" role="status"></p>
       </div>
+
+      <div class="cup-champ" id="cup-champ" hidden></div>
+
+      <ul class="cup-legend">
+        <li><svg class="cup-legend-icon" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span class="cup-legend-sample win">胜方</span> = 晋级（对勾 + 加粗）；灰字 = 出局</li>
+        <li><svg class="cup-legend-icon cup-legend-crown" aria-hidden="true" focusable="false"><use href="#i-crown"/></svg><span class="cup-legend-sample champ">冠军</span> = 该季冠军；橙色线路 = 冠军的晋级路径</li>
+        <li><span class="cup-legend-bye" aria-hidden="true">┄ 轮空</span> = 该签位本轮无对手，直接晋级下一轮</li>
+        <li>对阵线路按数据 <code>feeds_into</code> 逐场连接，从最左轮次一路追到冠军</li>
+      </ul>
+
+      <div class="cup-loading" id="cup-loading" role="status">
+        <span class="pulse-dot" aria-hidden="true"></span> 加载杯赛数据…
+      </div>
+
+      <div class="cup-error" id="cup-error" hidden>
+        <svg class="state-icon" aria-hidden="true" focusable="false"><use href="#i-warn"/></svg>
+        <p class="state-title">杯赛数据暂时无法加载</p>
+        <p class="state-desc">请检查网络后重试；若持续失败请联系管理员确认 data/cup/ 下的 JSON 文件。</p>
+        <button type="button" class="btn-retry" id="cup-retry">
+          <svg aria-hidden="true" focusable="false"><use href="#i-refresh"/></svg>
+          重新加载
+        </button>
+      </div>
+
+      <!-- 桌面：从左到右对阵图（容器横向滚动容纳宽图） -->
+      <div class="cup-bracket" id="cup-bracket" tabindex="0" hidden></div>
+
+      <!-- 移动端：分轮折叠列表（不硬塞宽图） -->
+      <div class="cup-mobile" id="cup-mobile" hidden></div>
     </section>
 
     <!-- ---------- 打印专用 ---------- -->
@@ -318,5 +350,6 @@
 </button>
 
 <script src="js/app.js"></script>
+<script src="js/cup.js"></script>
 </body>
 </html>
