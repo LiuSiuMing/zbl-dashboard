@@ -241,6 +241,7 @@
 
         const rows = entries.map((entry, idx) => ({
             rank: ranks[idx],
+            entry_id: entry.entry_id,            // 供 js/lineups.js 打开「本 GW 阵容」弹层
             zid: entry.zid,
             team_name: entry.team_name,
             manager_name: entry.manager_name || '',
@@ -252,6 +253,7 @@
 
         const gwNum = (currentData.meta && currentData.meta.current_gw) || null;
         const gwLabel = gwNum ? `第 ${gwNum} 轮` : '本轮';
+        if (gwNum) document.documentElement.dataset.gw = String(gwNum);   // 阵容弹层据此定位 gw{n}.json
 
         // 一次性 innerHTML 批量插入（105 行不逐行 appendChild、不逐行绑事件）
         tbody.innerHTML = rows.map(r => {
@@ -268,7 +270,7 @@
             const hasGw = !r.dq && r.event_total !== null && r.event_total !== undefined && r.event_total !== '' && isFinite(Number(r.event_total));
             const gwTitle = hasGw ? `${gwLabel}得分 ${Number(r.event_total)}` : `${gwLabel}得分暂无数据`;
 
-            return `<tr class="${cls.join(' ')}" data-search="${search}">
+            return `<tr class="${cls.join(' ')}" data-search="${search}" data-entry-id="${r.entry_id == null ? '' : r.entry_id}">
                 <td class="rank-cell${rankCls}">${rankChipHTML(r.rank)}</td>
                 <td class="team-cell" title="${escHTML(r.team_name)}"><span class="team-name">${escHTML(r.team_name)}</span>${badges}</td>
                 <td class="manager-cell">${escHTML(r.manager_name || '—')}</td>
@@ -596,6 +598,8 @@
 
     function syncTabFromHash() {
         const h = (location.hash || '').replace('#', '');
+        // #entry=<id> 是「本 GW 阵容」弹层的深链，不属于 Tab 状态：放行，别重定向、别清搜索框
+        if (h.indexOf('entry=') === 0) return;
         const btn = h ? document.getElementById('tab-' + h) : null;
         // ❗拒绝禁用 Tab：杯赛不可通过 URL 激活
         if (!btn || btn.getAttribute('aria-disabled') === 'true') {

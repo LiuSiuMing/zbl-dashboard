@@ -1,0 +1,615 @@
+/* ==========================================================================
+   ZBL 僵尸联赛看板 — 「本 GW 阵容」弹层样式（css/lineups.css）
+   沿用站点既有令牌（暗夜球场 / 品牌橘 #FF7A18）。
+   ─────────────────────────────────────────────────────────────────────────
+   色彩策略（复审问题 #6 的答案）
+   · 能用既有变量的一律用变量：--bg-base / --bg-surface / --bg-elevated /
+     --bg-inset / --border-* / --text-* / --brand / --signal-up / --medal-gold。
+   · 站点调色板是「石墨中性 + 品牌橘」，没有①草皮绿 ②人物位灰绿 ③骨架微光
+     这三类层次；它们集中在文件顶部声明为 --lu-* 局部 token，只在本文件内使用。
+   · 小字（≤12px）统一用 --text-th，不用 --text-muted：
+     muted 在球场最亮草纹带只有 3.90:1（不达标），text-th 实测 4.97:1。
+   ========================================================================== */
+
+/* -------- 局部层次色（唯一新增色板，共 12 个，全部限定用途）----------------
+   --lu-pitch-*  : 草皮色阶。现有 --bg-* 全是中性石墨，直接拿来做球场会发灰、
+                   与暗夜球场主题的绿调不符。4 档：描边 / 顶区 / 中场 / 门将区。
+   --lu-portrait-bg : 照片未解码时的底，防白闪（不能用 --bg-*，会让头像与卡片同色）。
+   --lu-slot-*   : 无照片球员的「人物位」渐变。必须在球场底色上可辨，
+                   且比 --bg-elevated 更冷（避免看起来像一块 UI 卡片）。
+   --lu-sk-*     : 骨架微光两档。--bg-elevated 与 --bg-surface 只差 5%，
+                   做 shimmer 看不出流动，故需要一档明确的高光。
+   --lu-on-green : 「已顶上」徽章的绿底。--signal-up 是文字色，站点没有绿色表面色。
+   --lu-scrim    : 遮罩。用 rgba 才能透出场地氛围，站点无等值变量。
+   -------------------------------------------------------------------------- */
+:root{
+  --lu-pitch-edge:#1E2E26;
+  --lu-pitch-top:#14241C;
+  --lu-pitch-mid:#0D1712;
+  --lu-pitch-btm:#0A120E;
+  --lu-portrait-bg:#1A241F;
+  --lu-slot-top:#2E3D35;
+  --lu-slot-btm:#1D2823;
+  --lu-sk-base:#232C28;
+  --lu-sk-hi:#313D37;
+  --lu-on-green:#15301F;
+  --lu-scrim:rgba(5,8,7,.78);
+}
+
+/* ============================ 触发：整行可点 ============================ */
+/* 只有 JS 打过 data-entry-id 的非 DQ 行会拿到 .lu-row（DQ 行永不加） */
+.lu-row{ cursor:pointer; position:relative; }
+@media (hover:hover){
+  .lu-row:hover .gw-score-cell{ color:var(--brand); }
+}
+.lu-row:focus-visible{
+  outline:2px solid var(--focus-ring);
+  outline-offset:-2px;          /* 内嵌：行在表格里，外扩会被容器裁掉 */
+}
+.lu-row:focus-visible .gw-score-cell{ color:var(--brand); }
+/* 移动端行是 grid，outline 内嵌同样适用 */
+@media (max-width:768px){
+  .lu-row:focus-visible{ outline-offset:-3px; }
+}
+
+/* ============================ 遮罩 + 容器 ============================== */
+.lu-overlay{
+  position:fixed; inset:0; z-index:100;
+  display:none;
+  align-items:center; justify-content:center;
+  padding:var(--sp-6);
+  background:var(--lu-scrim);
+  overscroll-behavior:contain;
+}
+.lu-overlay.is-open{ display:flex; }
+.lu-overlay.is-open .lu-dialog{
+  animation:lu-dialog-in var(--dur-base) var(--ease-out) both;
+}
+@keyframes lu-dialog-in{
+  from{ opacity:0; transform:translateY(12px) scale(.985); }
+  to{ opacity:1; transform:none; }
+}
+
+.lu-dialog{
+  position:relative;
+  display:flex; flex-direction:column;
+  width:min(100%, 880px);
+  max-height:min(92dvh, 940px);
+  background:var(--bg-surface);
+  border:1px solid var(--border-default);
+  border-radius:16px;
+  box-shadow:var(--shadow-lg);
+  overflow:hidden;
+}
+.lu-dialog:focus,
+.lu-dialog:focus-visible{ outline:none; }   /* 容器只作为焦点落点，不要给整块弹层套焦点环 */
+
+.lu-scroll{
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;
+}
+
+/* 关闭按钮：绝对定位在右上，不随内容滚动 */
+.lu-close{
+  position:absolute; top:10px; right:10px; z-index:3;
+  display:flex; align-items:center; justify-content:center;
+  width:38px; height:38px; padding:0;
+  border-radius:var(--r-pill);
+  background:var(--bg-elevated);
+  border:1px solid var(--border-default);
+  color:var(--text-secondary);
+  cursor:pointer;
+  transition:background var(--dur-fast) var(--ease-std),
+             color var(--dur-fast) var(--ease-std),
+             border-color var(--dur-fast) var(--ease-std);
+}
+.lu-close svg{ width:16px; height:16px; }
+.lu-close:hover{ background:var(--bg-hover); color:var(--text-primary); border-color:var(--border-strong); }
+.lu-close:focus-visible{ outline:2px solid var(--focus-ring); outline-offset:2px; }
+
+/* ============================== 顶部横幅 =============================== */
+/* 直接复用站点 .notice-bar 的语言（bg-elevated + 金色左边 + 次级文字），
+   不再自造橘色渐变，也就少两个硬编码色值。 */
+.lu-banner{
+  display:flex; align-items:flex-start; gap:var(--sp-2);
+  margin:0; padding:9px 52px 9px 12px;
+  font-size:var(--fs-xs); line-height:1.45;
+  color:var(--text-secondary);
+  background:var(--bg-elevated);
+  border-bottom:1px solid var(--border-default);
+  border-left:3px solid var(--medal-gold);
+}
+.lu-banner svg{
+  width:15px; height:15px; flex:none; margin-top:1px;
+  color:var(--medal-gold);
+}
+
+/* ================================ 头部 ================================= */
+.lu-head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:center;
+  gap:var(--sp-3) var(--sp-4);
+  padding:var(--sp-5) 58px var(--sp-3) var(--sp-5);   /* 右留 58px：关闭按钮是绝对定位的 */
+}
+.lu-id{ display:flex; align-items:center; gap:var(--sp-3); min-width:0; }
+.lu-crest{
+  flex:none;
+  display:flex; align-items:center; justify-content:center;
+  width:44px; height:44px;
+  border-radius:12px;
+  font:700 1.125rem/1 var(--font-sans);
+  color:var(--brand);
+  background:var(--brand-tint);
+  border:1px solid rgba(255,122,24,.30);
+}
+.lu-idtext{ min-width:0; }
+.lu-title{
+  margin:0;
+  font:700 1.25rem/1.25 var(--font-sans);      /* 不用 --font-logo：那是只覆盖站名的14KB子集，队名会字形缺失 */
+  color:var(--text-primary);
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+/* 标题会被程序聚焦（tabindex=-1）用于读屏播报，不要焦点环 */
+.lu-title:focus{ outline:none; }
+.lu-sub{
+  margin:3px 0 0;
+  font-size:var(--fs-xs);
+  color:var(--text-th);
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+
+.lu-score{ text-align:right; flex:none; }
+.lu-score-num{
+  display:block;
+  font:700 2rem/1 var(--font-mono);
+  font-variant-numeric:tabular-nums lining-nums;
+  color:var(--brand);
+}
+.lu-score-num small{
+  font-size:var(--fs-xs); font-weight:600;
+  color:var(--text-th); margin-left:2px;
+}
+.lu-score-cap{
+  display:block; margin-top:3px;
+  font-size:var(--fs-2xs); letter-spacing:.06em;
+  color:var(--text-th);
+}
+/* 官方口径与球员卡合计不一致时，第二个数字（复审问题 #7） */
+.lu-score-alt{
+  display:block; margin-top:2px;
+  font-size:var(--fs-2xs);
+  font-variant-numeric:tabular-nums lining-nums;
+  color:var(--text-th);
+}
+.lu-score-alt b{ color:var(--text-secondary); font-weight:700; }
+
+.lu-meta{
+  grid-column:1 / -1;
+  display:flex; flex-wrap:wrap; gap:6px;
+  margin:0; padding:0; list-style:none;
+}
+.lu-chip{
+  display:inline-flex; align-items:center; gap:4px;
+  padding:3px 8px;
+  font-size:var(--fs-2xs); line-height:1.5;
+  color:var(--text-secondary);
+  background:var(--bg-inset);
+  border:1px solid var(--border-subtle);
+  border-radius:var(--r-pill);
+  white-space:nowrap;
+}
+.lu-chip b{
+  color:var(--text-primary); font-weight:700;
+  font-family:var(--font-mono);
+  font-variant-numeric:tabular-nums lining-nums;
+}
+.lu-chip.is-chip{
+  color:var(--text-on-brand); background:var(--brand); border-color:transparent; font-weight:700;
+  letter-spacing:.02em;
+}
+.lu-chip.is-chip b{ color:var(--text-on-brand); }
+
+/* ================================ 球场 ================================= */
+.lu-body{ padding:0 var(--sp-5) var(--sp-4); }
+
+.lu-pitch{
+  position:relative;
+  display:flex; flex-direction:column; justify-content:space-between;
+  gap:clamp(6px, 1.4vw, 16px);
+  padding:clamp(12px, 2vw, 22px) clamp(6px, 1.4vw, 16px);
+  border:1px solid var(--lu-pitch-edge);
+  border-radius:14px;
+  background:
+    repeating-linear-gradient(180deg,
+      rgba(255,255,255,.022) 0 8%,
+      rgba(0,0,0,0) 8% 16%),
+    radial-gradient(120% 78% at 50% 0%, var(--lu-pitch-top) 0%, var(--lu-pitch-mid) 62%, var(--lu-pitch-btm) 100%);
+  overflow:hidden;
+  isolation:isolate;
+}
+/* 场地线：中线 + 中圈（纯装饰，读屏忽略） */
+.lu-pitch::before{
+  content:''; position:absolute; left:0; right:0; top:50%;
+  height:1px; background:rgba(255,255,255,.055); z-index:0;
+}
+.lu-pitch::after{
+  content:''; position:absolute; left:50%; top:50%;
+  width:min(28%, 120px); aspect-ratio:1;
+  transform:translate(-50%,-50%);
+  border:1px solid rgba(255,255,255,.055);
+  border-radius:50%; z-index:0;
+}
+.lu-line{
+  position:relative; z-index:1;
+  display:flex; justify-content:center; align-items:flex-start;
+  gap:clamp(2px, 1.1vw, 14px);
+  width:100%; max-width:520px;      /* 限宽：3 人线不会被拉成三根柱子 */
+  margin:0 auto; padding:0; list-style:none;
+}
+
+/* ============================== 球员卡 ================================= */
+.lu-card{
+  position:relative;
+  flex:1 1 0; min-width:0; max-width:88px;
+  display:flex; flex-direction:column; align-items:center;
+  gap:3px;
+  text-align:center;
+}
+.lu-avatar{
+  position:relative;
+  display:block;
+  width:clamp(38px, 7.2vw, 50px);
+  aspect-ratio:1;
+  border-radius:50%;
+  background:linear-gradient(180deg, var(--lu-slot-top), var(--lu-slot-btm));
+  border:1px solid var(--border-strong);
+  box-shadow:0 2px 6px rgba(0,0,0,.35);
+}
+/* 首字母占位：默认完全隐藏，只在该球员「没有照片」或「照片加载失败」时出现。
+   这样它永远不会盖在人像上（复审问题 #1）。 */
+.lu-initial{
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  font:700 1.0625rem/1 var(--font-sans);
+  color:var(--text-secondary);
+  opacity:0;
+}
+.lu-avatar.is-noimg .lu-initial,
+.lu-avatar.is-imgfail .lu-initial{ opacity:1; }
+
+.lu-photo{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  border-radius:50%;                 /* 只裁照片，角标不被圆裁掉 */
+  object-fit:cover; object-position:50% 12%;
+  background:var(--lu-portrait-bg);
+}
+/* 俱乐部徽章：贴在头像右下角，纯装饰（aria-hidden），失败退回纯文本缩写 */
+.lu-clubbadge{
+  position:absolute; right:-3px; bottom:-3px; z-index:2;
+  width:15px; height:15px;
+  border-radius:50%;
+  background:var(--bg-base);
+  box-shadow:0 0 0 2px var(--bg-surface);   /* 与卡片底色咬合，读成一枚贴章 */
+}
+/* 图片 404/403 → JS 打 hidden，必须真的消失 */
+.lu-photo[hidden],
+.lu-clubbadge[hidden]{ display:none; }
+
+.lu-card-name{
+  display:block; width:100%;
+  /* 行高写死像素：降档只改字号，不改行高 → 卡片高度恒定，行内不会错位、也不产生 CLS */
+  font:600 .75rem/15px var(--font-sans);
+  color:var(--text-primary);
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+/* 长名降档：档位由 JS 实测 scrollWidth 决定（见 fitNames()），这里只定义三档字号。
+   为什么不按字符数：字形宽度差异大 —— Muharemović 只有 11 字符，却比 13 字符的
+   Calvert-Lewin 更宽；不同机器字体回退也不同，只有量出来才算数。
+   任何情况下 title / aria-label 都是全名，截断只影响视觉、不丢信息。 */
+.lu-card-name.is-tight{ font-size:.6875rem; letter-spacing:-.015em; }
+.lu-card-name.is-xlong{ font-size:.5625rem; letter-spacing:-.02em; }
+
+.lu-card-foot{
+  display:flex; align-items:center; justify-content:center; gap:4px;
+  width:100%;
+}
+.lu-club{
+  font:500 var(--fs-2xs)/16px var(--font-sans);
+  letter-spacing:.04em;
+  color:var(--text-th);
+}
+.lu-pts{
+  min-width:22px; padding:0 5px;
+  border-radius:5px;
+  background:var(--bg-inset);
+  border:1px solid var(--border-subtle);
+  font:700 var(--fs-2xs)/16px var(--font-mono);
+  font-variant-numeric:tabular-nums lining-nums;
+  color:var(--text-primary);
+}
+.lu-pts.is-captain{
+  background:var(--brand); border-color:transparent; color:var(--text-on-brand);
+}
+/* 未上场（0 分钟）：降饱和，不降文字对比度（颜色仍走 --text-th，实测 4.97:1） */
+.lu-card.is-blank .lu-avatar{ filter:saturate(.28) brightness(.72); }
+.lu-card.is-blank .lu-card-name{ color:var(--text-th); }
+.lu-card.is-blank .lu-pts{ color:var(--text-th); }
+/* 替补顶上的首发：橙色描边提示「本 GW 是替补上来的」 */
+.lu-card.is-subin .lu-avatar{
+  border-color:rgba(255,122,24,.75);
+  box-shadow:0 0 0 2px rgba(255,122,24,.18), 0 2px 6px rgba(0,0,0,.35);
+}
+
+/* 角标：C / V / ↑ —— 挂在头像右上角外侧，只压到圆的透明区，不压五官 */
+.lu-badges{
+  position:absolute; top:-5px; right:-8px; z-index:3;
+  display:flex; gap:2px;
+}
+.lu-badge{
+  display:flex; align-items:center; justify-content:center;
+  min-width:15px; height:15px; padding:0 2px;
+  border-radius:4px;
+  font:700 9px/1 var(--font-mono);
+  letter-spacing:0;
+  box-shadow:0 0 0 2px var(--bg-surface);
+}
+.lu-badge.is-c{ background:var(--brand); color:var(--text-on-brand); }
+.lu-badge.is-v{ background:var(--bg-elevated); color:var(--text-secondary); border:1px solid var(--border-strong); }
+.lu-badge.is-in{ background:var(--lu-on-green); color:var(--signal-up); border:1px solid rgba(70,209,127,.45); }
+
+/* ============================== 替补席 ================================ */
+.lu-bench{
+  margin-top:var(--sp-4);
+  padding-top:var(--sp-3);
+  border-top:1px solid var(--border-subtle);
+}
+.lu-bench-head{
+  display:flex; align-items:baseline; justify-content:space-between; gap:var(--sp-3);
+  margin-bottom:var(--sp-3);
+}
+.lu-bench-title{
+  margin:0;
+  font:600 var(--fs-xs)/1.2 var(--font-sans);
+  letter-spacing:.06em;
+  color:var(--text-th);
+}
+.lu-bench-pts{
+  font:700 var(--fs-sm)/1 var(--font-mono);
+  font-variant-numeric:tabular-nums lining-nums;
+  color:var(--text-secondary);
+}
+.lu-bench-pts small{ font-size:var(--fs-2xs); font-weight:500; color:var(--text-th); margin-left:2px; }
+
+.lu-bench-list{
+  display:flex; justify-content:center;
+  gap:clamp(6px, 2vw, 22px);
+  margin:0; padding:0; list-style:none;
+}
+.lu-bench-list .lu-card{ flex:0 1 92px; max-width:92px; }
+.lu-slot{
+  display:block;
+  margin:0 0 3px;
+  font:700 9px/1 var(--font-mono);
+  letter-spacing:.06em;
+  color:var(--text-th);
+}
+.lu-card.is-on .lu-slot{ color:var(--signal-up); }
+.lu-card.is-on .lu-card-name{ color:var(--text-primary); }
+/* 替补席没上场：分数不计入总分，视觉必须让位，否则「摆着 9 分却不加」很费解 */
+.lu-bench-list .lu-card:not(.is-on) .lu-pts{
+  color:var(--text-th);
+  background:transparent;
+  border-color:var(--border-subtle);
+}
+.lu-card.is-on .lu-pts{ color:var(--signal-up); border-color:rgba(70,209,127,.35); }
+
+/* 自动替补明细 */
+.lu-subs{
+  margin-top:var(--sp-3);
+  padding:var(--sp-2) var(--sp-3);
+  border-radius:var(--r-md);
+  background:var(--bg-inset);
+  border:1px solid var(--border-subtle);
+}
+.lu-subs-title{
+  margin:0 0 4px;
+  font:600 var(--fs-2xs)/1.3 var(--font-sans);
+  letter-spacing:.06em;
+  color:var(--text-th);
+}
+.lu-subs ul{ margin:0; padding:0; list-style:none; }
+.lu-subs li{
+  font-size:var(--fs-xs); line-height:1.7;
+  color:var(--text-secondary);
+}
+.lu-subs .lu-in{ color:var(--signal-up); font-weight:600; }
+.lu-subs .lu-out{ color:var(--text-th); }
+
+/* ============================== 页脚 ================================== */
+.lu-foot{
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between;
+  gap:var(--sp-2) var(--sp-3);
+  margin-top:var(--sp-3);
+  padding-top:var(--sp-3);
+  border-top:1px solid var(--border-subtle);
+  font-size:var(--fs-2xs);
+  color:var(--text-th);
+}
+.lu-foot a{
+  color:var(--link);
+  text-decoration:none;
+  border-bottom:1px solid rgba(255,154,69,.35);
+  padding-bottom:1px;
+  white-space:nowrap;
+}
+.lu-foot a:hover{ color:var(--brand-hover); border-bottom-color:var(--brand-hover); }
+.lu-foot a:focus-visible{ outline:2px solid var(--focus-ring); outline-offset:2px; border-radius:2px; }
+.lu-note{
+  flex:1 1 100%;
+  margin:0;
+  font-size:var(--fs-2xs); line-height:1.6;
+  color:var(--text-th);
+}
+
+/* ============================ 三态：骨架/错误/空 ======================== */
+.lu-skeleton .lu-card{ pointer-events:none; }
+.lu-sk{
+  display:block;
+  border-radius:8px;
+  background:linear-gradient(90deg, var(--lu-sk-base) 25%, var(--lu-sk-hi) 37%, var(--lu-sk-base) 63%);
+  background-size:400% 100%;
+  animation:lu-shimmer 1.4s ease-in-out infinite;
+}
+.lu-sk-avatar{ width:clamp(38px, 7.2vw, 50px); aspect-ratio:1; border-radius:50%; margin:0 auto; }
+.lu-sk-name{ width:74%; height:9px; margin:5px auto 0; }
+.lu-sk-pts{ width:22px; height:14px; margin:5px auto 0; }
+.lu-sk-crest{ flex:none; width:44px; height:44px; border-radius:12px; }
+.lu-sk-title{ width:min(62%, 180px); height:18px; margin-bottom:7px; }
+.lu-sk-sub{ width:min(84%, 240px); height:10px; }
+.lu-sk-num{ width:64px; height:30px; justify-self:end; align-self:center; border-radius:8px; }
+.lu-sk-chip{ width:58px; height:18px; border-radius:var(--r-pill); }
+@keyframes lu-shimmer{
+  0%{ background-position:100% 0; }
+  100%{ background-position:-100% 0; }
+}
+
+.lu-state{
+  display:flex; flex-direction:column; align-items:center; gap:var(--sp-2);
+  padding:var(--sp-10) var(--sp-6);
+  text-align:center;
+}
+.lu-state .lu-state-icon{ width:32px; height:32px; color:var(--text-th); }
+.lu-state .lu-state-icon.is-warn{ color:var(--brand); }
+.lu-state-title{
+  margin:var(--sp-2) 0 0;
+  font:600 var(--fs-lg)/1.3 var(--font-sans);
+  color:var(--text-primary);
+}
+.lu-state-desc{
+  margin:0;
+  max-width:42ch;
+  font-size:var(--fs-sm); line-height:1.6;
+  color:var(--text-secondary);
+}
+.lu-retry{
+  display:inline-flex; align-items:center; gap:6px;
+  margin-top:var(--sp-2);
+  padding:9px 18px;
+  font:600 var(--fs-md)/1 var(--font-sans);
+  color:var(--text-on-brand);
+  background:var(--brand);
+  border:0; border-radius:var(--r-md);
+  cursor:pointer;
+  transition:background var(--dur-fast) var(--ease-std);
+}
+.lu-retry svg{ width:16px; height:16px; }
+.lu-retry:hover{ background:var(--brand-hover); }
+.lu-retry:focus-visible{ outline:2px solid var(--focus-ring); outline-offset:2px; }
+
+/* ============================== 轻提示 ================================ */
+.lu-toast{
+  position:fixed; left:50%; bottom:32px; z-index:120;
+  transform:translateX(-50%);
+  max-width:calc(100vw - 32px);
+  padding:10px 16px;
+  font-size:var(--fs-sm); line-height:1.5;
+  color:var(--text-primary);
+  background:var(--bg-elevated);
+  border:1px solid var(--border-default);
+  border-radius:var(--r-pill);
+  box-shadow:var(--shadow-lg);
+  animation:lu-toast-in var(--dur-fast) var(--ease-out) both;
+}
+@keyframes lu-toast-in{
+  from{ opacity:0; transform:translate(-50%, 8px); }
+  to{ opacity:1; transform:translate(-50%, 0); }
+}
+
+/* ============================ 响应式 ================================== */
+/* 移动端优先解决「一屏看得到替补席」：整块内容压在 ~600px 以内
+   （375×812 首屏、375×667 老机型都不需要下滑找替补席） */
+@media (max-width:768px){
+  .lu-overlay{ padding:0; align-items:flex-end; }
+  /* 内容短时贴着底部收口（drawer 观感），内容超长时封顶 100dvh、内部滚动 */
+  .lu-dialog{
+    width:100%;
+    max-width:none;
+    height:auto;
+    max-height:100dvh;
+    border-radius:16px 16px 0 0;
+    border:0;
+    border-top:1px solid var(--border-default);
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  .lu-scroll{ min-height:0; }
+
+  .lu-banner{ padding:7px 46px 7px 10px; font-size:var(--fs-2xs); }
+  .lu-head{
+    padding:12px 46px 8px 14px;
+    gap:var(--sp-2) var(--sp-3);
+  }
+  .lu-id{ gap:var(--sp-2); }
+  .lu-crest{ width:34px; height:34px; font-size:.875rem; border-radius:9px; }
+  .lu-title{ font-size:1rem; }
+  .lu-sub{ margin-top:2px; font-size:var(--fs-2xs); }
+  .lu-score-num{ font-size:1.5rem; }
+  .lu-score-cap{ margin-top:2px; }
+  .lu-score-alt{ margin-top:1px; }
+  .lu-meta{ gap:5px; }
+  .lu-chip{ padding:2px 7px; }
+
+  .lu-body{ padding:0 12px 12px; }
+  .lu-pitch{ padding:9px 6px; gap:5px; border-radius:10px; }
+  .lu-card{ gap:2px; }
+  .lu-avatar{ width:clamp(34px, 7vw, 42px); }
+  .lu-initial{ font-size:.875rem; }
+  .lu-card-name{ font-size:.6875rem; line-height:14px; }
+  .lu-card-name.is-tight{ font-size:.625rem; letter-spacing:-.02em; }
+  .lu-card-name.is-xlong{ font-size:.53125rem; letter-spacing:-.02em; }
+  .lu-card-foot{ gap:2px; }
+  .lu-club{ font-size:9px; line-height:14px; }
+  .lu-pts{ min-width:19px; padding:0 3px; font-size:9px; line-height:14px; }
+  .lu-badges{ top:-4px; right:-6px; gap:1px; }
+  .lu-badge{ min-width:13px; height:13px; font-size:8px; padding:0 1px; }
+  /* 11px + 外移 4px：内角到圆心 14.1px > 人脸区 10.2px，绝不压到五官 */
+  .lu-clubbadge{ width:11px; height:11px; right:-4px; bottom:-4px; }
+
+  .lu-bench{ margin-top:10px; padding-top:9px; }
+  .lu-bench-head{ margin-bottom:8px; }
+  .lu-bench-list{ gap:4px; }
+  .lu-bench-list .lu-card{ flex:0 1 84px; max-width:84px; }
+
+  .lu-subs{ margin-top:8px; padding:6px 10px; }
+  .lu-subs li{ line-height:1.55; }
+
+  .lu-foot{ margin-top:8px; padding-top:8px; }
+  .lu-close{ top:8px; right:8px; width:34px; height:34px; }
+  .lu-toast{ bottom:max(20px, env(safe-area-inset-bottom)); }
+}
+
+@media (max-width:380px){
+  .lu-card-name{ font-size:.625rem; }
+  .lu-card-name.is-tight{ font-size:.5625rem; letter-spacing:-.03em; }
+  .lu-card-name.is-xlong{ font-size:.53125rem; letter-spacing:-.025em; }
+  .lu-club{ display:none; }          /* 375px 五后卫：宁可只留分数，不挤成两行 */
+  /* 34px 头像配 13px 角标比例过重，再收一档并外移，视觉上贴角不压人 */
+  .lu-badge{ min-width:12px; height:12px; font-size:7.5px; padding:0 1px; }
+  .lu-badges{ top:-5px; right:-7px; }
+  .lu-clubbadge{ width:10px; height:10px; right:-4px; bottom:-4px; }
+}
+
+/* ============================ 动效 / 打印 ============================== */
+@media (prefers-reduced-motion:reduce){
+  .lu-overlay.is-open .lu-dialog{ animation:none; }
+  .lu-sk{ animation:none; background:var(--lu-sk-base); }
+  .lu-toast{ animation:none; }
+  .lu-close{ transition:none; }
+}
+
+@media print{
+  .lu-overlay, .lu-toast{ display:none !important; }
+}
