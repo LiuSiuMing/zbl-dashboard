@@ -584,7 +584,8 @@
         const wrap = panel && panel.querySelector('.table-wrapper');
         if (wrap) wrap.scrollTop = 0;
 
-        if (!opts.fromHash) {
+        // 战报的 URL 是 #/reports/gwN，由 js/reports.js 独占管理，别用 #reports 覆盖
+        if (!opts.fromHash && tabName !== 'reports') {
             // replaceState 而非 pushState：切 Tab 是视图状态，不该污染历史栈
             const url = (tabName === 'season')
                 ? location.pathname + location.search      // 默认 Tab 不写 hash
@@ -600,6 +601,11 @@
         const h = (location.hash || '').replace('#', '');
         // #entry=<id> 是「本 GW 阵容」弹层的深链，不属于 Tab 状态：放行，别重定向、别清搜索框
         if (h.indexOf('entry=') === 0) return;
+        // #/reports/gwN 是战报深链：只激活 Tab，具体期数交给 js/reports.js
+        if (h.indexOf('/reports/') === 0 || h === 'reports') {
+            switchTab('reports', { fromHash: true });
+            return;
+        }
         const btn = h ? document.getElementById('tab-' + h) : null;
         // ❗拒绝禁用 Tab：杯赛不可通过 URL 激活
         if (!btn || btn.getAttribute('aria-disabled') === 'true') {

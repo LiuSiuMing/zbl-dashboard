@@ -1,0 +1,205 @@
+/* ==========================================================================
+   ZBL 战报 Tab — 暗夜球场主题延伸（仅 .rp-* 命名空间 + 4-Tab 窄屏适配）
+   依赖 css/style.css 的 :root 设计令牌；不改动任何现有选择器。
+   ========================================================================== */
+
+/* ---- 新增第 4 个 Tab 后，375/768 档不能横溢 ------------------------------ */
+@media (max-width:768px){
+  .tab-nav{ gap:1px; }
+  .tab-btn{ padding:var(--sp-2) 4px; font-size:var(--fs-sm); gap:0; }
+  .tab-btn .tab-icon{ display:none; }
+}
+@media (max-width:400px){
+  .tab-btn{ padding:var(--sp-2) 2px; font-size:var(--fs-xs); letter-spacing:-.02em; }
+}
+
+/* ---- 容器 / 顶部 -------------------------------------------------------- */
+.rp{
+  max-width:100%;
+  background:var(--bg-surface);
+  border:1px solid var(--border-default);
+  border-radius:0 0 var(--r-lg) var(--r-lg);
+  padding:var(--sp-5) var(--sp-6) var(--sp-8);
+  overflow-wrap:break-word;
+  word-break:break-word;
+}
+.rp *, .rp *::before, .rp *::after{ box-sizing:border-box; }
+
+.rp-switch{ margin-bottom:var(--sp-5); }
+.rp-chips{
+  display:flex; gap:var(--sp-2);
+  overflow-x:auto; overflow-y:hidden;
+  padding-bottom:var(--sp-1);
+  scrollbar-width:thin;
+}
+.rp-chip{
+  flex:0 0 auto;
+  font-family:inherit; font-size:var(--fs-sm); font-weight:600;
+  color:var(--text-secondary);
+  background:var(--bg-elevated);
+  border:1px solid var(--border-default);
+  border-radius:var(--r-pill);
+  padding:6px 14px; min-height:34px;
+  cursor:pointer; white-space:nowrap;
+}
+.rp-chip:hover{ color:var(--text-primary); border-color:var(--border-strong); }
+.rp-chip.is-active{
+  color:var(--text-on-brand); background:var(--brand);
+  border-color:var(--brand); font-weight:700;
+}
+.rp-chip:focus-visible{ outline:2px solid var(--focus-ring); outline-offset:2px; }
+
+.rp-mobile-switch{ display:none; align-items:center; gap:var(--sp-2); }
+.rp-select{
+  flex:1 1 auto; min-width:0;
+  font-family:inherit; font-size:var(--fs-md);
+  color:var(--text-primary); background:var(--bg-elevated);
+  border:1px solid var(--border-default); border-radius:var(--r-md);
+  padding:8px 10px; min-height:40px;
+}
+.rp-step{
+  flex:0 0 auto;
+  font-family:inherit; font-size:var(--fs-sm); font-weight:600;
+  color:var(--text-secondary); background:var(--bg-elevated);
+  border:1px solid var(--border-default); border-radius:var(--r-md);
+  padding:8px 10px; min-height:40px; cursor:pointer; white-space:nowrap;
+}
+.rp-step:disabled{ color:var(--text-disabled); cursor:not-allowed; opacity:.6; }
+.rp-step:focus-visible, .rp-select:focus-visible{
+  outline:2px solid var(--focus-ring); outline-offset:2px;
+}
+
+.rp-head{ margin-bottom:var(--sp-6); }
+.rp-headline{
+  margin:0 0 var(--sp-2);
+  font-family:var(--font-sans); font-weight:700;
+  font-size:clamp(1.25rem, 2.6vw, 1.7rem);
+  line-height:1.38; color:var(--text-primary);
+}
+.rp-meta{
+  margin:0 0 var(--sp-4);
+  font-size:var(--fs-sm); color:var(--text-muted);
+}
+.rp-anchors{
+  display:flex; gap:var(--sp-2);
+  overflow-x:auto; overflow-y:hidden;
+  padding:var(--sp-1) 0 var(--sp-2);
+  scrollbar-width:thin;
+}
+.rp-anchor{
+  flex:0 0 auto;
+  font-family:inherit; font-size:var(--fs-xs); font-weight:600;
+  color:var(--text-secondary); background:var(--bg-inset);
+  border:1px solid var(--border-subtle); border-radius:var(--r-md);
+  padding:6px 10px; min-height:32px; cursor:pointer;
+  white-space:nowrap; text-align:left;
+}
+.rp-anchor:hover{ color:var(--brand); border-color:var(--brand-dim); }
+.rp-anchor:focus-visible{ outline:2px solid var(--focus-ring); outline-offset:2px; }
+
+/* ---- 正文 5 段 ---------------------------------------------------------- */
+.rp-section{ margin:0 0 var(--sp-8); scroll-margin-top:var(--sp-4); }
+.rp-section:last-child{ margin-bottom:var(--sp-5); }
+.rp-section-title{
+  margin:0 0 var(--sp-3);
+  font-family:var(--font-sans); font-size:var(--fs-h2); font-weight:700;
+  line-height:1.45; color:var(--brand);
+  padding-left:var(--sp-3);
+  border-left:3px solid var(--brand);
+}
+.rp-p{
+  margin:0 0 var(--sp-3);
+  font-size:var(--fs-md); line-height:1.95;
+  color:var(--text-primary);
+  letter-spacing:.01em;
+}
+.rp-p:last-child{ margin-bottom:0; }
+.rp a[data-entry-id]{
+  color:var(--link); text-decoration:none;
+  border-bottom:1px dashed var(--border-strong);
+  cursor:pointer;
+}
+.rp a[data-entry-id]:hover{ color:var(--brand-hover); border-bottom-color:var(--brand); }
+.rp a[data-entry-id]:focus-visible{ outline:2px solid var(--focus-ring); outline-offset:2px; }
+
+/* ---- 第一集团表 --------------------------------------------------------- */
+.rp-table-wrap{
+  max-width:100%; margin-top:var(--sp-4);
+  overflow-x:auto; -webkit-overflow-scrolling:touch;
+  border:1px solid var(--border-default); border-radius:var(--r-md);
+}
+.rp-table-wrap:focus-visible{ outline:2px solid var(--focus-ring); outline-offset:2px; }
+.rp-table{
+  width:100%; border-collapse:collapse;
+  font-size:var(--fs-table); font-variant-numeric:tabular-nums;
+}
+.rp-table th, .rp-table td{
+  padding:10px var(--sp-3);
+  border-bottom:1px solid var(--border-subtle);
+  white-space:nowrap;
+}
+.rp-table th{
+  text-align:left; font-weight:600; font-size:var(--fs-sm);
+  color:var(--text-th); background:var(--bg-elevated);
+  position:sticky; top:0;
+}
+.rp-table tbody tr:nth-child(even){ background:var(--bg-row-alt); }
+.rp-table tbody tr:hover{ background:var(--bg-hover); }
+.rp-table tbody tr:last-child td{ border-bottom:0; }
+.rp-table .rp-n{ text-align:right; }
+.rp-table .rp-c-rank{ text-align:center; color:var(--text-secondary); font-weight:700; }
+.rp-table .rp-c-team{ min-width:120px; }
+.rp-change{
+  display:inline-block; min-width:34px; text-align:center;
+  padding:2px 6px; border-radius:var(--r-sm); font-weight:700;
+}
+.rp-up{ color:var(--signal-up); background:rgba(70,209,127,.12); }
+.rp-down{ color:var(--signal-down); background:rgba(206,113,113,.12); }
+.rp-flat{ color:var(--signal-flat); background:var(--bg-elevated); }
+
+.rp-foot{
+  margin:var(--sp-6) 0 0; padding-top:var(--sp-3);
+  border-top:1px solid var(--border-subtle);
+  font-size:var(--fs-xs); line-height:1.7; color:var(--text-muted);
+}
+
+/* ---- 空态 / 错误态 ------------------------------------------------------ */
+.rp-state{
+  max-width:100%; padding:var(--sp-10) var(--sp-5);
+  text-align:center;
+  background:var(--bg-surface);
+  border:1px solid var(--border-default); border-radius:0 0 var(--r-lg) var(--r-lg);
+}
+.rp-state-title{ margin:0 0 var(--sp-3); font-size:var(--fs-h2); color:var(--text-primary); }
+.rp-state-desc{ margin:0 0 var(--sp-5); font-size:var(--fs-md); color:var(--text-secondary); line-height:1.8; }
+.rp-state-error .rp-state-title{ color:var(--signal-down); }
+.rp-retry{
+  font-family:inherit; font-size:var(--fs-md); font-weight:600;
+  color:var(--text-on-brand); background:var(--brand);
+  border:0; border-radius:var(--r-md); padding:10px 20px; cursor:pointer;
+}
+.rp-retry:focus-visible{ outline:2px solid var(--focus-ring); outline-offset:2px; }
+
+/* ---- 断点：≤768 下拉 + 表格横滚 + 冻结首列 ------------------------------ */
+@media (max-width:768px){
+  .rp{ padding:var(--sp-4) var(--sp-3) var(--sp-6); }
+  .rp-chips{ display:none; }
+  .rp-mobile-switch{ display:flex; }
+  .rp-p{ font-size:var(--fs-sm); line-height:1.9; }
+  .rp-section-title{ font-size:var(--fs-lg); }
+  .rp-table{ min-width:600px; }
+  .rp-table th:first-child, .rp-table td:first-child{
+    position:sticky; left:0; z-index:2;
+    background:var(--bg-surface);
+    box-shadow:1px 0 0 var(--border-default);
+  }
+  .rp-table tbody tr:nth-child(even) td:first-child{ background:var(--bg-row-alt); }
+  .rp-table thead th:first-child{ z-index:3; background:var(--bg-elevated); }
+}
+@media (max-width:400px){
+  .rp-step{ padding:8px 6px; font-size:var(--fs-xs); }
+  .rp-anchor{ font-size:var(--fs-2xs); }
+}
+@media (prefers-reduced-motion:reduce){
+  .rp *, .rp *::before, .rp *::after{ transition:none !important; animation:none !important; }
+}
