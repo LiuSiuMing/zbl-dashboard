@@ -55,6 +55,14 @@
    "path": "gw3.json",
    "published_at": "2026-11-07T23:43:41+08:00",
    "status": "published"
+  },
+  {
+   "generated_at": "2026-11-07T23:39:33+08:00",
+   "gw": 2,
+   "headline": "僵尸鹰 196 分领跑，121 分拿下单轮最高",
+   "path": "gw2.json",
+   "published_at": "2026-11-07T23:43:41+08:00",
+   "status": "published"
   }
  ],
  "season": "2627",
