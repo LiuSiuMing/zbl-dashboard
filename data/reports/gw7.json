@@ -1,0 +1,660 @@
+{
+ "best": {
+  "co_winners": [],
+  "entries": [
+   {
+    "bench": [
+     {
+      "came_on": false,
+      "captain": false,
+      "code": 485055,
+      "id": 496,
+      "multiplier": 0,
+      "name": "Kinsky",
+      "points": 2,
+      "pos": "GK",
+      "sub_in": false,
+      "team": "TOT",
+      "team_code": 6,
+      "vice": false
+     },
+     {
+      "came_on": false,
+      "captain": false,
+      "code": 222531,
+      "id": 480,
+      "multiplier": 0,
+      "name": "Gibbs-White",
+      "points": 0,
+      "pos": "MID",
+      "sub_in": false,
+      "team": "NFO",
+      "team_code": 17,
+      "vice": false
+     },
+     {
+      "came_on": false,
+      "captain": false,
+      "code": 243413,
+      "id": 290,
+      "multiplier": 0,
+      "name": "Slater",
+      "points": 1,
+      "pos": "MID",
+      "sub_in": false,
+      "team": "HUL",
+      "team_code": 88,
+      "vice": false
+     },
+     {
+      "came_on": false,
+      "captain": false,
+      "code": 219924,
+      "id": 259,
+      "multiplier": 0,
+      "name": "Diop",
+      "points": 3,
+      "pos": "DEF",
+      "sub_in": false,
+      "team": "IPS",
+      "team_code": 40,
+      "vice": false
+     }
+    ],
+    "bench_points": 6,
+    "bench_scored": 6,
+    "chip": null,
+    "entry_id": 38293,
+    "formation": "4-3-3",
+    "manager_name": "僵尸 海笛",
+    "overall_rank": 13353,
+    "points": 85,
+    "prev_overall_rank": 43178,
+    "source": "picks",
+    "starters": [
+     {
+      "captain": false,
+      "code": 154561,
+      "id": 1,
+      "multiplier": 1,
+      "name": "Raya",
+      "points": 9,
+      "pos": "GK",
+      "sub_in": false,
+      "team": "ARS",
+      "team_code": 3,
+      "vice": false
+     },
+     {
+      "captain": false,
+      "code": 226597,
+      "id": 4,
+      "multiplier": 1,
+      "name": "Gabriel",
+      "points": 8,
+      "pos": "DEF",
+      "sub_in": false,
+      "team": "ARS",
+      "team_code": 3,
+      "vice": false
+     },
+     {
+      "captain": false,
+      "code": 17761,
+      "id": 229,
+      "multiplier": 1,
+      "name": "Tarkowski",
+      "points": 0,
+      "pos": "DEF",
+      "sub_in": false,
+      "team": "EVE",
+      "team_code": 11,
+      "vice": false
+     },
+     {
+      "captain": false,
+      "code": 610799,
+      "id": 504,
+      "multiplier": 1,
+      "name": "Vuskovic",
+      "points": 11,
+      "pos": "DEF",
+      "sub_in": false,
+      "team": "BHA",
+      "team_code": 36,
+      "vice": false
+     },
+     {
+      "captain": false,
+      "code": 522047,
+      "id": 334,
+      "multiplier": 1,
+      "name": "Muharemović",
+      "points": 5,
+      "pos": "DEF",
+      "sub_in": true,
+      "team": "LEE",
+      "team_code": 2,
+      "vice": false
+     },
+     {
+      "captain": false,
+      "code": 60307,
+      "id": 124,
+      "multiplier": 1,
+      "name": "Groß",
+      "points": 5,
+      "pos": "MID",
+      "sub_in": false,
+      "team": "BHA",
+      "team_code": 36,
+      "vice": false
+     },
+     {
+      "captain": false,
+      "code": 424876,
+      "id": 368,
+      "multiplier": 1,
+      "name": "Szoboszlai",
+      "points": 1,
+      "pos": "MID",
+      "sub_in": false,
+      "team": "LIV",
+      "team_code": 14,
+      "vice": false
+     },
+     {
+      "captain": false,
+      "code": 204480,
+      "id": 13,
+      "multiplier": 1,
+      "name": "Rice",
+      "points": 9,
+      "pos": "MID",
+      "sub_in": false,
+      "team": "ARS",
+      "team_code": 3,
+      "vice": false
+     },
+     {
+      "captain": false,
+      "code": 475168,
+      "id": 165,
+      "multiplier": 1,
+      "name": "João Pedro",
+      "points": 2,
+      "pos": "FWD",
+      "sub_in": false,
+      "team": "CHE",
+      "team_code": 8,
+      "vice": true
+     },
+     {
+      "captain": false,
+      "code": 177815,
+      "id": 346,
+      "multiplier": 1,
+      "name": "Calvert-Lewin",
+      "points": 9,
+      "pos": "FWD",
+      "sub_in": false,
+      "team": "LEE",
+      "team_code": 2,
+      "vice": false
+     },
+     {
+      "captain": true,
+      "code": 223094,
+      "id": 411,
+      "multiplier": 2,
+      "name": "Haaland",
+      "points": 13,
+      "pos": "FWD",
+      "sub_in": false,
+      "team": "MCI",
+      "team_code": 43,
+      "vice": false
+     }
+    ],
+    "subs": [
+     {
+      "in": 334,
+      "in_name": "Muharemović",
+      "out": 480,
+      "out_name": "Gibbs-White"
+     }
+    ],
+    "team_name": "僵尸海笛"
+   }
+  ],
+  "margin": 4,
+  "runner_up": {
+   "entry_id": 6986242,
+   "points": 81.0,
+   "team_name": "僵尸农场主"
+  },
+  "runner_up_points": 81.0
+ },
+ "content": {
+  "approved_at": "2026-11-07T23:43:26+08:00",
+  "edited_by": "Leon",
+  "facts_hash": "sha256:1c27d02d35e292ac4712fc5e29ed4c14ca0836f6764126c519234f0417231690",
+  "gw": 7,
+  "headline": "僵尸海笛 544 分领跑，85 分拿下单轮最高",
+  "needs_refresh": false,
+  "published_at": "2026-11-07T23:43:40+08:00",
+  "revision": 1,
+  "sections": {
+   "best": {
+    "headline": "僵尸海笛 85 分，僵尸农场主 81 分紧随",
+    "paragraphs": [
+     "GW7 单轮最高分属于僵尸海笛（85 分），领先次高的僵尸农场主（81 分）4 分。",
+     "队长 Haaland 拿到 13 分并翻倍成 26 分；Vuskovic 11 分、Raya 9 分、Rice 9 分、Calvert-Lewin 9 分，前中后三条线都有贡献。",
+     "这套首发还触发一次自动替补：Muharemović 换下 Gibbs-White；替补席另有 6 分未计入。",
+     "他本轮 overall 排名从第 43,178 名升到第 13,353 名。"
+    ],
+    "title": "本周最佳：僵尸海笛 85 分，僵尸农场主 81 分紧随"
+   },
+   "in_form": {
+    "headline": "僵尸海笛近四轮 318 分，从第 11 升到第 1",
+    "paragraphs": [
+     "最近四轮（GW4–7）状态最热的正是榜首僵尸海笛：111 → 63 → 59 → 85，合计 318 分，全联赛第一，领先第二名 19 分。",
+     "这段窗口从第 11 位一路升到第 1 位；GW7 的 85 分是窗口内单轮最高。",
+     "overall 排名从第 390,143 名推进到第 13,353 名，状态和排名同步走高。"
+    ],
+    "title": "状态正佳：僵尸海笛近四轮 318 分，从第 11 升到第 1"
+   },
+   "leader": {
+    "headline": "僵尸海笛 544 分夺回榜首，领先 28 分",
+    "paragraphs": [
+     "僵尸海笛以 544 分继续领跑，领先第二名僵尸B15（516 分）28 分。",
+     "他的 overall 排名从第 43,178 名升到第 13,353 名，单轮前进 29,825 位。",
+     "赛季走势：GW1 第 29 → GW4 首次登顶 → GW6 被僵尸B15 追平后按排序落到第二 → GW7 以 85 分夺回榜首，并把优势扩大到 28 分。"
+    ],
+    "title": "领头羊：僵尸海笛 544 分，夺回榜首并拉开 28 分"
+   },
+   "overview": {
+    "footnote": "全体排名为按 ZBL 101 队总分-排名拟合的估算值，非官方排名。",
+    "headline": "全员合规，单轮均分跑赢大盘 2.2 分",
+    "paragraphs": [
+     "GW7 犯规检测覆盖 101 支僵尸：0 队犯规、0 队待复核，连续第 5 轮零犯规。",
+     "本轮橘僵联平均 61.2 分，比全体玩家平均 59.0 分高 2.2 分，扭转了 GW6 的 -7.9 分。",
+     "联赛总分平均 434.0 分（中位 439.0），按 101 队总分-排名拟合约对应全体第 3,474,014 名；101 队的 overall 排名从第 13,353 名到第 10,366,987 名。"
+    ],
+    "title": "总览：全员合规，单轮均分跑赢大盘"
+   },
+   "top_group": {
+    "headline": "2–10 名只差 38 分，农场主从第 21 冲到第 8",
+    "paragraphs": [
+     "第二到第十名总共只差 38 分；第 6 到第 9 名更是挤在 7 分之内。",
+     "僵尸农场主本轮 81 分，是集团内最高，从第 21 冲到第 8；僵尸B15 仅 57 分，从第 1 退到第 2。",
+     "僵尸Disco 70 分、僵尸脑 67 分，各自上升一位；僵尸猪、僵尸LAK、僵尸扎、僵尸数字名次未变。"
+    ],
+    "title": "第一集团：2–10 名只差 38 分，农场主大幅上升"
+   }
+  },
+  "status": "published",
+  "updated_at": "2026-11-07T23:43:26+08:00"
+ },
+ "dq_effective_from_gw": 2,
+ "dq_excluded": 4,
+ "foul": {
+  "checked": true,
+  "checked_at": "2026-10-21T08:09:26.846673",
+  "fouls": 0,
+  "reviews": 0,
+  "source": "ZBL_foulcheck_GW07_2610210809.json",
+  "zero_streak": 5
+ },
+ "generated_at": "2026-11-07T23:15:54+08:00",
+ "gw": 7,
+ "in_form": {
+  "entry_id": 38293,
+  "last": [
+   {
+    "gw": 4,
+    "points": 111
+   },
+   {
+    "gw": 5,
+    "points": 63
+   },
+   {
+    "gw": 6,
+    "points": 59
+   },
+   {
+    "gw": 7,
+    "points": 85
+   }
+  ],
+  "overall_before": 390143,
+  "overall_now": 13353,
+  "rank_before": 11,
+  "rank_change": 10,
+  "rank_now": 1,
+  "second_sum": 299.0,
+  "second_team": "",
+  "sum": 318.0,
+  "sum_rank": 1,
+  "team_name": "僵尸海笛",
+  "window": [
+   4,
+   7
+  ]
+ },
+ "leader": {
+  "delta": 29825,
+  "direction": "up",
+  "entry_id": 38293,
+  "lead": 28,
+  "overall_rank": 13353,
+  "prev_overall_rank": 43178,
+  "second": {
+   "entry_id": 19148,
+   "team_name": "僵尸B15",
+   "total": 516.0
+  },
+  "streak": [
+   {
+    "event_points": 70,
+    "gap_to_first": -29,
+    "gw": 1,
+    "lead": 0,
+    "overall_rank": 529735,
+    "rank": 29,
+    "total": 70
+   },
+   {
+    "event_points": 104,
+    "gap_to_first": -22,
+    "gw": 2,
+    "lead": 0,
+    "overall_rank": 338418,
+    "rank": 15,
+    "total": 174
+   },
+   {
+    "event_points": 52,
+    "gap_to_first": -19,
+    "gw": 3,
+    "lead": 0,
+    "overall_rank": 390143,
+    "rank": 11,
+    "total": 226
+   },
+   {
+    "event_points": 111,
+    "gap_to_first": 11,
+    "gw": 4,
+    "lead": 11,
+    "overall_rank": 27312,
+    "rank": 1,
+    "total": 337
+   },
+   {
+    "event_points": 63,
+    "gap_to_first": 17,
+    "gw": 5,
+    "lead": 17,
+    "overall_rank": 7027,
+    "rank": 1,
+    "total": 400
+   },
+   {
+    "event_points": 59,
+    "gap_to_first": 0,
+    "gw": 6,
+    "lead": 0,
+    "overall_rank": 43178,
+    "rank": 2,
+    "total": 459
+   },
+   {
+    "event_points": 85,
+    "gap_to_first": 28,
+    "gw": 7,
+    "lead": 28,
+    "overall_rank": 13353,
+    "rank": 1,
+    "total": 544
+   }
+  ],
+  "team_name": "僵尸海笛",
+  "total": 544.0
+ },
+ "overview": {
+  "diff": 2.2,
+  "is_estimate": true,
+  "overall_avg": 59.0,
+  "overall_rank_max": 10366987,
+  "overall_rank_min": 13353,
+  "prev_gw_diff": -7.9,
+  "rank_of_avg_points_estimate": 3474014,
+  "season_worst_diff": -7.9,
+  "total_avg": 434.0,
+  "total_median": 439.0,
+  "zbl_avg": 61.2
+ },
+ "published_at": "2026-11-07T23:43:40+08:00",
+ "season": "2627",
+ "status": "published",
+ "team_count": 101,
+ "team_names": {
+  "100586": "僵尸Alger",
+  "102177": "僵尸霆",
+  "114733": "僵尸波",
+  "1156075": "僵尸哈",
+  "12869": "僵尸E",
+  "1353220": "僵尸将臣",
+  "1423179": "僵尸毛",
+  "158694": "僵尸小卡",
+  "1654415": "僵尸Conan",
+  "16962": "僵尸团",
+  "176642": "僵尸笨",
+  "182776": "僵尸kw",
+  "1846031": "僵尸胡",
+  "188016": "僵尸dt",
+  "19148": "僵尸B15",
+  "192199": "僵尸僵",
+  "20359": "僵尸新",
+  "20362": "僵尸che",
+  "21173": "僵尸荷",
+  "21766": "僵尸驰",
+  "22600": "僵尸欧迅",
+  "2297516": "僵尸尼",
+  "2307414": "僵尸吴",
+  "234814": "僵尸橘",
+  "2459359": "僵尸鬼",
+  "2459887": "僵尸龙王",
+  "2460905": "僵尸扣",
+  "2463039": "僵尸美凌格",
+  "2468224": "僵尸船",
+  "2473971": "僵尸818",
+  "247810": "僵尸背头",
+  "2488478": "僵尸歪",
+  "2493076": "僵尸xzz",
+  "24932": "僵史史",
+  "2498157": "僵尸果",
+  "2499268": "僵尸猪",
+  "25053": "僵尸赵",
+  "250721": "僵尸雷子",
+  "2549850": "僵尸Yemon",
+  "2583556": "僵尸ginger",
+  "2656396": "僵尸Dtum",
+  "2668675": "僵尸霉霉",
+  "2675893": "僵尸软糖",
+  "2695340": "僵尸番茄狗",
+  "27004": "僵尸吉鲁",
+  "27198": "僵尸数字",
+  "273861": "僵尸哀",
+  "27901": "僵尸ro",
+  "2922022": "僵尸星魂",
+  "302417": "僵尸甲",
+  "3047306": "僵尸小火龙",
+  "31817": "僵尸机",
+  "3242549": "僵尸Clichy",
+  "3267275": "僵尸反三俗",
+  "3324": "僵尸堡",
+  "3468570": "僵尸天才",
+  "35654": "僵尸青森",
+  "3667894": "僵尸mk",
+  "3775621": "僵尸马",
+  "38293": "僵尸海笛",
+  "3877135": "僵尸发",
+  "3936346": "僵尸豆",
+  "39639": "僵尸炮",
+  "3966621": "僵尸andy",
+  "39853": "僵尸扎",
+  "39963": "僵尸色",
+  "4013197": "僵尸虎",
+  "4028335": "僵尸班",
+  "41051": "僵尸LAK",
+  "410867": "僵尸翼",
+  "41403": "僵尸K",
+  "4764595": "僵尸14",
+  "4764624": "僵尸条",
+  "4765290": "僵尸鹰",
+  "4775017": "僵尸小光",
+  "4798217": "僵尸law陈",
+  "4850147": "僵尸梨",
+  "4854554": "僵尸武大三粗",
+  "48777": "僵尸三儿",
+  "5122813": "僵尸杭",
+  "55436": "僵尸传奇",
+  "5963015": "僵尸吴佳慧",
+  "5963427": "僵尸师弟",
+  "680025": "僵尸春",
+  "681465": "僵尸Pluto",
+  "681608": "僵尸丹顿",
+  "688913": "僵尸kimi",
+  "69835": "僵尸Disco",
+  "6986242": "僵尸农场主",
+  "700554": "僵尸椰",
+  "705380": "僵尸G",
+  "708496": "僵尸俊凯",
+  "740921": "僵尸光",
+  "741774": "僵尸脑",
+  "748108": "僵尸雕",
+  "74886": "僵尸gu",
+  "7488949": "僵尸林黄",
+  "7549452": "僵尸W²",
+  "7566792": "僵尸快乐时光",
+  "760250": "僵尸DDDD",
+  "763946": "僵尸平",
+  "7683161": "僵尸R",
+  "829545": "僵尸企鹅",
+  "8804676": "僵尸熊",
+  "9018": "僵尸北海"
+ },
+ "top_group": [
+  {
+   "entry_id": 19148,
+   "event_total": 57.0,
+   "manager_name": "僵尸 B15",
+   "overall_rank": 151015,
+   "prev_rank": 1,
+   "rank": 2,
+   "rank_change": -1,
+   "team_name": "僵尸B15",
+   "tie": false,
+   "total": 516.0
+  },
+  {
+   "entry_id": 2499268,
+   "event_total": 62.0,
+   "manager_name": "Kevin Zhu",
+   "overall_rank": 439927,
+   "prev_rank": 3,
+   "rank": 3,
+   "rank_change": 0,
+   "team_name": "僵尸猪",
+   "tie": false,
+   "total": 498.0
+  },
+  {
+   "entry_id": 41051,
+   "event_total": 68.0,
+   "manager_name": "LA LAK",
+   "overall_rank": 619458,
+   "prev_rank": 4,
+   "rank": 4,
+   "rank_change": 0,
+   "team_name": "僵尸LAK",
+   "tie": false,
+   "total": 491.0
+  },
+  {
+   "entry_id": 39853,
+   "event_total": 69.0,
+   "manager_name": "僵尸 扎",
+   "overall_rank": 679385,
+   "prev_rank": 5,
+   "rank": 5,
+   "rank_change": 0,
+   "team_name": "僵尸扎",
+   "tie": false,
+   "total": 489.0
+  },
+  {
+   "entry_id": 69835,
+   "event_total": 70.0,
+   "manager_name": "失意 阵线联盟",
+   "overall_rank": 710371,
+   "prev_rank": 7,
+   "rank": 6,
+   "rank_change": 1,
+   "team_name": "僵尸Disco",
+   "tie": false,
+   "total": 488.0
+  },
+  {
+   "entry_id": 741774,
+   "event_total": 67.0,
+   "manager_name": "H B",
+   "overall_rank": 808098,
+   "prev_rank": 8,
+   "rank": 7,
+   "rank_change": 1,
+   "team_name": "僵尸脑",
+   "tie": false,
+   "total": 485.0
+  },
+  {
+   "entry_id": 6986242,
+   "event_total": 81.0,
+   "manager_name": "Jim Guo",
+   "overall_rank": 842456,
+   "prev_rank": 21,
+   "rank": 8,
+   "rank_change": 13,
+   "team_name": "僵尸农场主",
+   "tie": false,
+   "total": 484.0
+  },
+  {
+   "entry_id": 2488478,
+   "event_total": 68.0,
+   "manager_name": "良田 僵尸版",
+   "overall_rank": 952005,
+   "prev_rank": 11,
+   "rank": 9,
+   "rank_change": 2,
+   "team_name": "僵尸歪",
+   "tie": false,
+   "total": 481.0
+  },
+  {
+   "entry_id": 27198,
+   "event_total": 61.0,
+   "manager_name": "Loki 0-0",
+   "overall_rank": 1068199,
+   "prev_rank": 10,
+   "rank": 10,
+   "rank_change": 0,
+   "team_name": "僵尸数字",
+   "tie": false,
+   "total": 478.0
+  }
+ ]
+}
