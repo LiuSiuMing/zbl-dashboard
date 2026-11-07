@@ -23,6 +23,14 @@
    "path": "gw7.json",
    "published_at": "2026-11-07T23:43:40+08:00",
    "status": "published"
+  },
+  {
+   "generated_at": "2026-11-07T23:21:50+08:00",
+   "gw": 6,
+   "headline": "僵尸B15 与僵尸海笛并列榜首，僵尸B15 76 分拿下单轮最高",
+   "path": "gw6.json",
+   "published_at": "2026-11-07T23:43:40+08:00",
+   "status": "published"
   }
  ],
  "season": "2627",
