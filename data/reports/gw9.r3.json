@@ -211,18 +211,18 @@
   "gw": 9,
   "headline": "僵尸海笛 650 分领跑，僵尸law陈 74 分拿下单轮最高",
   "needs_refresh": false,
-  "published_at": "2026-11-06T23:20:02+08:00",
+  "published_at": "2026-11-07T23:43:55+08:00",
   "revision": 2,
   "sections": {
    "best": {
-    "headline": "僵尸law陈 74 分，门将替补 + 队长拿下",
+    "headline": "僵尸law陈 74 分，僵尸gu 71 分紧随",
     "paragraphs": [
      "GW9 单轮最高分属于僵尸law陈（74 分），领先次高的僵尸gu（71 分）3 分，第三是僵尸脑（70 分）。",
      "这套 74 分的构成很有故事：首发门将 Sánchez 未出场，替补门将 Verbruggen 拿到 11 分，触发自动替补后计入首发；另一处自动替补是 Muharemović（3 分）换下 Igor Jesus。",
      "队长 Palmer 拿下 16 分（8×2），是全场最大单点来源；后卫线 Konsa 10 + Ajer 8 + Gabriel 6 + Tarkowski 6，合计 30 分；锋线 Thiago 9 分、Haaland 仅 2 分；替补席另有 8 分未计入。",
      "他本轮 overall 排名从第 334.9 万名跃升到第 205.4 万名，单轮前进约 130 万名。"
     ],
-    "title": "本周最佳：僵尸law陈 74 分，靠门将替补和队长拿下"
+    "title": "本周最佳：僵尸law陈 74 分，僵尸gu 71 分紧随"
    },
    "in_form": {
     "headline": "僵尸脑近四轮 267 分，从第 12 冲到第 2",
@@ -262,7 +262,7 @@
    }
   },
   "status": "published",
-  "updated_at": "2026-11-06T23:19:57+08:00"
+  "updated_at": "2026-11-07T23:21:19+08:00"
  },
  "dq_effective_from_gw": 2,
  "dq_excluded": 4,
@@ -422,7 +422,7 @@
   "total_median": 536.0,
   "zbl_avg": 42.3
  },
- "published_at": "2026-11-06T23:20:02+08:00",
+ "published_at": "2026-11-07T23:43:55+08:00",
  "season": "2627",
  "status": "published",
  "team_count": 101,
