@@ -39,6 +39,14 @@
    "path": "gw5.json",
    "published_at": "2026-11-07T23:43:41+08:00",
    "status": "published"
+  },
+  {
+   "generated_at": "2026-11-07T23:32:22+08:00",
+   "gw": 4,
+   "headline": "僵尸海笛 337 分首次登顶，111 分拿下单轮最高",
+   "path": "gw4.json",
+   "published_at": "2026-11-07T23:43:41+08:00",
+   "status": "published"
   }
  ],
  "season": "2627",
