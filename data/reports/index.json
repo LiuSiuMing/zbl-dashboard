@@ -47,6 +47,14 @@
    "path": "gw4.json",
    "published_at": "2026-11-07T23:43:41+08:00",
    "status": "published"
+  },
+  {
+   "generated_at": "2026-11-07T23:36:21+08:00",
+   "gw": 3,
+   "headline": "僵尸扎 245 分首次登顶，僵尸北海 75 分拿下单轮最高",
+   "path": "gw3.json",
+   "published_at": "2026-11-07T23:43:41+08:00",
+   "status": "published"
   }
  ],
  "season": "2627",
