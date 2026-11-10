@@ -12,7 +12,7 @@
 
     var INDEX_URL = 'data/reports/index.json';
     var CURRENT_URL = 'data/current.json';
-    var SECTIONS = ['overview', 'best', 'leader', 'top_group', 'in_form'];
+    var SECTIONS = ['overview', 'best', 'leader', 'top_group', 'in_form', 'watch'];
     var FPL_ENTRY = 'https://fantasy.premierleague.com/entry/';
 
     var state = {
