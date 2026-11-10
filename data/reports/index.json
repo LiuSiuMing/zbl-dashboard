@@ -63,8 +63,16 @@
    "path": "gw2.json",
    "published_at": "2026-11-07T23:43:41+08:00",
    "status": "published"
+  },
+  {
+   "generated_at": "2026-11-10T13:37:11+08:00",
+   "gw": 1,
+   "headline": "105 队开季，僵尸Disco 99 分先拔头筹",
+   "path": "gw1.json",
+   "published_at": "2026-11-10T13:41:29+08:00",
+   "status": "published"
   }
  ],
  "season": "2627",
- "updated_at": "2026-11-07T23:43:55+08:00"
+ "updated_at": "2026-11-10T13:41:29+08:00"
 }
