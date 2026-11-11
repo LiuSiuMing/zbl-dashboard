@@ -18,6 +18,8 @@
     var DATA_DIR   = 'data/lineups/';
     var CURRENT    = 'data/current.json';
     var PHOTO_BASE = 'https://resources.premierleague.com/premierleague/photos/players/110x140/p';
+    // 自建头像库：240x240 webp，按本赛季 FPL element id 命名；缺图回落官方 CDN
+    var PHOTO_LOCAL = 'img/players/';
     var BADGE_BASE = 'https://resources.premierleague.com/premierleague/badges/50/t';
     var FPL_BASE   = 'https://fantasy.premierleague.com/entry/';
 
@@ -155,6 +157,17 @@
         });
 
         dialog.addEventListener('keydown', trapFocus);
+
+        // 头像多级回落：本地 webp 失败 → 换官方 CDN（data-fb），再失败才隐藏
+        document.addEventListener('error', function (e) {
+            var img = e.target;
+            if (!img || img.tagName !== 'IMG') return;
+            var fb = img.getAttribute('data-fb');
+            if (fb) {
+                img.removeAttribute('data-fb');
+                img.src = fb;
+            }
+        }, true);
 
         // 图片失败 → 隐藏该图，视觉自动落到下层首字母 / 纯文本缩写
         overlay.addEventListener('error', function (e) {
@@ -306,7 +319,11 @@
 
         var media = '';
         if (hasPhoto) {
-            media = '<img class="lu-photo" src="' + PHOTO_BASE + esc(p.code) + '.png" alt="' + esc(name) + '"' +
+            var pid = (s && s.id != null) ? String(s.id) : '';
+            var cdn  = PHOTO_BASE + esc(p.code) + '.png';
+            // 本地优先；本地没这张时 data-fb 让 error 处理器直接换 CDN，不隐藏
+            media = '<img class="lu-photo" src="' + (pid ? PHOTO_LOCAL + esc(pid) + '.webp' : cdn) + '" alt="' + esc(name) + '"' +
+                    (pid ? ' data-fb="' + cdn + '"' : '') +
                     ' width="50" height="50" loading="lazy" decoding="async">';
         }
         if (p.team_code) {
